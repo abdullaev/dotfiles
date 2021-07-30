@@ -5,7 +5,7 @@
 ### Clean
 ![Clean](https://github.com/abdullaev/dotfiles/blob/master/.screenshots/1.png "Clean")
 
-### Fake busy
+### Fuck busy
 ![Fake busy](https://github.com/abdullaev/dotfiles/blob/master/.screenshots/3.png "Fake busy")
 
 ## Some installed software
