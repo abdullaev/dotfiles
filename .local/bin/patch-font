@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e
+
+FONT_FILE="$1"
+
+if [[ ! -f "$FONT_FILE" ]]; then
+  echo "Usage: $0 path/to/font.otf"
+  exit 1
+fi
+
+# Get base name
+BASENAME=$(basename "$FONT_FILE")
+NAME="${BASENAME%.*}"
+
+# Step 1: Convert font to TTX
+ttx -o "${NAME}.ttx" "$FONT_FILE"
+
+# Step 2: Patch all glyphs with width ≠ 1024
+echo "Patching all glyphs with width ≠ 1024 to width=1024..."
+# Uses a regex to match width values that are not 1024 and change them
+# This works in GNU sed; on macOS you may need `gsed` or tweak the syntax
+sed -i -E 's/(<mtx name="[^"]+" )width="([^1][0-9]*|1[^0][0-9]*|10[^2][0-9]*|102[^0-9]|[^0-9]*102[5-9][0-9]*)"/\1width="1024"/g' "${NAME}.ttx"
+
+# Step 3: Compile font back from TTX
+ttx -o "${NAME}-patched.otf" "${NAME}.ttx"
+
+# Step 4: Replace original font
+mv "${NAME}-patched.otf" "$FONT_FILE"
+
+# Step 5: Clean up
+rm "${NAME}.ttx"
+rm -f "${NAME}#*.ttx"
+
+echo "✅ All non-1024 widths patched in: $FONT_FILE"
+

@@ -1,0 +1,29 @@
+[user]
+    name = Amir Abdullaev
+    email = amir@abdullaev.xyz
+
+[core]
+    pager = delta
+
+
+[interactive]
+    diffFilter = delta --color-only
+
+
+[include]
+    path = ~/.config/delta/themes/catppuccin.gitconfig
+
+[delta]
+    features = catppuccin-mocha
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+
+[merge]
+	tool = nvimdiff3
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+
+[init]
+	defaultBranch = main

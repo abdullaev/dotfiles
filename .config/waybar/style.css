@@ -1,0 +1,97 @@
+@import "mocha.css";
+
+* {
+  font-size: 16px;
+  transition: background-color 0.15s;
+}
+
+#waybar {
+  background: alpha(@crust, 0.5);
+}
+
+.modules-left,
+.modules-right {
+  background: @base;
+  padding: 0 12px;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  margin: 8px 20px;
+  border-radius: 8px;
+}
+
+.modules-center {
+  color: @text;
+  font-style: italic;
+  text-shadow: 1px 1px 2px @pink;
+}
+
+#clock,
+#network,
+#bluetooth,
+#pulseaudio,
+#language,
+#custom-notifications {
+  padding: 6px 12px;
+}
+
+#clock:hover,
+#network:hover,
+#pulseaudio:hover,
+#language:hover,
+#bluetooth:hover,
+#custom-notifications:hover {
+  background: @mantle;
+}
+
+#bluetooth {
+  color: @blue;
+}
+
+#network {
+  color: @red;
+  padding-right: 19px;
+}
+
+#pulseaudio {
+  color: @mauve;
+  padding-right: 18px;
+}
+
+#language {
+  min-width: 32px;
+  font-family: monospace;
+  font-feature-settings: "ss15";
+  color: @lavender;
+}
+
+#clock {
+  font-family: monospace;
+  font-feature-settings: "ss17";
+  color: @peach;
+}
+
+#custom-notifications {
+  color: @teal;
+}
+
+#workspaces button {
+  font-family: monospace;
+  background: transparent;
+  color: @text;
+  border-radius: 0;
+  opacity: 0.6;
+}
+
+#workspaces button.active {
+  color: @rosewater;
+  font-weight: bold;
+  opacity: 1;
+}
+
+#workspaces button:hover {
+  background: @mantle;
+  box-shadow: none;
+}

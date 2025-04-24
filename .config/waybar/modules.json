@@ -1,0 +1,44 @@
+{
+  "hyprland/workspaces": {
+    "all-outputs": true,
+    "format": "{name}"
+  },
+  "hyprland/window": {
+    "on-click": "rofi -show drun"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-icons": {
+      "default-muted": "󰖁",
+      "default": "󰕾"
+    },
+    "on-click": "pavucontrol"
+  },
+  "network": {
+    "format-wifi": "󰖩",
+    "format-disconnected": "󰖪",
+    "on-click": "ghostty --custom-shader=$HOME/.config/ghostty/shaders/in-game-crt.glsl --custom-shader-animation=true --title=impala -e impala",
+    "tooltip-format": "{essid}"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-off": "󰂲",
+    "on-click": "blueman-manager"
+  },
+  "hyprland/language": {
+    "format-en": "[EN]",
+    "format-ru": "[RU]",
+    "on-click": "hyprctl switchxkblayout keychron-keychron-k3-pro next"
+  },
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%H:%M:%S}",
+    "tooltip-format": "{:%A, %B %d, %Y}",
+    "interval": 1
+  },
+  "custom/notifications": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "swaync-client -t"
+  }
+}

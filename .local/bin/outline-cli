@@ -1,0 +1,111 @@
+#!/bin/bash
+
+# Simple Outline Manager CLI using the REST API
+# Requires: go, curl, jq, secret-tool
+
+# === CONFIG ===
+
+API_URL=$(secret-tool lookup outline api-url)
+
+# === API CALLS ===
+
+list_keys() {
+  curl -sk "$API_URL/access-keys" | jq
+}
+
+create_key() {
+  curl -sk -X POST "$API_URL/access-keys" | jq
+}
+
+delete_key() {
+  local id="$1"
+  curl -sk -X DELETE "$API_URL/access-keys/$id"
+}
+
+rename_key() {
+  local id="$1"
+  local name="$2"
+  curl -sk -X PUT -H "Content-Type: application/json" \
+    -d "{\"name\":\"$name\"}" "$API_URL/access-keys/$id/name"
+}
+
+set_limit() {
+  local id="$1"
+  local bytes="$2"
+  curl -sk -X PUT -H "Content-Type: application/json" \
+    -d "{\"limit\": {\"bytes\": $bytes}}" "$API_URL/access-keys/$id/data-limit"
+}
+
+remove_limit() {
+  local id="$1"
+  curl -sk -X DELETE "$API_URL/access-keys/$id/data-limit"
+}
+
+server_info() {
+  curl -sk "$API_URL/server" | jq
+}
+
+connect_key() {
+  local id="$1"
+
+  if [[ -z "$id" ]]; then
+    echo "Usage: $0 connect <access-key-id>"
+    return 1
+  fi
+
+  # Get the access key JSON
+  local key_info=$(curl -sk "$API_URL/access-keys" | jq -r --arg ID "$id" '.accessKeys[] | select(.id == $ID)')
+
+  if [[ -z "$key_info" ]]; then
+    echo "Access key with ID '$id' not found."
+    return 1
+  fi
+
+  # Get the access URL (ss://...)
+  local access_url=$(echo "$key_info" | jq -r '.accessUrl')
+
+  if [[ -z "$access_url" ]]; then
+    echo "❌ Failed to extract accessUrl."
+    return 1
+  fi
+
+  echo "🔌 Connecting to Outline server with access key ID: $id"
+  echo
+
+  # Run the Outline SDK client using Go
+  sudo go run github.com/Jigsaw-Code/outline-sdk/x/examples/outline-cli@latest -transport "$access_url"
+}
+
+# === CLI ===
+
+show_help() {
+  echo "Usage: $0 [command] [args...]"
+  echo
+  echo "Commands:"
+  echo "  list                    List access keys"
+  echo "  create                  Create a new access key"
+  echo "  delete <id>             Delete access key by ID"
+  echo "  rename <id> <name>      Rename access key"
+  echo "  set-limit <id> <bytes>  Set data limit in bytes for key"
+  echo "  remove-limit <id>       Remove data limit"
+  echo "  info                    Show server info"
+  echo "  connect                 Connect to VPN by access key ID"
+  echo
+}
+
+main() {
+  case "$1" in
+    list) list_keys ;;
+    create) create_key ;;
+    delete) delete_key "$2" ;;
+    rename) rename_key "$2" "$3" ;;
+    set-limit) set_limit "$2" "$3" ;;
+    remove-limit) remove_limit "$2" ;;
+    info) server_info ;;
+    connect) connect_key "$2" ;;
+    *) show_help ;;
+  esac
+}
+
+main "$@"
+

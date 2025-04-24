@@ -1,0 +1,21 @@
+theme = "catppuccin_mocha"
+
+[editor]
+mouse = true
+scrolloff = 10
+cursorline = true
+color-modes = true
+text-width = 80
+popup-border = "all"
+line-number = "relative"
+
+[editor.gutters]
+layout = ["diagnostics", "spacer", "diff", "line-numbers", "spacer", "spacer"]
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.indent-guides]
+render = false
