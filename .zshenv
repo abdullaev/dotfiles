@@ -14,6 +14,8 @@ export GOROOT="/usr/lib/go"
 export EDITOR="helix"
 export VISUAL="zeditor"
 
+export PROXY_URL="$(secret-tool lookup proxy url)"
+
 PATH="$PATH:$HOME/.config/emacs/bin"
 PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
 export PATH
