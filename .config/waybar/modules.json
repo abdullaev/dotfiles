@@ -17,7 +17,7 @@
   "network": {
     "format-wifi": "󰖩",
     "format-disconnected": "󰖪",
-    "on-click": "ghostty --custom-shader=$HOME/.config/ghostty/shaders/in-game-crt.glsl --custom-shader-animation=true --title=impala -e impala",
+    "on-click": "ghostty --title=impala -e impala",
     "tooltip-format": "{essid}"
   },
   "bluetooth": {

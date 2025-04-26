@@ -35,6 +35,7 @@ alias t='tmux new-session -A -s default'
 alias h='helix .'
 alias c='clear'
 alias y='yazi'
+alias s='sesh connect $(sesh list | fzf)'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 export NVM_DIR="$HOME/.nvm"
