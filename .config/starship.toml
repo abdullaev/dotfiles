@@ -10,7 +10,7 @@ palette = "catppuccin_mocha"
 format = """$directory$git_branch$character"""
 
 # Right side
-right_format = """$cmd_duration$status"""
+# right_format = """$cmd_duration$status"""
 
 # Set line break
 [line_break]
