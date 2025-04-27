@@ -7,6 +7,8 @@ zstyle ':completion::complete:*' gain-privileges 1
 
 bindkey -e
 
+ZLE_RPROMPT_INDENT=0
+
 # History
 
 HISTFILE=~/.zsh_history
@@ -21,7 +23,7 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-PS1='%F{blue}%~ %(?.%F{green}.%F{red})❭%f '
+# PS1='%F{blue}%~ %(?.%F{green}.%F{red})❭%f '
 
 alias ls="eza --icons=always"
 alias la='eza -lua --icons=always'
@@ -38,10 +40,8 @@ alias y='yazi'
 alias s='sesh connect $(sesh list | fzf)'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
+# starship
+eval "$(starship init zsh)"
 
 # bun completions
 [ -s "/home/f278f1b2/.bun/_bun" ] && source "/home/f278f1b2/.bun/_bun"
@@ -56,3 +56,9 @@ eval "$(zoxide init --cmd cd zsh)"
 # fzf
 source <(fzf --zsh)
 
+# fnm
+FNM_PATH="/home/f278f1b2/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/f278f1b2/.local/share/fnm:$PATH"
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
