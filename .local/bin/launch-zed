@@ -1,0 +1,4 @@
+#!/bin/bash
+export HTTP_PROXY=$(secret-tool lookup proxy url)
+exec /usr/bin/zeditor "$@"
+
