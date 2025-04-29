@@ -12,10 +12,8 @@ export FZF_DEFAULT_OPTS="\
 export GOPATH="$HOME/go"
 export GOROOT="/usr/lib/go"
 
-export EDITOR="helix"
-export VISUAL="zeditor"
-
-export PROXY_URL="$(secret-tool lookup proxy url)"
+export EDITOR="hx"
+export VISUAL="hx"
 
 PATH="$PATH:$HOME/.cargo/bin"
 

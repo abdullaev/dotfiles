@@ -8,7 +8,7 @@ play = [
 	{ run = 'mpv "$@"', orphan = true, for = "unix" },
 ]
 edit = [
-	{ run = 'helix "$@"', block = true, for = "unix" },
+	{ run = 'hx "$@"', block = true, for = "unix" },
 ]
 open = [
 	{ run = 'xdg-open "$@"', orphan = true, desc = "Open" },

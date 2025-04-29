@@ -7,7 +7,6 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "proxy": "${PROXY_URL}",
   "show_edit_predictions": false,
   "assistant": {
     "always_allow_tool_actions": true,
