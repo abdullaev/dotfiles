@@ -28,7 +28,7 @@ setopt hist_find_no_dups
 alias ls="eza --icons=always"
 alias la='eza -lua --icons=always'
 alias grep='grep --color=auto'
-alias zed='HTTP_PROXY=$(secret-tool lookup proxy url) zeditor -n'
+alias zed='launch-zed -n'
 alias ec='emacsclient -n'
 alias em='emacsclient -n -c'
 alias lg='lazygit'
