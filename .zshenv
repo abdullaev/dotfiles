@@ -17,6 +17,8 @@ export VISUAL="zeditor"
 
 export PROXY_URL="$(secret-tool lookup proxy url)"
 
+PATH="$PATH:$HOME/.cargo/bin"
+
 PATH="$PATH:$HOME/.config/emacs/bin"
 PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
 export PATH
