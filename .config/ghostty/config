@@ -63,3 +63,5 @@ quit-after-last-window-closed = false
 cursor-text = #11111b
 
 confirm-close-surface = false
+
+app-notifications = no-clipboard-copy
