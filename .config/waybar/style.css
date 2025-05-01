@@ -103,3 +103,7 @@ tooltip label {
   background: @mantle;
   box-shadow: none;
 }
+
+#workspaces button.special.active {
+  color: @sky;
+}
