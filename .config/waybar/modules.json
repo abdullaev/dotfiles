@@ -12,7 +12,8 @@
       "default-muted": "󰖁",
       "default": "󰕾"
     },
-    "on-click": "pavucontrol"
+    "on-click": "pavucontrol",
+    "tooltip-format": "{volume}%"
   },
   "network": {
     "format-wifi": "󰖩",
@@ -23,7 +24,9 @@
   "bluetooth": {
     "format": "",
     "format-off": "󰂲",
-    "on-click": "blueman-manager"
+    "on-click": "blueman-manager",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "tooltip-format": "{device_enumerate}"
   },
   "hyprland/language": {
     "format-en": "[EN]",

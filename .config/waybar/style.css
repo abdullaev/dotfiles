@@ -5,6 +5,14 @@
   transition: background-color 0.15s;
 }
 
+tooltip {
+  background-color: @mantle;
+}
+
+tooltip label {
+  color: @text;
+}
+
 #waybar {
   background: alpha(@crust, 0.5);
 }

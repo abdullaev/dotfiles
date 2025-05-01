@@ -43,6 +43,8 @@
 # resize-overlay-duration = 4s 200ms
 
 gtk-single-instance = true
+gtk-adwaita = false
+window-decoration = none
 
 theme = catppuccin-mocha
 
@@ -58,10 +60,9 @@ font-size = 14
 
 adjust-cursor-thickness = 2
 
-quit-after-last-window-closed = false
-
 cursor-text = #11111b
 
 confirm-close-surface = false
 
 app-notifications = no-clipboard-copy
+
