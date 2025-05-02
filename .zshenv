@@ -11,6 +11,8 @@ export FZF_DEFAULT_OPTS="\
 --color=selected-bg:#45475a \
 --color=border:#313244,label:#cdd6f4"
 
+export FZF_DEFAULT_COMMAND='rg --files --hidden --iglob "!.local/share/Steam/*"'
+
 export GOPATH="$HOME/go"
 export GOROOT="/usr/lib/go"
 
