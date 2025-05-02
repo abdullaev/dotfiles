@@ -31,7 +31,6 @@ max-indent-retain = 0
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
 C-r = [":reload-all"]
-C-R = [":reload-all", ":lsp-restart"]
 C-a = [":reset-diff-change"]
 C-x = [":buffer-close"]
-C-X = [":buffer-close-others"]
+C-q = [":buffer-close-others"]
