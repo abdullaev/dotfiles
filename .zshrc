@@ -25,8 +25,9 @@ setopt hist_find_no_dups
 
 # PS1='%F{blue}%~ %(?.%F{green}.%F{red})❭%f '
 
-alias ls="eza --icons=always"
+alias ls='eza --icons=always'
 alias la='eza -lua --icons=always'
+alias vim='nvim'
 alias grep='grep --color=auto'
 alias zed='launch-zed -n'
 alias ec='emacsclient -n'
