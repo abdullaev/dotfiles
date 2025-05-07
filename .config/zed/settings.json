@@ -9,6 +9,7 @@
 {
   "show_edit_predictions": false,
   "assistant": {
+    "default_profile": "ask",
     "always_allow_tool_actions": true,
     "default_model": {
       "provider": "zed.dev",
