@@ -8,6 +8,9 @@ scrolloff = 10
 line-number = "relative"
 end-of-line-diagnostics = "hint"
 
+[editor.auto-save]
+focus-lost = true
+
 [editor.inline-diagnostics]
 cursor-line = "warning"
 
