@@ -38,7 +38,7 @@ alias h='hx .'
 alias c='clear'
 alias y='yazi'
 alias s='sesh connect $(sesh list | fzf)'
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # starship
 eval "$(starship init zsh)"
