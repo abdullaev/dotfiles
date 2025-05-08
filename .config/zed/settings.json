@@ -8,7 +8,7 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "show_edit_predictions": false,
-  "assistant": {
+  "agent": {
     "default_profile": "ask",
     "always_allow_tool_actions": true,
     "default_model": {
@@ -18,7 +18,7 @@
     "version": "2"
   },
   "edit_predictions": {
-    "enabled_in_assistant": true
+    "enabled_in_text_threads": true
   },
   "vim_mode": true,
   "vim": {
@@ -36,7 +36,7 @@
   "buffer_font_family": "PragmataPro Mono",
   "buffer_font_size": 18,
   "buffer_line_height": "standard",
-  "theme": "Catppuccin Mocha",
+  "theme": "Catppuccin Mocha (lavender)",
   "icon_theme": "Catppuccin Mocha",
   "ui_font_family": "IBM Plex Sans",
   "terminal": {
