@@ -27,9 +27,13 @@ max-indent-retain = 0
 esc = ["collapse_selection", "keep_primary_selection"]
 
 [keys.normal.f]
-w = ":write"
-W = ":write-all"
-x = ":buffer-close"
-X = ":buffer-close-others"
+s = ":write"
+S = ":write!"
+w = ":write-all"
+W = ":write-all!"
+q = ":buffer-close"
+Q = ":buffer-close!"
+x = ":buffer-close-others"
+X = ":buffer-close-others!"
 d = ":reset-diff-change"
 r = ":reload-all"
