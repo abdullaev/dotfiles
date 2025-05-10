@@ -6,10 +6,10 @@ cursorline = true
 color-modes = true
 scrolloff = 10
 line-number = "relative"
-end-of-line-diagnostics = "hint"
+# end-of-line-diagnostics = "hint"
 
-[editor.inline-diagnostics]
-cursor-line = "warning"
+# [editor.inline-diagnostics]
+# cursor-line = "warning"
 
 [editor.gutters]
 layout = ["diff", "spacer", "diagnostics", "spacer", "line-numbers", "spacer"]
