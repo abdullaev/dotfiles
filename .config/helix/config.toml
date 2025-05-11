@@ -26,7 +26,7 @@ max-indent-retain = 0
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
 
-[keys.normal.f]
+[keys.normal.","]
 s = ":write"
 S = ":write!"
 w = ":write-all"
