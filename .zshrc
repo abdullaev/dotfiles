@@ -27,6 +27,7 @@ setopt hist_find_no_dups
 
 alias ls='eza --icons=always'
 alias la='eza -lua --icons=always'
+alias lt='eza --tree --icons=always'
 alias vim='nvim'
 alias grep='grep --color=auto'
 alias zed='launch-zed -n'
