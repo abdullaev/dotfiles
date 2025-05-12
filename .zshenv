@@ -13,7 +13,7 @@ export FZF_DEFAULT_OPTS="\
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --iglob "!.local/share/Steam/*"'
 
-export GOPATH="$HOME/go"
+export GOPATH="$HOME/Tools/go"
 export GOROOT="/usr/lib/go"
 
 export EDITOR="hx"
