@@ -41,7 +41,7 @@ tooltip label {
 #bluetooth,
 #pulseaudio,
 #language,
-#custom-notifications {
+#custom-notification {
   padding: 6px 12px;
 }
 
@@ -50,7 +50,7 @@ tooltip label {
 #pulseaudio:hover,
 #language:hover,
 #bluetooth:hover,
-#custom-notifications:hover {
+#custom-notification:hover {
   background: @mantle;
 }
 
@@ -81,7 +81,8 @@ tooltip label {
   color: @peach;
 }
 
-#custom-notifications {
+#custom-notification {
+  padding-right: 16px;
   color: @teal;
 }
 

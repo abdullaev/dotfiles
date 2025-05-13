@@ -14,7 +14,7 @@
     "bluetooth",
     "network",
     "clock",
-    "custom/notifications"
+    "custom/notification"
   ],
   "include": [
     "~/.config/waybar/modules.json"
