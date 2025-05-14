@@ -1,4 +1,4 @@
 #!/bin/bash
-export HTTP_PROXY=$(secret-tool lookup proxy url)
+export HTTP_PROXY=$(secret-tool lookup socks5proxy url)
 exec /usr/bin/zeditor "$@"
 
