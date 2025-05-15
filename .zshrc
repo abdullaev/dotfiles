@@ -34,12 +34,13 @@ alias zed='launch-zed -n'
 alias ec='emacsclient -n'
 alias em='emacsclient -n -c'
 alias lg='lazygit'
-alias t='tmux new-session -A -s default'
+alias t='tmux new-session -A -s "$(basename "$PWD")"'
 alias h='hx .'
 alias c='clear'
 alias y='yazi'
 alias s='sesh connect $(sesh list | fzf)'
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias claude="HTTP_PROXY=$(secret-tool lookup proxy url) $HOME/.claude/local/claude"
 
 # starship
 eval "$(starship init zsh)"
@@ -63,3 +64,4 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="/home/f278f1b2/.local/share/fnm:$PATH"
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
+
