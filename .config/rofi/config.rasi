@@ -8,7 +8,7 @@ configuration {
     display-combi:  "󰕘 combi:";
     display-filebrowser: "󰉋 filebrowser:";
 
-    font: "monospace-proportional 18";
+    font: "monospace 18";
 
     terminal: "ghostty";
 }
