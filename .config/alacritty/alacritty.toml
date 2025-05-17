@@ -7,10 +7,10 @@ x = 8
 y = 8
 
 [font]
-size = 13.0
+size = 14.0
 
 [cursor]
 thickness = 0.2
 
 [cursor.style]
-shape = "Block"
+shape = "Beam"
