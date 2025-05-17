@@ -1,12 +1,12 @@
 configuration {
     show-icons: true;
 
-    display-ssh:    "󰣀 ssh:";
-    display-run:    "󱓞 run:";
-    display-drun:   "󰣖 drun:";
-    display-window: "󱂬 window:";
-    display-combi:  "󰕘 combi:";
-    display-filebrowser: "󰉋 filebrowser:";
+    display-ssh:         "ssh:";
+    display-run:         "run:";
+    display-drun:        "drun:";
+    display-window:      "window:";
+    display-combi:       "combi:";
+    display-filebrowser: "filebrowser:";
 
     font: "monospace 18";
 
