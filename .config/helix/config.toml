@@ -23,6 +23,9 @@ select = "underline"
 enable = true
 max-indent-retain = 0
 
+[editor.lsp]
+display-color-swatches = false
+
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
 
