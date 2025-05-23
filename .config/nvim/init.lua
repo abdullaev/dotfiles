@@ -41,6 +41,12 @@ require("lazy").setup({
       priority = 1000,
       config = function()
         vim.cmd([[colorscheme catppuccin-mocha]])
+
+        vim.cmd [[
+          highlight Normal guibg=NONE ctermbg=NONE
+          highlight NormalNC guibg=NONE ctermbg=NONE
+          highlight EndOfBuffer guibg=NONE ctermbg=NONE
+        ]]
       end,
     }
   },

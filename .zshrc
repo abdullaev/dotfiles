@@ -64,3 +64,4 @@ if [ -d "$FNM_PATH" ]; then
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
 
+alias claude="/home/f278f1b2/.claude/local/claude"

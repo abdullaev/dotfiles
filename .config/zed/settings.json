@@ -33,18 +33,21 @@
   "vertical_scroll_margin": 10,
   "horizontal_scroll_margin": 10,
   "ui_font_size": 18,
-  "buffer_font_family": "PragmataPro Mono",
+  "buffer_font_family": "PragmataPro Mono Liga",
   "buffer_font_size": 18,
   "buffer_line_height": "standard",
   "theme": "Catppuccin Mocha (lavender)",
   "icon_theme": "Catppuccin Mocha",
   "ui_font_family": "IBM Plex Sans",
+  "buffer_font_features": {
+    "calt": true
+  },
   "indent_guides": {
     "enabled": false
   },
   "terminal": {
     "line_height": "standard",
-    "font_family": "PragmataPro Mono"
+    "font_family": "PragmataPro Mono Liga"
   },
   "calls": {
     "mute_on_join": true,
