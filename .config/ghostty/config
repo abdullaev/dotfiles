@@ -43,7 +43,7 @@
 # resize-overlay-duration = 4s 200ms
 
 gtk-single-instance = true
-# gtk-adwaita = false
+gtk-adwaita = false
 window-decoration = none
 
 theme = catppuccin-mocha
@@ -66,4 +66,4 @@ confirm-close-surface = false
 
 app-notifications = no-clipboard-copy
 
-background-opacity = 0.9
+# background-opacity = 0.9
