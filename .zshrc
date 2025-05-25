@@ -42,7 +42,22 @@ alias claude="HTTP_PROXY=$(secret-tool lookup proxy url) $HOME/.claude/local/cla
 t() {
   local session_name="$(basename "$PWD")"
   if [ -n "$TMUX" ]; then
-    tmux rename-session "$session_name"
+    current_session="$(tmux display-message -p '#S')"
+
+    if [ "$current_session" = "$session_name" ]; then
+      exit 0
+    fi
+
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+      tmux switch-client -t "$session_name"
+    else
+      tmux new-session -d -s "$session_name"
+      tmux switch-client -t "$session_name"
+    fi
+
+    tmux kill-session -t "$current_session"
+
+    tmux new-session -d -s "$session_name" \; switch-client -t "$session_name" \; kill-session -t "$(tmux display-message -p '#S')"
   else
     tmux new-session -A -s "$session_name"
   fi
