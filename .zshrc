@@ -23,8 +23,6 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# PS1='%F{blue}%~ %(?.%F{green}.%F{red})❭%f '
-
 alias ls='eza --icons=always'
 alias la='eza -lua --icons=always'
 alias lt='eza --tree --icons=always'
@@ -34,12 +32,21 @@ alias zed='launch-zed -n'
 alias ec='emacsclient -n'
 alias em='emacsclient -n -c'
 alias lg='lazygit'
-alias t='tmux new-session -A -s "$(basename "$PWD")"'
 alias c='clear'
 alias y='yazi'
 alias s='sesh connect $(sesh list | fzf)'
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias claude="HTTP_PROXY=$(secret-tool lookup proxy url) $HOME/.claude/local/claude"
+
+# tmux helper
+t() {
+  local session_name="$(basename "$PWD")"
+  if [ -n "$TMUX" ]; then
+    tmux rename-session "$session_name"
+  else
+    tmux new-session -A -s "$session_name"
+  fi
+}
 
 # starship
 eval "$(starship init zsh)"
@@ -63,5 +70,3 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="/home/f278f1b2/.local/share/fnm:$PATH"
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
-
-alias claude="/home/f278f1b2/.claude/local/claude"
