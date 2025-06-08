@@ -37,6 +37,7 @@ alias y='yazi'
 alias s='sesh connect $(sesh list | fzf)'
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias claude="HTTP_PROXY=$(secret-tool lookup proxy url) $HOME/.claude/local/claude"
+alias forge="FORGE_KEY=$(secret-tool lookup forge key) forge"
 
 # tmux helper
 t() {
