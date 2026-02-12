@@ -1,0 +1,37 @@
+{
+    "window.commandCenter": true,
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
+    "catppuccin.accentColor": "lavender",
+    "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
+    "workbench.preferredLightColorTheme": "Catppuccin Latte",
+    "catppuccin.extraBordersEnabled": true,
+    "editor.fontFamily": "monospace",
+    "debug.console.fontFamily": "monospace",
+    "terminal.integrated.fontFamily": "monospace",
+    "terminal.integrated.fontLigatures.enabled": false,
+    "editor.fontLigatures": true,
+    "workbench.activityBar.orientation": "vertical",
+    "editor.cursorBlinking": "smooth",
+    "editor.smoothScrolling": true,
+    "workbench.tree.renderIndentGuides": "none",
+    "editor.guides.indentation": false,
+    "editor.formatOnSave": true,
+    "nix.enableLanguageServer": true,
+    "nix.serverPath": "nixd",
+    "update.mode": "manual",
+    "[nix]": {
+        "editor.inlayHints.enabled": "off"
+    },
+    "nix.hiddenLanguageServerErrors": [
+        "textDocument/formatting",
+        "textDocument/definition"
+    ],
+    "window.autoDetectColorScheme": true,
+    "cursor.composer.shouldChimeAfterChatFinishes": true,
+    "editor.fontSize": 16,
+    "terminal.integrated.fontSize": 16,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "json.schemaDownload.enable": true
+}
