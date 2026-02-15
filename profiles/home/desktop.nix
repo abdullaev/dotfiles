@@ -21,6 +21,7 @@
     ../../modules/home/fzf.nix
     ../../modules/home/bitwarden.nix
     ../../modules/home/telegram.nix
+    ../../modules/home/cursor.nix
     ../../modules/home/dev.nix
     ../../modules/home/nh.nix
   ];
