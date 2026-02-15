@@ -6,7 +6,7 @@
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-color-emoji
-    (nerd-fonts.iosevka)
+    (nerd-fonts.jetbrains-mono)
   ];
 
   fonts.fontconfig = {
@@ -22,7 +22,7 @@
       ];
 
       monospace = [
-        "Iosevka"
+        "JetBrains Mono Nerd Font"
       ];
     };
   };
