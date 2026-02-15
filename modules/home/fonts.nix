@@ -1,17 +1,12 @@
 { pkgs, ... }:
 
-let
-  pragmata-pro = pkgs.callPackage ../../pkgs/pragmata-pro { };
-in
-
 {
   home.packages = with pkgs; [
-    pragmata-pro
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-color-emoji
-    (nerd-fonts.jetbrains-mono)
+    (nerd-fonts.iosevka)
   ];
 
   fonts.fontconfig = {
@@ -27,8 +22,7 @@ in
       ];
 
       monospace = [
-        "PragmataPro Mono Liga"
-        "JetBrainsMono Nerd Font"
+        "Iosevka"
       ];
     };
   };
