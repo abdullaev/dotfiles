@@ -14,5 +14,6 @@
     ../../modules/system/firefox.nix
     ../../modules/system/plasma6.nix
     ../../modules/system/sddm.nix
+    ../../modules/system/openssh.nix
   ];
 }

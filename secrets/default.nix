@@ -1,6 +1,4 @@
 {
-  age.identityPaths = [ "/etc/ssh/host_ed25519" ];
-
   age.secrets.rs-awg2-latvia = {
     file = ./rs-awg2-latvia.conf.age;
   };
