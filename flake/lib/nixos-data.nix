@@ -24,7 +24,9 @@ let
     lib.nixosSystem {
       system = hostConfig.system;
       modules = [
+        inputs.agenix.nixosModules.default
         ../../system.nix
+        ../../secrets
         {
           networking.hostName = hostName;
         }

@@ -1,9 +1,9 @@
-{ ... }:
+{ config, ... }:
 
 {
   networking.wg-quick.interfaces.awg0 = {
     type = "amneziawg";
-    configFile = "/etc/secrets/awg/Latvia.conf";
+    configFile = config.age.secrets.rs-awg2-latvia.path;
     autostart = true;
   };
 
