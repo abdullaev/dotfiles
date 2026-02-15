@@ -17,7 +17,6 @@
     ../../modules/home/eza.nix
     ../../modules/home/fonts.nix
     ../../modules/home/ghostty.nix
-    ../../modules/home/cursor.nix
     ../../modules/home/zoxide.nix
     ../../modules/home/fzf.nix
     ../../modules/home/bitwarden.nix
