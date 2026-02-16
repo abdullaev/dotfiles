@@ -10,7 +10,6 @@ in
     noto-fonts-cjk-serif
     noto-fonts-color-emoji
     pragmata-pro
-    (nerd-fonts.iosevka-term)
   ];
 
   fonts.fontconfig = {
@@ -27,7 +26,10 @@ in
 
       monospace = [
         "PragmataPro Mono Liga"
-        "Iosevka Term Nerd Font Mono"
+      ];
+
+      emoji = [
+        "Noto Color Emoji"
       ];
     };
   };

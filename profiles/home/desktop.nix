@@ -9,7 +9,7 @@
     ../../modules/home/mpv.nix
     ../../modules/home/bat.nix
     ../../modules/home/delta.nix
-    ../../modules/home/nixvim.nix
+    ../../modules/home/nixvim
     ../../modules/home/fastfetch.nix
     ../../modules/home/codex.nix
     ../../modules/home/opencode.nix
@@ -24,5 +24,6 @@
     ../../modules/home/cursor.nix
     ../../modules/home/dev.nix
     ../../modules/home/nh.nix
+    ../../modules/home/ripgrep.nix
   ];
 }
