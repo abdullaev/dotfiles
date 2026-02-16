@@ -14,6 +14,7 @@
     opts = {
       number = true;
       relativenumber = true;
+      termguicolors = true;
       mouse = "a";
       clipboard = "unnamedplus";
       breakindent = true;
@@ -33,53 +34,15 @@
       smartindent = true;
     };
 
-    keymaps = import ./keymaps.nix;
-
     colorschemes.catppuccin = {
       enable = true;
       settings.flavour = "mocha";
     };
 
-    plugins = {
-      lualine.enable = true;
-      web-devicons.enable = true;
-      telescope.enable = true;
-      which-key.enable = true;
+    extraConfigLua = builtins.readFile ./lua/autocmds.lua;
 
-      gitsigns = {
-        enable = true;
-        settings = {
-          signs = {
-            add.text = "▌";
-            change.text = "▌";
-            delete.text = "▌";
-            topdelete.text = "▌";
-            changedelete.text = "▌";
-            untracked.text = "▌";
-          };
-          signs_staged = {
-            add.text = "▌";
-            change.text = "▌";
-            delete.text = "▌";
-            topdelete.text = "▌";
-            changedelete.text = "▌";
-            untracked.text = "▌";
-          };
-          signs_staged_enable = true;
-          signcolumn = true;
-          numhl = false;
-          linehl = false;
-          current_line_blame = false;
-        };
-      };
+    keymaps = import ./keymaps.nix;
 
-      treesitter = {
-        enable = true;
-        settings = {
-          highlight.enable = true;
-          indent.enable = true;
-        };
-      };
-    };
+    plugins = import ./plugins;
   };
 }
