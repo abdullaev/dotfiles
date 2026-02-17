@@ -89,11 +89,20 @@
             enable = true;
           };
 
+          lsp = {
+            enable = true;
+          };
+
           treesitter = {
             enable = true;
             highlight.enable = true;
             indent.enable = true;
             grammars = pkgs.vimPlugins.nvim-treesitter.allGrammars;
+          };
+
+          languages.nix = {
+            enable = true;
+            lsp.servers = [ "nixd" ];
           };
 
           git = {
