@@ -1,6 +1,6 @@
 {
   flake.modules.homeManager.neovim =
-    { pkgs, ... }:
+    { ... }:
     {
       programs.nvf = {
         enable = true;
@@ -37,19 +37,27 @@
             smartindent = true;
           };
 
+          highlight = {
+            DiagnosticUnderlineError = {
+              undercurl = true;
+            };
+            DiagnosticUnderlineWarn = {
+              undercurl = true;
+            };
+            DiagnosticUnderlineInfo = {
+              undercurl = true;
+            };
+            DiagnosticUnderlineHint = {
+              undercurl = true;
+            };
+            DiagnosticUnderlineOk = {
+              undercurl = true;
+            };
+          };
+
           visuals.nvim-web-devicons.enable = true;
 
           binds.whichKey.enable = true;
-
-          keymaps = [
-            {
-              key = "<Esc>";
-              mode = "n";
-              action = "<cmd>nohlsearch<CR>";
-              desc = "Clear search highlight";
-              silent = true;
-            }
-          ];
 
           theme = {
             enable = true;
@@ -96,43 +104,21 @@
 
           diagnostics = {
             enable = true;
-            config.underline = true;
           };
 
           treesitter = {
             enable = true;
             highlight.enable = true;
             indent.enable = true;
-            grammars = pkgs.vimPlugins.nvim-treesitter.allGrammars;
           };
 
-          languages.nix = {
-            enable = true;
-            lsp.servers = [ "nixd" ];
+          languages = {
+            nix = {
+              enable = true;
+              treesitter.enable = true;
+              lsp.servers = [ "nixd" ];
+            };
           };
-
-          luaConfigPost = ''
-            local apply_diagnostic_undercurl = function()
-              for _, group in ipairs({
-                "DiagnosticUnderlineError",
-                "DiagnosticUnderlineWarn",
-                "DiagnosticUnderlineInfo",
-                "DiagnosticUnderlineHint",
-                "DiagnosticUnderlineOk",
-              }) do
-                local hl = vim.api.nvim_get_hl(0, { name = group })
-                hl.undercurl = true
-                hl.underline = false
-                vim.api.nvim_set_hl(0, group, hl)
-              end
-            end
-
-            vim.api.nvim_create_autocmd("ColorScheme", {
-              callback = apply_diagnostic_undercurl,
-            })
-
-            apply_diagnostic_undercurl()
-          '';
 
           git = {
             enable = true;
