@@ -43,6 +43,21 @@ in
               type = types.bool;
               default = true;
             };
+
+            enableHomeManager = mkOption {
+              type = types.bool;
+              default = true;
+            };
+
+            homeManagerModules = mkOption {
+              type = with types; nullOr (listOf deferredModule);
+              default = null;
+            };
+
+            extraHomeManagerModules = mkOption {
+              type = with types; listOf deferredModule;
+              default = [ ];
+            };
           };
         }
       ));

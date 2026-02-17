@@ -1,13 +1,20 @@
 { lib, inputs }:
 { config, ... }:
 let
+  resolveHomeManagerModules =
+    user:
+    (if user.homeManagerModules == null then config.homeManagerModules else user.homeManagerModules)
+    ++ user.extraHomeManagerModules;
+
+  enabledHomeManagerUsers = lib.filterAttrs (_: user: user.enableHomeManager) config.users;
+
   homeManagerUsers = lib.mapAttrs (
     name: user:
     {
       _module.args.user = user // { inherit name; };
-      imports = config.homeManagerModules;
+      imports = resolveHomeManagerModules user;
     }
-  ) config.users;
+  ) enabledHomeManagerUsers;
 in
 {
   options.homeManagerModules = lib.mkOption {
