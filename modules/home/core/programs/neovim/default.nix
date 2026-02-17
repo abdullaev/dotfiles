@@ -53,11 +53,22 @@
             DiagnosticUnderlineOk = {
               undercurl = true;
             };
+            DiagnosticDeprecated = {
+              undercurl = true;
+            };
           };
+
+          ui.colorizer.enable = true;
+
+          lazy.enable = true;
+
+          autocomplete.blink-cmp.enable = true;
 
           visuals.nvim-web-devicons.enable = true;
 
           binds.whichKey.enable = true;
+
+          visuals.tiny-devicons-auto-colors.enable = true;
 
           theme = {
             enable = true;
@@ -96,6 +107,21 @@
           telescope = {
             enable = true;
           };
+
+          luaConfigRC.telescope-treesitter-compat = ''
+            if vim.treesitter and vim.treesitter.language and vim.treesitter.language.get_buf_lang == nil then
+              vim.treesitter.language.get_buf_lang = function(bufnr)
+                bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+                local filetype = vim.bo[bufnr].filetype
+                if filetype == nil or filetype == "" then
+                  return nil
+                end
+
+                return vim.treesitter.language.get_lang(filetype)
+              end
+            end
+          '';
 
           lsp = {
             enable = true;
