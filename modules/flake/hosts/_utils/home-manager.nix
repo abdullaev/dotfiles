@@ -8,13 +8,12 @@ let
 
   enabledHomeManagerUsers = lib.filterAttrs (_: user: user.enableHomeManager) config.users;
 
-  homeManagerUsers = lib.mapAttrs (
-    name: user:
-    {
-      _module.args.user = user // { inherit name; };
-      imports = resolveHomeManagerModules user;
-    }
-  ) enabledHomeManagerUsers;
+  homeManagerUsers = lib.mapAttrs (name: user: {
+    _module.args.user = user // {
+      inherit name;
+    };
+    imports = resolveHomeManagerModules user;
+  }) enabledHomeManagerUsers;
 in
 {
   options.homeManagerModules = lib.mkOption {
@@ -34,7 +33,7 @@ in
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          sharedModules = [ inputs.nixvim.homeModules.nixvim ];
+          sharedModules = [ inputs.nvf.homeManagerModules.default ];
           backupFileExtension = "backup";
           extraSpecialArgs = {
             inherit
