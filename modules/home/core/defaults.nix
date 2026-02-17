@@ -1,6 +1,7 @@
 {
   flake.modules.homeManager.defaults =
     {
+      pkgs,
       user,
       ...
     }:
@@ -8,6 +9,11 @@
       home = {
         username = user.name;
         homeDirectory = user.homeDirectory;
+
+        packages = with pkgs; [
+          nixfmt
+          nixd
+        ];
       };
 
       programs.git.settings.user = {

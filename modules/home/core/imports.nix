@@ -17,7 +17,6 @@
     fonts
     zoxide
     fzf
-    dev
     nh
     ripgrep
   ];
