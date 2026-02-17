@@ -1,8 +1,9 @@
 {
   flake.modules.homeManager.zsh =
-    { config, ... }:
+    { config, user, ... }:
     {
       programs.zsh = {
+        enable = user.shell == "zsh";
         enableCompletion = true;
         syntaxHighlighting.enable = true;
 
