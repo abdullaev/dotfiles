@@ -91,6 +91,12 @@
 
           lsp = {
             enable = true;
+            formatOnSave = true;
+          };
+
+          diagnostics = {
+            enable = true;
+            config.underline = true;
           };
 
           treesitter = {
@@ -104,6 +110,29 @@
             enable = true;
             lsp.servers = [ "nixd" ];
           };
+
+          luaConfigPost = ''
+            local apply_diagnostic_undercurl = function()
+              for _, group in ipairs({
+                "DiagnosticUnderlineError",
+                "DiagnosticUnderlineWarn",
+                "DiagnosticUnderlineInfo",
+                "DiagnosticUnderlineHint",
+                "DiagnosticUnderlineOk",
+              }) do
+                local hl = vim.api.nvim_get_hl(0, { name = group })
+                hl.undercurl = true
+                hl.underline = false
+                vim.api.nvim_set_hl(0, group, hl)
+              end
+            end
+
+            vim.api.nvim_create_autocmd("ColorScheme", {
+              callback = apply_diagnostic_undercurl,
+            })
+
+            apply_diagnostic_undercurl()
+          '';
 
           git = {
             enable = true;
