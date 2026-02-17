@@ -6,6 +6,10 @@
     users.sqxt = {
       fullName = "Amir Abdullaev";
       email = "me@sqxt.dev";
+      groups = [
+        "networkmanager"
+        "wheel"
+      ];
       extraHomeManagerModules = with config.flake.modules.homeManager; [
         desktop
       ];

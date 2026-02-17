@@ -1,10 +1,10 @@
 {
   flake.modules.homeManager.nh =
-    { config, ... }:
+    { user, ... }:
     {
       programs.nh = {
         enable = true;
-        flake = "${config.home.homeDirectory}/dotfiles-nix";
+        flake = user.dotfilesPath;
       };
     };
 }

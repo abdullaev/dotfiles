@@ -10,7 +10,11 @@ in
   options = {
     users = mkOption {
       type = with types; attrsOf (submodule (
-        { name, ... }:
+        {
+          config,
+          name,
+          ...
+        }:
         {
           options = {
             fullName = mkOption {
@@ -30,12 +34,14 @@ in
               type = with types; listOf str;
               default = [
                 "networkmanager"
-                "wheel"
               ];
             };
 
             shell = mkOption {
-              type = types.str;
+              type = with types; enum [
+                "bash"
+                "zsh"
+              ];
               default = "zsh";
             };
 
@@ -57,6 +63,11 @@ in
             extraHomeManagerModules = mkOption {
               type = with types; listOf deferredModule;
               default = [ ];
+            };
+
+            dotfilesPath = mkOption {
+              type = types.str;
+              default = "${config.homeDirectory}/dotfiles-nix";
             };
           };
         }
