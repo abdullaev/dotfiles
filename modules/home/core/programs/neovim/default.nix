@@ -9,45 +9,34 @@
           viAlias = true;
           vimAlias = true;
 
-          globals = {
-            mapleader = " ";
-            maplocalleader = " ";
-          };
-
           options = {
-            number = true;
-            relativenumber = true;
-            termguicolors = true;
-            mouse = "a";
-            clipboard = "unnamedplus";
-            breakindent = true;
-            undofile = true;
-            ignorecase = true;
-            smartcase = true;
-            signcolumn = "yes";
-            updatetime = 250;
-            timeoutlen = 300;
-            splitright = true;
-            splitbelow = true;
-            cursorline = true;
             scrolloff = 8;
             tabstop = 2;
             shiftwidth = 2;
-            expandtab = true;
-            smartindent = true;
           };
 
-          ui.colorizer.enable = true;
+          undoFile.enable = true;
+
+          clipboard = {
+            enable = true;
+            providers.wl-copy.enable = true;
+            registers = "unnamedplus";
+          };
 
           lazy.enable = true;
 
           autocomplete.blink-cmp.enable = true;
 
-          visuals.nvim-web-devicons.enable = true;
-
           binds.whichKey.enable = true;
 
+          visuals.nvim-web-devicons.enable = true;
           visuals.tiny-devicons-auto-colors.enable = true;
+
+          utility.direnv.enable = true;
+
+          utility.motion.flash-nvim.enable = true;
+
+          utility.nix-develop.enable = true;
 
           theme = {
             enable = true;
@@ -57,38 +46,6 @@
 
           statusline.lualine = {
             enable = true;
-            theme = "catppuccin";
-
-            sectionSeparator = {
-              left = "";
-              right = "";
-            };
-
-            componentSeparator = {
-              left = "⁞";
-              right = "";
-            };
-
-            setupOpts.sections = {
-              lualine_a = [ "mode" ];
-              lualine_b = [
-                "branch"
-                "diff"
-                "diagnostics"
-              ];
-              lualine_c = [
-                [
-                  "filename"
-                  {
-                    _type = "lua-inline";
-                    expr = "path = 1";
-                  }
-                ]
-              ];
-              lualine_x = [ "lsp_status" ];
-              lualine_y = [ "progress" ];
-              lualine_z = [ "location" ];
-            };
           };
 
           telescope = {
@@ -102,12 +59,11 @@
 
           diagnostics = {
             enable = true;
+            nvim-lint.enable = true;
           };
 
           treesitter = {
             enable = true;
-            highlight.enable = true;
-            indent.enable = true;
           };
 
           languages = {
@@ -117,6 +73,12 @@
               lsp.enable = true;
             };
           };
+
+          debugger = {
+            nvim-dap.enable = true;
+          };
+
+          ui.fastaction.enable = true;
 
           git = {
             enable = true;
@@ -139,11 +101,6 @@
                   changedelete.text = "▌";
                   untracked.text = "▌";
                 };
-                signs_staged_enable = true;
-                signcolumn = true;
-                numhl = false;
-                linehl = false;
-                current_line_blame = false;
               };
             };
           };
