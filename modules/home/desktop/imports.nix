@@ -6,6 +6,5 @@
     ghostty
     bitwarden
     telegram
-    cursor
   ];
 }
