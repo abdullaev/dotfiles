@@ -97,7 +97,15 @@
                 "diff"
                 "diagnostics"
               ];
-              lualine_c = [ "filename" ];
+              lualine_c = [
+                [
+                  "filename"
+                  {
+                    _type = "lua-inline";
+                    expr = "path = 1";
+                  }
+                ]
+              ];
               lualine_x = [ "lsp_status" ];
               lualine_y = [ "progress" ];
               lualine_z = [ "location" ];
@@ -107,21 +115,6 @@
           telescope = {
             enable = true;
           };
-
-          luaConfigRC.telescope-treesitter-compat = ''
-            if vim.treesitter and vim.treesitter.language and vim.treesitter.language.get_buf_lang == nil then
-              vim.treesitter.language.get_buf_lang = function(bufnr)
-                bufnr = bufnr or vim.api.nvim_get_current_buf()
-
-                local filetype = vim.bo[bufnr].filetype
-                if filetype == nil or filetype == "" then
-                  return nil
-                end
-
-                return vim.treesitter.language.get_lang(filetype)
-              end
-            end
-          '';
 
           lsp = {
             enable = true;
