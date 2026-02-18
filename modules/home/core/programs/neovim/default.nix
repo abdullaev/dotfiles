@@ -80,6 +80,8 @@
 
           ui.fastaction.enable = true;
 
+          utility.smart-splits.enable = true;
+
           git = {
             enable = true;
             gitsigns = {
