@@ -37,27 +37,6 @@
             smartindent = true;
           };
 
-          highlight = {
-            DiagnosticUnderlineError = {
-              undercurl = true;
-            };
-            DiagnosticUnderlineWarn = {
-              undercurl = true;
-            };
-            DiagnosticUnderlineInfo = {
-              undercurl = true;
-            };
-            DiagnosticUnderlineHint = {
-              undercurl = true;
-            };
-            DiagnosticUnderlineOk = {
-              undercurl = true;
-            };
-            DiagnosticDeprecated = {
-              undercurl = true;
-            };
-          };
-
           ui.colorizer.enable = true;
 
           lazy.enable = true;
@@ -135,7 +114,7 @@
             nix = {
               enable = true;
               treesitter.enable = true;
-              lsp.servers = [ "nixd" ];
+              lsp.enable = true;
             };
           };
 
