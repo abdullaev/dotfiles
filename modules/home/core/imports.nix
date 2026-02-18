@@ -9,6 +9,7 @@
     btop
     bat
     delta
+    direnv
     neovim
     fastfetch
     codex
