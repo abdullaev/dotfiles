@@ -15,6 +15,12 @@
             shiftwidth = 2;
           };
 
+          theme = {
+            enable = true;
+            name = "catppuccin";
+            style = "mocha";
+          };
+
           undoFile.enable = true;
 
           clipboard = {
@@ -24,33 +30,20 @@
           };
 
           lazy.enable = true;
-
           autocomplete.blink-cmp.enable = true;
-
           binds.whichKey.enable = true;
 
           visuals.nvim-web-devicons.enable = true;
           visuals.tiny-devicons-auto-colors.enable = true;
+          statusline.lualine.enable = true;
+          telescope.enable = true;
 
           utility.direnv.enable = true;
-
-          utility.motion.flash-nvim.enable = true;
-
           utility.nix-develop.enable = true;
+          utility.motion.flash-nvim.enable = true;
+          utility.smart-splits.enable = true;
 
-          theme = {
-            enable = true;
-            name = "catppuccin";
-            style = "mocha";
-          };
-
-          statusline.lualine = {
-            enable = true;
-          };
-
-          telescope = {
-            enable = true;
-          };
+          ui.fastaction.enable = true;
 
           lsp = {
             enable = true;
@@ -62,25 +55,15 @@
             nvim-lint.enable = true;
           };
 
-          treesitter = {
+          treesitter.enable = true;
+
+          languages.nix = {
             enable = true;
+            treesitter.enable = true;
+            lsp.enable = true;
           };
 
-          languages = {
-            nix = {
-              enable = true;
-              treesitter.enable = true;
-              lsp.enable = true;
-            };
-          };
-
-          debugger = {
-            nvim-dap.enable = true;
-          };
-
-          ui.fastaction.enable = true;
-
-          utility.smart-splits.enable = true;
+          debugger.nvim-dap.enable = true;
 
           git = {
             enable = true;
