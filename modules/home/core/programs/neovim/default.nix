@@ -57,10 +57,18 @@
 
           treesitter.enable = true;
 
-          languages.nix = {
-            enable = true;
-            treesitter.enable = true;
-            lsp.enable = true;
+          languages = {
+            nix = {
+              enable = true;
+              treesitter.enable = true;
+              lsp.enable = true;
+            };
+            rust = {
+              enable = true;
+              treesitter.enable = true;
+              lsp.enable = true;
+              dap.enable = true;
+            };
           };
 
           debugger.nvim-dap.enable = true;
