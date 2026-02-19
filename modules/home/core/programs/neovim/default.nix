@@ -53,6 +53,9 @@
           diagnostics = {
             enable = true;
             nvim-lint.enable = true;
+            config = {
+              virtual_text.enable = true;
+            };
           };
 
           treesitter.enable = true;
