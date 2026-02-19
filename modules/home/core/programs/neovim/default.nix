@@ -1,6 +1,6 @@
 {
   flake.modules.homeManager.neovim =
-    { ... }:
+    { pkgs, ... }:
     {
       programs.nvf = {
         enable = true;
@@ -8,6 +8,10 @@
         settings.vim = {
           viAlias = true;
           vimAlias = true;
+
+          globals = {
+            netrw_banner = 0;
+          };
 
           options = {
             scrolloff = 8;
@@ -58,7 +62,11 @@
             };
           };
 
-          treesitter.enable = true;
+          treesitter = {
+            enable = true;
+
+            grammars = pkgs.vimPlugins.nvim-treesitter.allGrammars;
+          };
 
           languages = {
             nix = {
@@ -72,9 +80,22 @@
               lsp.enable = true;
               dap.enable = true;
             };
+            ts = {
+              enable = true;
+              treesitter.enable = true;
+              lsp.enable = true;
+            };
           };
 
           debugger.nvim-dap.enable = true;
+
+          luaConfigPost = ''
+            vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError" })
+            vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticError" })
+            vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo" })
+            vim.fn.sign_define("DapStopped", { text = "", texthl = "DiagnosticOk", linehl = "debugPC" })
+            vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticError" })
+          '';
 
           git = {
             enable = true;
