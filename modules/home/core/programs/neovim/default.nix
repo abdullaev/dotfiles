@@ -17,6 +17,7 @@
             scrolloff = 8;
             tabstop = 2;
             shiftwidth = 2;
+            cursorline = true;
           };
 
           theme = {
@@ -40,7 +41,14 @@
           visuals.nvim-web-devicons.enable = true;
           visuals.tiny-devicons-auto-colors.enable = true;
           statusline.lualine.enable = true;
-          telescope.enable = true;
+
+          telescope = {
+            enable = true;
+
+            setupOpts = {
+              defaults.color_devicons = true;
+            };
+          };
 
           utility.direnv.enable = true;
           utility.nix-develop.enable = true;
@@ -56,7 +64,6 @@
 
           diagnostics = {
             enable = true;
-            nvim-lint.enable = true;
             config = {
               virtual_text.enable = true;
             };
@@ -84,6 +91,7 @@
               enable = true;
               treesitter.enable = true;
               lsp.enable = true;
+              extraDiagnostics.enable = true;
             };
           };
 
