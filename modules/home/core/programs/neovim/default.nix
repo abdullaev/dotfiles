@@ -34,7 +34,6 @@
           autocomplete.blink-cmp.enable = true;
           binds.whichKey.enable = true;
 
-          visuals.nvim-web-devicons.enable = true;
           visuals.tiny-devicons-auto-colors.enable = true;
           statusline.lualine.enable = true;
 
@@ -49,6 +48,7 @@
               explorer = {
                 enabled = true;
                 replace_netrw = true;
+                trash = true;
               };
               picker.enabled = true;
             };
@@ -139,6 +139,12 @@
               Snacks.picker.git_log_file()
             end, { desc = "Git commits (file)" })
           '';
+
+          mini = {
+            basics.enable = true;
+            icons.enable = true;
+            notify.enable = true;
+          };
 
           git = {
             enable = true;
