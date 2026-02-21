@@ -67,7 +67,7 @@
                   {
                     "diff",
                     colored = true,
-                    symbols = { added = '+ ', modified = '~ ', removed = '- ' },
+                    symbols = { added = '+', modified = '~', removed = '-' },
                     separator = { left = "", right = "" },
                   }
                 ''
@@ -253,6 +253,9 @@
             basics = {
               enable = true;
             };
+            icons = {
+              enable = true;
+            };
           };
 
           lsp = {
@@ -303,8 +306,6 @@
               };
             };
           };
-
-          visuals.tiny-devicons-auto-colors.enable = true;
 
           luaConfigPost = ''
             vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError" })
