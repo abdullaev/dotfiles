@@ -174,7 +174,7 @@
 
                 icons = {
                   files = {
-                    dir_open = " ";
+                    dir_open = " ";
                   };
                 };
 
@@ -255,6 +255,17 @@
             };
             icons = {
               enable = true;
+
+              setupOpts = {
+                directory = {
+                  src = {
+                    glyph = "󰉋";
+                  };
+                  lib = {
+                    glyph = "󰉋";
+                  };
+                };
+              };
             };
           };
 

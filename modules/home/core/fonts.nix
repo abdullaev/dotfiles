@@ -10,6 +10,7 @@
         noto-fonts-cjk-sans
         noto-fonts-cjk-serif
         noto-fonts-color-emoji
+        nerd-fonts.symbols-only
         pragmata-pro
       ];
 
@@ -27,6 +28,7 @@
 
           monospace = [
             "PragmataPro Mono Liga"
+            "Symbols Nerd Font Mono"
           ];
 
           emoji = [
