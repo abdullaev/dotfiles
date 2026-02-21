@@ -7,7 +7,7 @@
       settings = {
         add_newline = false;
         palette = "catppuccin_mocha";
-        format = "$directory$git_branch$character";
+        format = "$directory$git_branch$nix_shell$character";
 
         line_break = {
           disabled = true;
@@ -26,14 +26,11 @@
           only_attached = false;
         };
 
-        status = {
-          format = " [$status]($style)";
-          style = "red";
-          disabled = false;
-        };
-
-        cmd_duration = {
-          format = "took [$duration]($style)";
+        nix_shell = {
+          impure_msg = "[impure](bold red)";
+          pure_msg = "[pure](bold green)";
+          unknown_msg = "[unknown](bold yellow)";
+          format = "via [ $state()](bold blue) ";
         };
 
         character = {
