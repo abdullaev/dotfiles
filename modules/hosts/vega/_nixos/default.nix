@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   pkgs,
   users,
@@ -12,8 +13,17 @@ let
 in
 {
   imports = [
+    inputs.disko.nixosModules.disko
+    ./disko.nix
     ./hardware-configuration.nix
     ../../../../secrets
+  ];
+
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 32768;
+    }
   ];
 
   users.users = lib.mapAttrs (_: user: {
