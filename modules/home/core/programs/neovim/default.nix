@@ -41,6 +41,100 @@
             };
           };
 
+          keymaps = [
+            {
+              mode = "n";
+              key = "<leader>e";
+              action = "function() Snacks.explorer() end";
+              lua = true;
+              desc = "Snacks Explorer";
+            }
+            {
+              mode = "n";
+              key = "<leader>ff";
+              action = "function() Snacks.picker.files() end";
+              lua = true;
+              desc = "Find files";
+            }
+            {
+              mode = "n";
+              key = "<leader>fg";
+              action = "function() Snacks.picker.grep() end";
+              lua = true;
+              desc = "Live grep";
+            }
+            {
+              mode = "n";
+              key = "<leader>fb";
+              action = "function() Snacks.picker.buffers() end";
+              lua = true;
+              desc = "Find buffers";
+            }
+            {
+              mode = "n";
+              key = "<leader>fh";
+              action = "function() Snacks.picker.help() end";
+              lua = true;
+              desc = "Help tags";
+            }
+            {
+              mode = "n";
+              key = "<leader>gl";
+              action = "function() Snacks.picker.git_log() end";
+              lua = true;
+              desc = "Git commits";
+            }
+            {
+              mode = "n";
+              key = "<leader>gL";
+              action = "function() Snacks.picker.git_log_line() end";
+              lua = true;
+              desc = "Git commits (line)";
+            }
+            {
+              mode = "n";
+              key = "<leader>gb";
+              action = "function() Snacks.picker.git_branches() end";
+              lua = true;
+              desc = "Git branches";
+            }
+            {
+              mode = "n";
+              key = "<leader>gd";
+              action = "function() Snacks.picker.git_diff() end";
+              lua = true;
+              desc = "Git diff hunks";
+            }
+            {
+              mode = "n";
+              key = "<leader>gD";
+              action = "function() Snacks.picker.git_diff({ staged = true }) end";
+              lua = true;
+              desc = "Git staged hunks";
+            }
+            {
+              mode = "n";
+              key = "<leader>gS";
+              action = "function() Snacks.picker.git_stash() end";
+              lua = true;
+              desc = "Git stash";
+            }
+            {
+              mode = "n";
+              key = "<leader>gf";
+              action = "function() Snacks.picker.git_log_file() end";
+              lua = true;
+              desc = "Git commits (file)";
+            }
+            {
+              mode = "n";
+              key = "<leader>go";
+              action = "function() MiniDiff.toggle_overlay() end";
+              lua = true;
+              desc = "Git hunk overlay";
+            }
+          ];
+
           statusline.lualine = {
             enable = true;
             activeSection = {
@@ -385,45 +479,6 @@
             vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo" })
             vim.fn.sign_define("DapStopped", { text = "", texthl = "DiagnosticOk", linehl = "debugPC" })
             vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticError" })
-            vim.keymap.set("n", "<leader>e", function()
-              Snacks.explorer()
-            end, { desc = "Snacks Explorer" })
-            vim.keymap.set("n", "<leader>ff", function()
-              Snacks.picker.files()
-            end, { desc = "Find files" })
-            vim.keymap.set("n", "<leader>fg", function()
-              Snacks.picker.grep()
-            end, { desc = "Live grep" })
-            vim.keymap.set("n", "<leader>fb", function()
-              Snacks.picker.buffers()
-            end, { desc = "Find buffers" })
-            vim.keymap.set("n", "<leader>fh", function()
-              Snacks.picker.help()
-            end, { desc = "Help tags" })
-            vim.keymap.set("n", "<leader>gl", function()
-              Snacks.picker.git_log()
-            end, { desc = "Git commits" })
-            vim.keymap.set("n", "<leader>gL", function()
-              Snacks.picker.git_log_line()
-            end, { desc = "Git commits (line)" })
-            vim.keymap.set("n", "<leader>gb", function()
-              Snacks.picker.git_branches()
-            end, { desc = "Git branches" })
-            vim.keymap.set("n", "<leader>gd", function()
-              Snacks.picker.git_diff()
-            end, { desc = "Git diff hunks" })
-            vim.keymap.set("n", "<leader>gD", function()
-              Snacks.picker.git_diff({ staged = true })
-            end, { desc = "Git staged hunks" })
-            vim.keymap.set("n", "<leader>gS", function()
-              Snacks.picker.git_stash()
-            end, { desc = "Git stash" })
-            vim.keymap.set("n", "<leader>gf", function()
-              Snacks.picker.git_log_file()
-            end, { desc = "Git commits (file)" })
-            vim.keymap.set("n", "<leader>go", function()
-              MiniDiff.toggle_overlay()
-            end, { desc = "Git hunk overlay" })
           '';
 
           git = {
