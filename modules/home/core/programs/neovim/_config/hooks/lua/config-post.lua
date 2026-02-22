@@ -1,0 +1,5 @@
+vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError" })
+vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticError" })
+vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo" })
+vim.fn.sign_define("DapStopped", { text = "", texthl = "DiagnosticOk", linehl = "debugPC" })
+vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticError" })
