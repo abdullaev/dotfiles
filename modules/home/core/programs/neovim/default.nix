@@ -49,7 +49,7 @@
           utility.motion.flash-nvim.enable = true;
           utility.smart-splits.enable = true;
 
-          luaConfigPost = builtins.readFile ./lua/lua-config-post.lua;
+          luaConfigPost = builtins.readFile ./_config/lua/lua-config-post.lua;
         }
 
         (import ./_config/keymaps.nix)
