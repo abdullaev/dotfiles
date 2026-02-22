@@ -10,6 +10,17 @@
       picker = {
         enabled = true;
 
+        sources = {
+          explorer = {
+            hidden = true;
+            layout = {
+              layout = {
+                position = "right";
+              };
+            };
+          };
+        };
+
         icons = {
           files = {
             dir_open = " ";

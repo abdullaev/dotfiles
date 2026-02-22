@@ -48,6 +48,8 @@
           utility.nix-develop.enable = true;
           utility.motion.flash-nvim.enable = true;
           utility.smart-splits.enable = true;
+
+          luaConfigPost = builtins.readFile ./lua/lua-config-post.lua;
         }
 
         (import ./_config/keymaps.nix)
@@ -57,7 +59,6 @@
         (import ./_config/snacks.nix)
         (import ./_config/lualine.nix)
         (import ./_config/noice.nix)
-        (import ./_config/hooks)
       ];
     in
     {
