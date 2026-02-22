@@ -77,36 +77,15 @@
               x = [
                 ''
                   {
-                    function()
-                      local buf_ft = vim.bo.filetype
-                      local excluded_buf_ft = { toggleterm = true, NvimTree = true, ["neo-tree"] = true, TelescopePrompt = true }
-
-                      if excluded_buf_ft[buf_ft] then
-                        return ""
-                      end
-
-                      local bufnr = vim.api.nvim_get_current_buf()
-                      local clients = vim.lsp.get_clients({ bufnr = bufnr })
-
-                      if vim.tbl_isempty(clients) then
-                        return "No Active LSP"
-                      end
-
-                      local active_clients = {}
-                      for _, client in ipairs(clients) do
-                        table.insert(active_clients, client.name)
-                      end
-
-                      return table.concat(active_clients, ", ")
-                    end,
+                    "lsp_status",
                     icon = '',
                     separator = { left = "", right = "" },
+                    show_name = true
                   }
                 ''
                 ''
                   {
                     "diagnostics",
-                    sources = { 'nvim_lsp', 'nvim_diagnostic', 'nvim_diagnostic', 'vim_lsp', 'coc' },
                     symbols = { error = '󰅙 ', warn = ' ', info = ' ', hint = '󰌵 ' },
                     colored = true,
                     update_in_insert = false,
@@ -269,6 +248,9 @@
                 };
               };
             };
+            diff = {
+              enable = true;
+            };
           };
 
           lsp = {
@@ -294,6 +276,12 @@
               enable = true;
               treesitter.enable = true;
               lsp.enable = true;
+            };
+            clang = {
+              enable = true;
+              treesitter.enable = true;
+              lsp.enable = true;
+              dap.enable = true;
             };
             css = {
               enable = true;
@@ -382,8 +370,6 @@
             };
           };
 
-          debugger.nvim-dap.enable = true;
-
           ui.noice = {
             enable = true;
             setupOpts = {
@@ -414,9 +400,6 @@
             vim.keymap.set("n", "<leader>fh", function()
               Snacks.picker.help()
             end, { desc = "Help tags" })
-            vim.keymap.set("n", "<leader>gs", function()
-              Snacks.picker.git_status()
-            end, { desc = "Git status" })
             vim.keymap.set("n", "<leader>gl", function()
               Snacks.picker.git_log()
             end, { desc = "Git commits" })
@@ -429,37 +412,26 @@
             vim.keymap.set("n", "<leader>gd", function()
               Snacks.picker.git_diff()
             end, { desc = "Git diff hunks" })
+            vim.keymap.set("n", "<leader>gD", function()
+              Snacks.picker.git_diff({ staged = true })
+            end, { desc = "Git staged hunks" })
             vim.keymap.set("n", "<leader>gS", function()
               Snacks.picker.git_stash()
             end, { desc = "Git stash" })
             vim.keymap.set("n", "<leader>gf", function()
               Snacks.picker.git_log_file()
             end, { desc = "Git commits (file)" })
+            vim.keymap.set("n", "<leader>go", function()
+              MiniDiff.toggle_overlay()
+            end, { desc = "Git hunk overlay" })
           '';
 
           git = {
             enable = true;
-            gitsigns = {
-              enable = true;
-              setupOpts = {
-                signs = {
-                  add.text = "▌";
-                  change.text = "▌";
-                  delete.text = "▌";
-                  topdelete.text = "▌";
-                  changedelete.text = "▌";
-                  untracked.text = "▌";
-                };
-                signs_staged = {
-                  add.text = "▌";
-                  change.text = "▌";
-                  delete.text = "▌";
-                  topdelete.text = "▌";
-                  changedelete.text = "▌";
-                  untracked.text = "▌";
-                };
-              };
-            };
+            neogit.enable = true;
+            git-conflict.enable = true;
+            gitsigns.enable = false;
+            hunk-nvim.enable = false;
           };
         };
       };
