@@ -2,6 +2,13 @@
   flake.modules.homeManager.plasma =
     { pkgs, ... }:
     {
+      home.packages = [
+        (pkgs.catppuccin-kde.override {
+          flavour = [ "mocha" ];
+          accents = [ "lavender" ];
+        })
+      ];
+
       programs.plasma = {
         enable = true;
 

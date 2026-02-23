@@ -6,8 +6,7 @@
     bluetooth
     steam
     firefox
-    plasma6
-    sddm
+    plasma
     vpn
   ];
 }

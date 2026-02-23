@@ -38,6 +38,7 @@ in
             inputs.plasma-manager.homeModules.plasma-manager
           ];
           backupFileExtension = "backup";
+          overwriteBackup = true;
           extraSpecialArgs = {
             inherit
               inputs
