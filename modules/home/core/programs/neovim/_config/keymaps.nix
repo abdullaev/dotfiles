@@ -387,7 +387,7 @@
       key = "<leader>gt";
       action = "function() MiniDiff.toggle_overlay() end";
       lua = true;
-      desc = "Git hunk overlay";
+      desc = "Git hunk toggle overlay";
     }
 
     # Custom

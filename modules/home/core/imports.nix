@@ -21,5 +21,6 @@
     fd
     nh
     ripgrep
+    gh
   ];
 }
