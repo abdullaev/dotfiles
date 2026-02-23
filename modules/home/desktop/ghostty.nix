@@ -10,7 +10,6 @@
         font-family = "monospace";
         font-size = 13;
         app-notifications = false;
-        keybind = "global:ctrl+alt+q=toggle_quick_terminal";
       };
     };
   };

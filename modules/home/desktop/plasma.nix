@@ -21,6 +21,22 @@
             family = "monospace";
             pointSize = 10;
           };
+          small = {
+            family = "sans-serif";
+            pointSize = 8;
+          };
+          toolbar = {
+            family = "sans-serif";
+            pointSize = 10;
+          };
+          menu = {
+            family = "sans-serif";
+            pointSize = 10;
+          };
+          windowTitle = {
+            family = "sans-serif";
+            pointSize = 10;
+          };
         };
 
         workspace = {
@@ -32,6 +48,12 @@
           windowDecorations = {
             library = "org.kde.breeze";
             theme = "Breeze";
+          };
+        };
+
+        kscreenlocker = {
+          appearance = {
+            wallpaper = ../../../images/wallpaper.png;
           };
         };
 
@@ -72,6 +94,18 @@
             longitude = "37.6176";
           };
           temperature.night = 4000;
+        };
+
+        startup.startupScript."ghostty-daemon" = {
+          runAlways = true;
+          priority = 8;
+          text = ''
+            ${pkgs.ghostty}/bin/ghostty \
+              --gtk-single-instance=true \
+              --initial-window=false \
+              --quit-after-last-window-closed=false \
+              >/dev/null 2>&1 &
+          '';
         };
       };
 
