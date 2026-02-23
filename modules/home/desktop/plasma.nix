@@ -152,7 +152,7 @@
             variant = "mocha";
             accents = [ "lavender" ];
           };
-          name = "catppuccin-mocha-lavender-standard+default";
+          name = "catppuccin-mocha-lavender-standard";
         };
         iconTheme = {
           name = "breeze";

@@ -5,11 +5,14 @@
       enableZshIntegration = true;
       settings = {
         theme = "Catppuccin Mocha";
-        window-theme = "ghostty";
         adjust-cursor-thickness = 2;
         font-family = "monospace";
         font-size = 13;
         app-notifications = false;
+        maximize = true;
+        window-width = 200;
+        window-height = 48;
+        click-repeat-interval = 0;
       };
     };
   };
