@@ -74,25 +74,13 @@
       z = [
         ''
           {
-            "progress",
-            separator = { left = "", right = "" }
-          }
-        ''
-        ''
-          {
             "location",
             separator = { left = "", right = "" }
           }
         ''
         ''
           {
-            "fileformat",
-            color = { fg = 'black' },
-            symbols = {
-              unix = '',
-              dos = '',
-              mac = '',
-            },
+            "progress",
             separator = { left = "", right = "" }
           }
         ''
