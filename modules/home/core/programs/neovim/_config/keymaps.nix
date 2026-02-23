@@ -148,7 +148,6 @@
       lua = true;
       desc = "GitHub Pull Requests (all)";
     }
-
     {
       mode = "n";
       key = "<leader>sb";
