@@ -37,6 +37,11 @@
           {
             "lsp_status",
             icon = '',
+            symbols = {
+              spinner = {},
+              done = "",
+              separator = ', ',
+            },
             separator = { left = "", right = "" },
             show_name = true
           }

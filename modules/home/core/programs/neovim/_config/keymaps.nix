@@ -94,7 +94,7 @@
     {
       mode = "n";
       key = "<Space>q";
-      action = "<cmd>qa<CR>";
+      action = "<cmd>qa!<CR>";
       desc = "Quit all";
     }
     {
