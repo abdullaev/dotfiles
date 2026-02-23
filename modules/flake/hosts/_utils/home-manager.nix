@@ -27,6 +27,7 @@ in
       {
         users,
         hostName,
+        images,
         ...
       }:
       {
@@ -36,6 +37,7 @@ in
           sharedModules = [
             inputs.nvf.homeManagerModules.default
             inputs.plasma-manager.homeModules.plasma-manager
+            ../../../shared/images.nix
           ];
           backupFileExtension = "backup";
           overwriteBackup = true;
@@ -44,6 +46,7 @@ in
               inputs
               users
               hostName
+              images
               ;
           };
           users = homeManagerUsers;

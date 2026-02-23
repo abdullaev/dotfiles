@@ -1,6 +1,10 @@
 {
   flake.modules.nixos.plasma =
-    { pkgs, ... }:
+    {
+      config,
+      pkgs,
+      ...
+    }:
     {
       services.desktopManager.plasma6.enable = true;
 
@@ -13,7 +17,7 @@
       environment.systemPackages = [
         (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
           [General]
-          background = ${../../../images/wallpaper.png}
+          background = ${config.images.wallpaper}
         '')
       ];
     };

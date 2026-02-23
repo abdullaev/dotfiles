@@ -85,6 +85,13 @@ in
       default = [ ];
     };
 
+    images = mkOption {
+      type = with types; attrsOf path;
+      default = {
+        wallpaper = ../../../../images/wallpaper.png;
+      };
+    };
+
     extraSpecialArgs = mkOption {
       type = with types; attrsOf anything;
       default = { };
@@ -103,6 +110,9 @@ in
   config.specialArgs = {
     inherit inputs;
     hostName = name;
-    inherit (config) users;
+    inherit (config)
+      users
+      images
+      ;
   } // config.extraSpecialArgs;
 }
