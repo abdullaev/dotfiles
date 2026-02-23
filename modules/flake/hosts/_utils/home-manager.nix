@@ -33,7 +33,10 @@ in
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          sharedModules = [ inputs.nvf.homeManagerModules.default ];
+          sharedModules = [
+            inputs.nvf.homeManagerModules.default
+            inputs.plasma-manager.homeModules.plasma-manager
+          ];
           backupFileExtension = "backup";
           extraSpecialArgs = {
             inherit
