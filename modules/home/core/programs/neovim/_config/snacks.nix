@@ -26,6 +26,12 @@
             style = "fancy";
           };
         };
+
+        icons = {
+          git = {
+            enabled = false;
+          };
+        };
       };
       notifier = {
         enabled = true;
