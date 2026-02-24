@@ -15,6 +15,7 @@
             enable = true;
             name = "catppuccin";
             style = "mocha";
+            extraConfig = builtins.readFile ./_config/lua/catppuccin-extra-config.lua;
           };
 
           options = {
@@ -22,7 +23,6 @@
             tabstop = 2;
             shiftwidth = 2;
             cursorline = true;
-            showbreak = "↪";
           };
 
           undoFile.enable = true;
@@ -52,13 +52,14 @@
           luaConfigPost = builtins.readFile ./_config/lua/lua-config-post.lua;
         }
 
-        (import ./_config/keymaps.nix)
         (import ./_config/lang.nix { inherit pkgs; })
         (import ./_config/git.nix)
         (import ./_config/mini.nix)
         (import ./_config/snacks.nix)
         (import ./_config/lualine.nix)
         (import ./_config/noice.nix)
+        (import ./_config/keymaps.nix)
+        (import ./_config/highlight.nix)
       ];
     in
     {

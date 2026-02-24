@@ -29,7 +29,7 @@
 
         previewers = {
           diff = {
-            style = "syntax";
+            style = "fancy";
           };
         };
       };
