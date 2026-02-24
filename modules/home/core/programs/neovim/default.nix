@@ -37,13 +37,6 @@
 
           autocomplete.blink-cmp.enable = true;
 
-          binds.whichKey = {
-            enable = true;
-            setupOpts = {
-              preset = "helix";
-            };
-          };
-
           utility.direnv.enable = true;
           utility.nix-develop.enable = true;
           utility.motion.flash-nvim.enable = true;
@@ -58,6 +51,7 @@
         (import ./_config/snacks.nix)
         (import ./_config/lualine.nix)
         (import ./_config/noice.nix)
+        (import ./_config/which-key.nix)
         (import ./_config/keymaps.nix)
         (import ./_config/highlight.nix)
       ];

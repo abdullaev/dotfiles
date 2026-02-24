@@ -7,7 +7,13 @@
         theme = "Catppuccin Mocha";
         adjust-cursor-thickness = 2;
         font-family = "monospace";
-        font-size = 13;
+        font-codepoint-map = [
+          "U+E000-U+F8FF=Symbols Nerd Font"
+          "U+F0000-U+FFFFD=Symbols Nerd Font"
+          "U+100000-U+10FFFD=Symbols Nerd Font"
+        ];
+        adjust-icon-height = "-50%";
+        font-size = 14;
         app-notifications = false;
         maximize = true;
         window-width = 200;

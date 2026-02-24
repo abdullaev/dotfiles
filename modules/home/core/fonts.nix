@@ -28,7 +28,6 @@
 
           monospace = [
             "PragmataPro Mono Liga"
-            "Symbols Nerd Font Mono"
           ];
 
           emoji = [

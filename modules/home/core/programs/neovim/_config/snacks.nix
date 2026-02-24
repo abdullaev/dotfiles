@@ -21,12 +21,6 @@
           };
         };
 
-        icons = {
-          files = {
-            dir_open = " ";
-          };
-        };
-
         previewers = {
           diff = {
             style = "fancy";
@@ -40,31 +34,31 @@
         preset = {
           keys = [
             {
-              icon = " ";
+              icon = "";
               key = "f";
               desc = "Find File";
               action = ":lua Snacks.dashboard.pick('files')";
             }
             {
-              icon = " ";
+              icon = "";
               key = "n";
               desc = "New File";
               action = ":ene | startinsert";
             }
             {
-              icon = " ";
+              icon = "";
               key = "g";
               desc = "Find Text";
               action = ":lua Snacks.dashboard.pick('live_grep')";
             }
             {
-              icon = " ";
+              icon = "";
               key = "r";
               desc = "Recent Files";
               action = ":lua Snacks.dashboard.pick('oldfiles')";
             }
             {
-              icon = " ";
+              icon = "";
               key = "q";
               desc = "Quit";
               action = ":qa";
@@ -80,14 +74,14 @@
             padding = 1;
           }
           {
-            icon = " ";
+            icon = "";
             title = "Recent Files";
             section = "recent_files";
             indent = 1;
             padding = 1;
           }
           {
-            icon = " ";
+            icon = "";
             title = "Projects";
             section = "projects";
             indent = 1;

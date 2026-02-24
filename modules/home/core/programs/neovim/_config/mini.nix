@@ -5,17 +5,6 @@
     };
     icons = {
       enable = true;
-
-      setupOpts = {
-        directory = {
-          src = {
-            glyph = "󰉋";
-          };
-          lib = {
-            glyph = "󰉋";
-          };
-        };
-      };
     };
     diff = {
       enable = true;
