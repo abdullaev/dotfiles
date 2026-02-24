@@ -1,7 +1,10 @@
 {
-  flake.modules.nixos.packages = { pkgs, ... }: {
-    environment.systemPackages = with pkgs; [
-      wget
-    ];
-  };
+  flake.modules.nixos.packages =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = with pkgs; [
+        wget
+        sqlite
+      ];
+    };
 }

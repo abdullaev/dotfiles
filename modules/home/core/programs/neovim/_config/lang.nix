@@ -14,7 +14,7 @@
 
   treesitter = {
     enable = true;
-
+    autotagHtml = true;
     grammars = pkgs.vimPlugins.nvim-treesitter.allGrammars;
   };
 

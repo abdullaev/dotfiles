@@ -9,5 +9,8 @@
     diff = {
       enable = true;
     };
+    hipatterns = {
+      enable = false;
+    };
   };
 }
