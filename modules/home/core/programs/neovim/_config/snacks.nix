@@ -2,6 +2,15 @@
   utility.snacks-nvim = {
     enable = true;
     setupOpts = {
+      bigfile = {
+        enabled = true;
+      };
+      quickfile = {
+        enabled = true;
+      };
+      notifier = {
+        enabled = true;
+      };
       explorer = {
         enabled = true;
         replace_netrw = true;
@@ -33,8 +42,17 @@
           };
         };
       };
-      notifier = {
-        enabled = true;
+      words = {
+        debounce = 50;
+        notify_jump = false;
+        notify_end = true;
+        foldopen = true;
+        jumplist = true;
+        modes = [
+          "n"
+          "i"
+          "c"
+        ];
       };
       dashboard = {
         preset = {

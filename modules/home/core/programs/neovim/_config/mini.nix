@@ -9,8 +9,11 @@
     diff = {
       enable = true;
     };
+    pairs = {
+      enable = true;
+    };
     hipatterns = {
-      enable = false;
+      enable = true;
     };
   };
 }
