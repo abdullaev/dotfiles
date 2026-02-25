@@ -1,4 +1,5 @@
-{pkgs}: {
+{ pkgs }:
+{
   autocomplete.blink-cmp.enable = true;
   autocomplete.enableSharedCmpSources = true;
 
@@ -97,7 +98,7 @@
       treesitter.enable = true;
       lsp.enable = true;
       extraDiagnostics.enable = true;
-      format.enable = true;
+      format.enable = false;
     };
     ocaml = {
       enable = true;
