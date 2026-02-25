@@ -408,8 +408,14 @@
     {
       mode = "n";
       key = "<Space>q";
-      action = "<cmd>qa!<CR>";
+      action = "<cmd>qa<CR>";
       desc = "Quit all";
+    }
+    {
+      mode = "n";
+      key = "<Space>k";
+      action = "<cmd>bd<CR>";
+      desc = "Delete buffer";
     }
     {
       mode = "n";

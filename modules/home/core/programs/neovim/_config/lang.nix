@@ -102,6 +102,7 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      format.enable = true;
       extraDiagnostics.enable = true;
     };
     yaml = {

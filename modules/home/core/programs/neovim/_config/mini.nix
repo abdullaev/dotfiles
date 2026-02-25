@@ -12,8 +12,5 @@
     pairs = {
       enable = true;
     };
-    hipatterns = {
-      enable = true;
-    };
   };
 }

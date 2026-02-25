@@ -21,6 +21,10 @@
         window-width = 200;
         window-height = 48;
         click-repeat-interval = 0;
+
+        keybind = [
+          "ctrl+shift+z=toggle_split_zoom"
+        ];
       };
     };
   };

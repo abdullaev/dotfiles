@@ -14,7 +14,7 @@
           theme = {
             enable = true;
             name = "catppuccin";
-            style = "mocha";
+            style = "auto";
             extraConfig = builtins.readFile ./_config/lua/catppuccin-extra-config.lua;
           };
 
@@ -22,6 +22,7 @@
             scrolloff = 8;
             tabstop = 2;
             shiftwidth = 2;
+            autoindent = true;
             cursorline = true;
           };
 
@@ -36,6 +37,7 @@
           lazy.enable = true;
 
           autocomplete.blink-cmp.enable = true;
+          autocomplete.enableSharedCmpSources = true;
 
           utility.direnv.enable = true;
           utility.nix-develop.enable = true;
