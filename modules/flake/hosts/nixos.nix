@@ -40,15 +40,14 @@ in
       };
   };
 
-  config.flake.nixosConfigurations =
-    lib.mapAttrs (
-      _: options:
-      inputs.nixpkgs.lib.nixosSystem {
-        inherit (options)
-          system
-          modules
-          specialArgs
-          ;
-      }
-    ) config.nixosHosts;
+  config.flake.nixosConfigurations = lib.mapAttrs (
+    _: options:
+    inputs.nixpkgs.lib.nixosSystem {
+      inherit (options)
+        system
+        modules
+        specialArgs
+        ;
+    }
+  ) config.nixosHosts;
 }
