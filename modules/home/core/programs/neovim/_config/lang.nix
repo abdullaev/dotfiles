@@ -1,5 +1,7 @@
-{ pkgs }:
-{
+{pkgs}: {
+  autocomplete.blink-cmp.enable = true;
+  autocomplete.enableSharedCmpSources = true;
+
   lsp = {
     enable = true;
     formatOnSave = true;
@@ -14,15 +16,22 @@
 
   treesitter = {
     enable = true;
-    autotagHtml = true;
     grammars = pkgs.vimPlugins.nvim-treesitter.allGrammars;
   };
 
   languages = {
+    astro = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      extraDiagnostics.enable = true;
+      format.enable = true;
+    };
     bash = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      format.enable = true;
     };
     clang = {
       enable = true;
@@ -34,11 +43,13 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      format.enable = true;
     };
     elixir = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      format.enable = true;
     };
     go = {
       enable = true;
@@ -55,11 +66,13 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      format.enable = true;
     };
     json = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      format.enable = true;
     };
     just = {
       enable = true;
@@ -70,16 +83,33 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      extraDiagnostics.enable = true;
+      format.enable = true;
     };
     markdown = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      extensions.markview-nvim.enable = true;
     };
     nix = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      extraDiagnostics.enable = true;
+      format.enable = true;
+    };
+    ocaml = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      format.enable = true;
+    };
+    python = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      format.enable = true;
     };
     rust = {
       enable = true;
@@ -91,12 +121,15 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      extraDiagnostics.enable = true;
+      format.enable = true;
     };
     svelte = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
       extraDiagnostics.enable = true;
+      format.enable = true;
     };
     ts = {
       enable = true;
@@ -104,6 +137,12 @@
       lsp.enable = true;
       format.enable = true;
       extraDiagnostics.enable = true;
+    };
+    typst = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      format.enable = true;
     };
     yaml = {
       enable = true;
