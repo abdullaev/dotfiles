@@ -4,6 +4,7 @@
     stateVersion
     defaults
     zsh
+    fish
     zellij
     starship
     git

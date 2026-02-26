@@ -9,6 +9,7 @@ let
   shellPackages = {
     bash = pkgs.bashInteractive;
     zsh = pkgs.zsh;
+    fish = pkgs.fish;
   };
 in
 {
@@ -36,4 +37,5 @@ in
   }) users;
 
   programs.zsh.enable = lib.any (user: user.shell == "zsh") (lib.attrValues users);
+  programs.fish.enable = lib.any (user: user.shell == "fish") (lib.attrValues users);
 }

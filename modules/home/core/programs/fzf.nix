@@ -3,6 +3,7 @@
     programs.fzf = {
       enable = true;
       enableZshIntegration = true;
+      enableFishIntegration = true;
       colors = {
         "bg+" = "#313244";
         "fg" = "#cdd6f4";

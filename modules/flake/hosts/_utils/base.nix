@@ -46,6 +46,7 @@ in
                     enum [
                       "bash"
                       "zsh"
+                      "fish"
                     ];
                   default = "zsh";
                 };

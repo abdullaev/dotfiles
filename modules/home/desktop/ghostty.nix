@@ -3,6 +3,7 @@
     programs.ghostty = {
       enable = true;
       enableZshIntegration = true;
+      enableFishIntegration = true;
       settings = {
         theme = "Catppuccin Mocha";
         adjust-cursor-thickness = 2;

@@ -6,6 +6,7 @@
     users.sqxt = {
       fullName = "Amir Abdullaev";
       email = "me@sqxt.dev";
+      shell = "fish";
       groups = [
         "networkmanager"
         "wheel"
