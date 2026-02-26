@@ -84,14 +84,12 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      extraDiagnostics.enable = true;
       format.enable = true;
     };
     markdown = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      extensions.markview-nvim.enable = true;
     };
     nix = {
       enable = true;

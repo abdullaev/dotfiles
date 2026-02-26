@@ -4,6 +4,9 @@
     {
       programs.fish = {
         enable = user.shell == "fish";
+        interactiveShellInit = ''
+          set -g fish_greeting
+        '';
       };
     };
 }

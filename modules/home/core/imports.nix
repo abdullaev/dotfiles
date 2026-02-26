@@ -23,5 +23,6 @@
     nh
     ripgrep
     gh
+    jq
   ];
 }
