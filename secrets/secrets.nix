@@ -14,4 +14,7 @@ in
   "rs-awg2-lithuania.conf.age".publicKeys = users ++ systems;
   "rs-awg2-netherlands.conf.age".publicKeys = users ++ systems;
   "rs-awg2-kazakhstan.conf.age".publicKeys = users ++ systems;
+  "awg-estonia.conf.age".publicKeys = users ++ systems;
+  "awg-poland.conf.age".publicKeys = users ++ systems;
+  "awg-switzerland.conf.age".publicKeys = users ++ systems;
 }

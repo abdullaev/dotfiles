@@ -8,5 +8,6 @@
     firefox
     plasma
     vpn
+    fonts
   ];
 }

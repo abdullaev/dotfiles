@@ -5,7 +5,6 @@
     defaults
     zsh
     fish
-    zellij
     starship
     git
     btop
