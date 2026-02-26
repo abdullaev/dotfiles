@@ -7,5 +7,6 @@
     ghostty
     bitwarden
     telegram
+    qbittorrent
   ];
 }
