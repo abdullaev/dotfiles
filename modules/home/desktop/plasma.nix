@@ -95,7 +95,6 @@
                     iconSpacing = "medium";
                   };
                   launchers = [
-                    "applications:org.kde.dolphin.desktop"
                     "applications:firefox.desktop"
                     "applications:com.mitchellh.ghostty.desktop"
                     "applications:org.telegram.desktop.desktop"

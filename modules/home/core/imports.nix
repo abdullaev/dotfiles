@@ -4,6 +4,7 @@
     stateVersion
     defaults
     zsh
+    zellij
     starship
     git
     btop
@@ -12,7 +13,6 @@
     direnv
     neovim
     fastfetch
-    codex
     opencode
     eza
     fonts
