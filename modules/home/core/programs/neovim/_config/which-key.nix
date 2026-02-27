@@ -1,12 +1,11 @@
 {
 
   binds.whichKey = {
-
     enable = true;
     setupOpts = {
       preset = "helix";
       icons = {
-        separator = "";
+        separator = " ";
       };
       show_help = false;
       show_keys = false;

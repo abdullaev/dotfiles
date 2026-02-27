@@ -38,7 +38,18 @@
 
         icons = {
           git = {
-            enabled = false;
+            staged = "";
+            added = "";
+            deleted = "󰚃";
+            ignored = "";
+            modified = "";
+            untracked = "";
+          };
+          diagnostics = {
+            Error = " ";
+            Warn = " ";
+            Hint = "󰌵 ";
+            Info = " ";
           };
         };
       };
