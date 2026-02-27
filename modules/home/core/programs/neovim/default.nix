@@ -36,6 +36,8 @@
 
           lazy.enable = true;
 
+          # binds.hardtime-nvim.enable = true;
+
           utility = {
             direnv.enable = true;
             nix-develop.enable = true;
@@ -52,6 +54,7 @@
         (import ./_config/snacks.nix)
         (import ./_config/lualine.nix)
         (import ./_config/noice.nix)
+        (import ./_config/codediff.nix { inherit pkgs; })
         (import ./_config/which-key.nix)
         (import ./_config/keymaps.nix)
         (import ./_config/highlight.nix)
