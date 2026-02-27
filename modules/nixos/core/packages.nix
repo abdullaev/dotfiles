@@ -1,10 +1,10 @@
 {
   flake.modules.nixos.packages =
-    { pkgs, ... }:
+    { pkgs, inputs, ... }:
     {
       environment.systemPackages = with pkgs; [
         wget
-        sqlite
+        inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };
 }
