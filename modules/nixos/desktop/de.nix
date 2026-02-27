@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktopBase = {
+  flake.modules.nixos.de = {
     services.xserver.enable = true;
 
     services.pulseaudio.enable = false;

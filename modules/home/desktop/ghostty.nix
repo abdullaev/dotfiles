@@ -19,8 +19,8 @@
         font-size = 14;
         app-notifications = false;
         maximize = true;
-        window-width = 200;
-        window-height = 48;
+        window-width = 162;
+        window-height = 49;
         click-repeat-interval = 0;
 
         keybind = [

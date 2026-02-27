@@ -15,7 +15,6 @@
     fastfetch
     opencode
     eza
-    fonts
     zoxide
     fzf
     fd
