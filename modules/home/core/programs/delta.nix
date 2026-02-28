@@ -21,7 +21,6 @@
       };
       programs.git = {
         settings = {
-          init.defaultBranch = "main";
           delta.features = "catppuccin-mocha";
         };
         includes = [
