@@ -4,7 +4,6 @@
     stateVersion
     bootloader
     nix
-    packages
     networking
     locale
     openssh

@@ -2,7 +2,7 @@
 {
   flake.modules.homeManager.core.imports = with config.flake.modules.homeManager; [
     stateVersion
-    defaults
+    base
     zsh
     fish
     starship

@@ -8,6 +8,12 @@
       quickfile = {
         enabled = true;
       };
+      input = {
+        enabled = true;
+      };
+      terminal = {
+        enabled = true;
+      };
       notifier = {
         enabled = true;
       };

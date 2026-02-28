@@ -2,6 +2,18 @@
   keymaps = [
     # Snacks
     {
+      mode = [
+        "n"
+        "t"
+        "i"
+        "x"
+      ];
+      key = "<C-`>";
+      action = "function() Snacks.terminal.toggle() end";
+      lua = true;
+      desc = "Terminal Toggle";
+    }
+    {
       mode = "n";
       key = "<leader>,";
       action = "function() Snacks.picker.buffers() end";
@@ -383,14 +395,14 @@
     {
       mode = "n";
       key = "]w";
-      action = "function() Snacks.words.jump(vim.v.count1, true) end";
+      action = "function() Snacks.words.jump(vim.v.count1) end";
       lua = true;
       desc = "Next Reference";
     }
     {
       mode = "n";
       key = "[w";
-      action = "function() Snacks.words.jump(-vim.v.count1, true) end";
+      action = "function() Snacks.words.jump(-vim.v.count1) end";
       lua = true;
       desc = "Previous Reference";
     }
