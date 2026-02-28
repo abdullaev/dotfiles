@@ -22,6 +22,7 @@
             "U+100000-U+10FFFD=Symbols Nerd Font"
 
             "U+2705=emoji"
+            "U+274C=emoji"
           ];
           adjust-icon-height = "-50%";
           font-size = 14;
