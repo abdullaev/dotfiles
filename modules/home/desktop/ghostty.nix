@@ -1,33 +1,48 @@
 {
-  flake.modules.homeManager.ghostty = {
-    programs.ghostty = {
-      enable = true;
-      enableZshIntegration = true;
-      enableFishIntegration = true;
-      settings = {
-        adjust-cursor-thickness = 2;
-        font-family = "monospace";
-        font-codepoint-map = [
-          "U+E000-U+F8FF=Symbols Nerd Font"
-          "U+F0000-U+FFFFD=Symbols Nerd Font"
-          "U+100000-U+10FFFD=Symbols Nerd Font"
-
-          "U+2705=emoji"
-        ];
-        adjust-icon-height = "-50%";
-        font-size = 14;
-        app-notifications = false;
-        maximize = true;
-        window-width = 180;
-        window-height = 48;
-        click-repeat-interval = 0;
-
-        keybind = [
-          "ctrl+shift+z=toggle_split_zoom"
-        ];
+  flake.modules.homeManager.ghostty =
+    { pkgs, ... }:
+    {
+      home.file.".config/ghostty/shaders".source = pkgs.fetchFromGitHub {
+        owner = "sahaj-b";
+        repo = "ghostty-cursor-shaders";
+        rev = "4faa83e4b9306750fc8de64b38c6f53c57862db8";
+        hash = "sha256-ruhEqXnWRCYdX5mRczpY3rj1DTdxyY3BoN9pdlDOKrE=";
       };
-    };
 
-    catppuccin.ghostty.enable = true;
-  };
+      programs.ghostty = {
+        enable = true;
+        enableZshIntegration = true;
+        enableFishIntegration = true;
+        settings = {
+          adjust-cursor-thickness = 2;
+          font-family = "monospace";
+          font-codepoint-map = [
+            "U+E000-U+F8FF=Symbols Nerd Font"
+            "U+F0000-U+FFFFD=Symbols Nerd Font"
+            "U+100000-U+10FFFD=Symbols Nerd Font"
+
+            "U+2705=emoji"
+          ];
+          adjust-icon-height = "-50%";
+          font-size = 14;
+          app-notifications = false;
+          maximize = true;
+          window-width = 180;
+          window-height = 48;
+          click-repeat-interval = 0;
+
+          keybind = [
+            "ctrl+shift+z=toggle_split_zoom"
+          ];
+
+          custom-shader-animation = "always";
+          custom-shader = [
+            "shaders/cursor_warp.glsl"
+            "shaders/ripple_cursor.glsl"
+          ];
+        };
+      };
+
+      catppuccin.ghostty.enable = true;
+    };
 }
