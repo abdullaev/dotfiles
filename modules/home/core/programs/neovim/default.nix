@@ -42,7 +42,6 @@
             direnv.enable = true;
             nix-develop.enable = true;
             motion.flash-nvim.enable = true;
-            smart-splits.enable = true;
           };
 
           luaConfigPost = builtins.readFile ./_config/lua/lua-config-post.lua;

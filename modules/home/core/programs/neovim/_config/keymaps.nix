@@ -3,6 +3,13 @@
     # Snacks
     {
       mode = "n";
+      key = "<leader><leader>";
+      action = "function() Snacks.picker.smart() end";
+      lua = true;
+      desc = "Smart Find Files";
+    }
+    {
+      mode = "n";
       key = "<leader>,";
       action = "function() Snacks.picker.buffers() end";
       lua = true;
@@ -490,19 +497,35 @@
       desc = "Sidekick Prompt";
     }
 
-    # Custom
+    # Save
     {
       mode = "n";
-      key = "<Space>q";
+      key = "<Space>ww";
+      action = "<cmd>w<CR>";
+      desc = "Save";
+    }
+    {
+      mode = "n";
+      key = "<Space>wa";
+      action = "<cmd>wa<CR>";
+      desc = "Save all";
+    }
+
+    # Quit
+    {
+      mode = "n";
+      key = "<Space>qq";
       action = "<cmd>qa<CR>";
       desc = "Quit all";
     }
     {
       mode = "n";
-      key = "<Space>k";
+      key = "<Space>qb";
       action = "<cmd>bd<CR>";
       desc = "Delete buffer";
     }
+
+    # Misc
     {
       mode = "n";
       key = "<Esc>";
