@@ -1,8 +1,10 @@
 {
-  flake.modules.homeManager.opencode = _: {
+  flake.modules.homeManager.opencode = {
     programs.opencode = {
       enable = true;
       enableMcpIntegration = true;
     };
+
+    catppuccin.opencode.enable = true;
   };
 }

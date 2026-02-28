@@ -5,7 +5,6 @@
       enableZshIntegration = true;
       enableFishIntegration = true;
       settings = {
-        theme = "Catppuccin Mocha";
         adjust-cursor-thickness = 2;
         font-family = "monospace";
         font-codepoint-map = [
@@ -28,5 +27,7 @@
         ];
       };
     };
+
+    catppuccin.ghostty.enable = true;
   };
 }

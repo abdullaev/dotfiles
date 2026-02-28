@@ -12,6 +12,11 @@
         homeDirectory = user.homeDirectory;
       };
 
+      catppuccin = {
+        flavor = "mocha";
+        accent = "lavender";
+      };
+
       home.packages = with pkgs; [
         wget
         lsof

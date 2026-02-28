@@ -1,11 +1,10 @@
 {
-  flake.modules.homeManager.bat = _: {
+  flake.modules.homeManager.bat = {
     programs.bat = {
       enable = true;
-      config = {
-        theme = "Catppuccin Mocha";
-      };
     };
+
+    catppuccin.bat.enable = true;
 
     home.shellAliases = {
       cat = "bat";

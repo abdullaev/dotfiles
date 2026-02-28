@@ -8,5 +8,7 @@
           set -g fish_greeting
         '';
       };
+
+      catppuccin.fish.enable = true;
     };
 }

@@ -1,6 +1,10 @@
 {
   flake.modules.homeManager.eza = {
-    programs.eza.enable = true;
+    programs.eza = {
+      enable = true;
+    };
+
+    catppuccin.eza.enable = true;
 
     home.shellAliases = {
       ls = "eza --icons=always";

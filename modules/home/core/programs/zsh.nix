@@ -7,11 +7,6 @@
         enableCompletion = true;
         syntaxHighlighting.enable = true;
 
-        completionInit = ''
-          zmodload zsh/complist
-          zstyle ':completion:*' menu select
-        '';
-
         history = {
           path = "${config.home.homeDirectory}/.zsh_history";
           size = 50000;

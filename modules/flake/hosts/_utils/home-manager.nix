@@ -37,6 +37,7 @@ in
           sharedModules = [
             inputs.nvf.homeManagerModules.default
             inputs.plasma-manager.homeModules.plasma-manager
+            inputs.catppuccin.homeModules.catppuccin
             ../../../shared/images.nix
           ];
           backupFileExtension = "backup";
