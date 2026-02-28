@@ -2,18 +2,6 @@
   keymaps = [
     # Snacks
     {
-      mode = [
-        "n"
-        "t"
-        "i"
-        "x"
-      ];
-      key = "<C-`>";
-      action = "function() Snacks.terminal.toggle() end";
-      lua = true;
-      desc = "Terminal Toggle";
-    }
-    {
       mode = "n";
       key = "<leader>,";
       action = "function() Snacks.picker.buffers() end";
@@ -406,6 +394,18 @@
       lua = true;
       desc = "Previous Reference";
     }
+    {
+      mode = [
+        "n"
+        "t"
+        "i"
+        "x"
+      ];
+      key = "<C-`>";
+      action = "function() Snacks.terminal.toggle() end";
+      lua = true;
+      desc = "Terminal Toggle";
+    }
 
     # Mini
     {
@@ -428,6 +428,18 @@
       action = "function() require('sidekick.cli').toggle() end";
       lua = true;
       desc = "Sidekick Toggle";
+    }
+    {
+      mode = [
+        "n"
+        "t"
+        "i"
+        "x"
+      ];
+      key = "<C-/>";
+      action = "function() require('sidekick.cli').focus() end";
+      lua = true;
+      desc = "Sidekick Focus Toggle";
     }
     {
       mode = "n";
