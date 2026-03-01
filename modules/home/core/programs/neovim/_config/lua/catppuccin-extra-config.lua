@@ -14,6 +14,18 @@ do
 			ok = { "undercurl" },
 		})
 
+		opts.custom_highlights = function(colors)
+			return {
+				SnacksPickerMatch = {
+					fg = colors.lavender,
+					bold = true,
+				},
+				SnacksPickerCol = {
+					fg = colors.subtext0,
+				},
+			}
+		end
+
 		return base_setup(opts)
 	end
 end
