@@ -99,6 +99,7 @@
                     "applications:com.mitchellh.ghostty.desktop"
                     "applications:org.telegram.desktop.desktop"
                     "applications:discord.desktop"
+                    "applications:element-desktop.desktop"
                     "applications:steam.desktop"
                   ];
                 };

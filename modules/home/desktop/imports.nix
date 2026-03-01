@@ -8,5 +8,6 @@
     bitwarden
     telegram
     qbittorrent
+    matrix
   ];
 }
