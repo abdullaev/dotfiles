@@ -8,17 +8,8 @@
     {
       services.desktopManager.plasma6.enable = true;
 
-      services.displayManager.sddm = {
+      services.displayManager.plasma-login-manager = {
         enable = true;
-        wayland.enable = true;
-        theme = "breeze";
       };
-
-      environment.systemPackages = [
-        (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
-          [General]
-          background = ${config.images.wallpaper}
-        '')
-      ];
     };
 }
