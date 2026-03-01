@@ -14,6 +14,24 @@
         pull = "<leader>gp";
         push = "<leader>gP";
       };
+      setupOpts = {
+        disable_hint = true;
+        disable_context_highlighting = true;
+        signs = {
+          hunk = [
+            ""
+            ""
+          ];
+          item = [
+            ""
+            ""
+          ];
+          section = [
+            ""
+            ""
+          ];
+        };
+      };
     };
   };
 }
