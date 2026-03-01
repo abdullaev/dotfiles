@@ -4,6 +4,7 @@
     git-conflict.enable = true;
     gitsigns.enable = false;
     hunk-nvim.enable = false;
+    vim-fugitive.enable = false;
 
     neogit = {
       enable = true;
