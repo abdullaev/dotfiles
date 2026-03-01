@@ -44,7 +44,7 @@
         };
 
         workspace = {
-          wallpaper = config.images.wallpaper;
+          inherit (config.images) wallpaper;
           colorScheme = "CatppuccinMochaLavender";
           iconTheme = "breeze";
           cursor = {
@@ -60,12 +60,28 @@
 
         kscreenlocker = {
           appearance = {
-            wallpaper = config.images.wallpaper;
+            inherit (config.images) wallpaper;
           };
+          autoLock = true;
+          timeout = 30;
+          passwordRequired = true;
+          passwordRequiredDelay = 0;
         };
 
         session = {
           sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
+        };
+
+        powerdevil = {
+          AC = {
+            powerProfile = "performance";
+            autoSuspend.action = "nothing";
+            turnOffDisplay = {
+              idleTimeout = 1800;
+              idleTimeoutWhenLocked = 300;
+            };
+            dimDisplay.idleTimeout = 900;
+          };
         };
 
         panels = [
