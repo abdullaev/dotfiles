@@ -1,7 +1,8 @@
 {
   git = {
     enable = true;
-    git-conflict.enable = true;
+
+    git-conflict.enable = false;
     gitsigns.enable = false;
     hunk-nvim.enable = false;
     vim-fugitive.enable = false;
@@ -16,7 +17,7 @@
       };
       setupOpts = {
         disable_hint = true;
-        disable_context_highlighting = true;
+        disable_context_highlighting = false;
         signs = {
           hunk = [
             ""
