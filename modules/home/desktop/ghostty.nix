@@ -14,6 +14,9 @@
         enableZshIntegration = true;
         enableFishIntegration = true;
         settings = {
+          window-padding-x = 0;
+          window-padding-y = 0;
+          window-padding-balance = true;
           adjust-cursor-thickness = 2;
           font-family = "monospace";
           font-codepoint-map = [
@@ -32,9 +35,7 @@
           window-height = 48;
           click-repeat-interval = 0;
 
-          keybind = [
-            "ctrl+shift+z=toggle_split_zoom"
-          ];
+          keybind = [ ];
 
           custom-shader-animation = "always";
           custom-shader = [

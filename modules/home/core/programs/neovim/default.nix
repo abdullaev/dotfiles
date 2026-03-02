@@ -19,7 +19,7 @@
           };
 
           options = {
-            scrolloff = 8;
+            scrolloff = 10;
             tabstop = 2;
             shiftwidth = 2;
             autoindent = true;
