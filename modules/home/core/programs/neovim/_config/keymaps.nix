@@ -633,8 +633,8 @@
     {
       mode = "n";
       key = "<Space>qb";
-      action = "<cmd>bd<CR>";
-      desc = "Delete buffer";
+      action = "<cmd>bw<CR>";
+      desc = "Quit buffer";
     }
 
     # Misc
