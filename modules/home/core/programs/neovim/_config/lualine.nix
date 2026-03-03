@@ -35,19 +35,6 @@
       x = [
         ''
           {
-            "lsp_status",
-            icon = '',
-            symbols = {
-              spinner = {},
-              done = "",
-              separator = ', ',
-            },
-            separator = { left = "", right = "" },
-            show_name = true
-          }
-        ''
-        ''
-          {
             "diagnostics",
             symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌵 ' },
             colored = true,
@@ -59,6 +46,19 @@
               color_info = { fg = 'cyan' },
             },
             separator = { left = "", right = "" },
+          }
+        ''
+        ''
+          {
+            "lsp_status",
+            icon = '',
+            symbols = {
+              spinner = {},
+              done = "",
+              separator = ', ',
+            },
+            separator = { left = "", right = "" },
+            show_name = true
           }
         ''
       ];
