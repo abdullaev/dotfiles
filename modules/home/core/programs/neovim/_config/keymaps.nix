@@ -626,15 +626,9 @@
     # Quit
     {
       mode = "n";
-      key = "<Space>qq";
+      key = "<Space>q";
       action = "<cmd>qa<CR>";
       desc = "Quit all";
-    }
-    {
-      mode = "n";
-      key = "<Space>qb";
-      action = "<cmd>bw<CR>";
-      desc = "Quit buffer";
     }
 
     # Misc
