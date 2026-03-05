@@ -1,9 +1,11 @@
+-- DAP symbols
 vim.fn.sign_define("DapBreakpoint", { text = " ", texthl = "DiagnosticError" })
 vim.fn.sign_define("DapBreakpointCondition", { text = " ", texthl = "DiagnosticError" })
 vim.fn.sign_define("DapLogPoint", { text = " ", texthl = "DiagnosticInfo" })
 vim.fn.sign_define("DapStopped", { text = " ", texthl = "DiagnosticOk", linehl = "debugPC" })
 vim.fn.sign_define("DapBreakpointRejected", { text = " ", texthl = "DiagnosticError" })
 
+-- Fix opencode orphan process
 -- TODO: Remove after fix https://github.com/anomalyco/opencode/issues/13001
 local function kill_session_opencode()
 	local nvim_pid = tostring(vim.fn.getpid())

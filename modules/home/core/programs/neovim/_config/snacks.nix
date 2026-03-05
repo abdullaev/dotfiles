@@ -2,6 +2,12 @@
   utility.snacks-nvim = {
     enable = true;
     setupOpts = {
+      styles = {
+        zoom_indicator = {
+          text = "󰊓 zoom";
+        };
+      };
+
       bigfile = {
         enabled = true;
       };
@@ -122,6 +128,13 @@
             padding = 1;
           }
         ];
+      };
+      zen = {
+        zoom = {
+          show = {
+            tabline = false;
+          };
+        };
       };
     };
   };
