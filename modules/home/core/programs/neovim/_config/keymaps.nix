@@ -390,14 +390,14 @@
     {
       mode = "n";
       key = "]w";
-      action = "function() Snacks.words.jump(vim.v.count1) end";
+      action = "function() Snacks.words.jump(vim.v.count1, true) end";
       lua = true;
       desc = "Next Reference";
     }
     {
       mode = "n";
       key = "[w";
-      action = "function() Snacks.words.jump(-vim.v.count1) end";
+      action = "function() Snacks.words.jump(-vim.v.count1, true) end";
       lua = true;
       desc = "Previous Reference";
     }
