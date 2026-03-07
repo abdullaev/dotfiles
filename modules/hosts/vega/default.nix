@@ -1,4 +1,7 @@
 { config, ... }:
+let
+  keys = import ../../../shared/keys.nix;
+in
 {
   nixosHosts.vega = {
     system = "x86_64-linux";
@@ -7,6 +10,9 @@
       fullName = "Amir Abdullaev";
       email = "me@sqxt.dev";
       shell = "fish";
+      authorizedKeys = [
+        keys.users.sqxt
+      ];
       groups = [
         "networkmanager"
         "wheel"

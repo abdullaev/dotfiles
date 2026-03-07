@@ -1,10 +1,12 @@
 let
+  keys = import ../shared/keys.nix;
+
   userKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGvCNlV66FuuFEAl/ZCOp8e563qqHOUNq7arOpwBegTK sqxt@vega"
+    keys.users.sqxt
   ];
 
   systemKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL5WZ+NS5wrzmIviPSGiKZ3z4eamVdoj92IN478iRTl0 root@vega"
+    keys.hosts.vega
   ];
 
   allKeys = userKeys ++ systemKeys;

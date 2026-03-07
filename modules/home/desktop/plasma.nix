@@ -1,10 +1,12 @@
 {
   flake.modules.homeManager.plasma =
     {
-      config,
       pkgs,
       ...
     }:
+    let
+      wallpaper = ../../../images/wallpaper.png;
+    in
     {
       home.packages = [
         (pkgs.catppuccin-kde.override {
@@ -44,7 +46,7 @@
         };
 
         workspace = {
-          inherit (config.images) wallpaper;
+          inherit wallpaper;
           colorScheme = "CatppuccinMochaLavender";
           iconTheme = "breeze";
           cursor = {
@@ -60,7 +62,7 @@
 
         kscreenlocker = {
           appearance = {
-            inherit (config.images) wallpaper;
+            inherit wallpaper;
           };
           autoLock = true;
           timeout = 30;

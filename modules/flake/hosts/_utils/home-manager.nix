@@ -27,7 +27,6 @@ in
       {
         users,
         hostName,
-        images,
         ...
       }:
       {
@@ -38,7 +37,6 @@ in
             inputs.nvf.homeManagerModules.default
             inputs.plasma-manager.homeModules.plasma-manager
             inputs.catppuccin.homeModules.catppuccin
-            ../../../shared/images.nix
           ];
           backupFileExtension = "backup";
           overwriteBackup = true;
@@ -47,7 +45,6 @@ in
               inputs
               users
               hostName
-              images
               ;
           };
           users = homeManagerUsers;

@@ -27,14 +27,20 @@ in
     }
   ];
 
-  users.users = lib.mapAttrs (_: user: {
-    isNormalUser = true;
-    description = user.fullName;
-    extraGroups = user.groups;
-    home = user.homeDirectory;
-    linger = user.linger;
-    shell = shellPackages.${user.shell};
-  }) users;
+  users.users = lib.mapAttrs (
+    _: user:
+    {
+      isNormalUser = true;
+      description = user.fullName;
+      extraGroups = user.groups;
+      home = user.homeDirectory;
+      linger = user.linger;
+      shell = shellPackages.${user.shell};
+    }
+    // lib.optionalAttrs (user.authorizedKeys != [ ]) {
+      openssh.authorizedKeys.keys = user.authorizedKeys;
+    }
+  ) users;
 
   programs.zsh.enable = lib.any (user: user.shell == "zsh") (lib.attrValues users);
   programs.fish.enable = lib.any (user: user.shell == "fish") (lib.attrValues users);

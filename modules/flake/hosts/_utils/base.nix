@@ -40,6 +40,11 @@ in
                   ];
                 };
 
+                authorizedKeys = mkOption {
+                  type = with types; listOf str;
+                  default = [ ];
+                };
+
                 shell = mkOption {
                   type =
                     with types;
@@ -92,13 +97,6 @@ in
       default = [ ];
     };
 
-    images = mkOption {
-      type = with types; attrsOf path;
-      default = {
-        wallpaper = ../../../../images/wallpaper.png;
-      };
-    };
-
     extraSpecialArgs = mkOption {
       type = with types; attrsOf anything;
       default = { };
@@ -119,7 +117,6 @@ in
     hostName = name;
     inherit (config)
       users
-      images
       ;
   }
   // config.extraSpecialArgs;
