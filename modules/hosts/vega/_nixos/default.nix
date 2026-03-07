@@ -3,6 +3,7 @@
   lib,
   pkgs,
   users,
+  config,
   ...
 }:
 let
@@ -27,6 +28,8 @@ in
     }
   ];
 
+  users.mutableUsers = false;
+
   users.users = lib.mapAttrs (
     _: user:
     {
@@ -39,6 +42,9 @@ in
     }
     // lib.optionalAttrs (user.authorizedKeys != [ ]) {
       openssh.authorizedKeys.keys = user.authorizedKeys;
+    }
+    // lib.optionalAttrs (user.passwordSecret != null) {
+      hashedPasswordFile = config.age.secrets.${user.passwordSecret}.path;
     }
   ) users;
 

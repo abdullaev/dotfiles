@@ -12,8 +12,16 @@ let
   allKeys = userKeys ++ systemKeys;
 in
 {
+  # misc
   "misc/access-tokens.age".publicKeys = allKeys;
 
+  # passwords
+  "passwords/sqxt-at-vega.age".publicKeys = [
+    keys.users.sqxt
+    keys.hosts.vega
+  ];
+
+  # vpn
   "vpn/rs-awg2-latvia.conf.age".publicKeys = allKeys;
   "vpn/rs-awg2-germany.conf.age".publicKeys = allKeys;
   "vpn/rs-awg2-poland.conf.age".publicKeys = allKeys;

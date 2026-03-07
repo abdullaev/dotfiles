@@ -7,6 +7,14 @@
       mode = "0440";
     };
 
+    # passwords
+    sqxt-at-vega = {
+      file = ./passwords/sqxt-at-vega.age;
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
+
     # vpn
     awg-estonia.file = ./vpn/awg-estonia.conf.age;
     awg-poland.file = ./vpn/awg-poland.conf.age;

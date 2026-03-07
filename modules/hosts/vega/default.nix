@@ -13,6 +13,7 @@ in
       authorizedKeys = [
         keys.users.sqxt
       ];
+      passwordSecret = "sqxt-at-vega";
       groups = [
         "networkmanager"
         "wheel"

@@ -40,6 +40,11 @@ in
                   ];
                 };
 
+                passwordSecret = mkOption {
+                  type = with types; nullOr str;
+                  default = null;
+                };
+
                 authorizedKeys = mkOption {
                   type = with types; listOf str;
                   default = [ ];
