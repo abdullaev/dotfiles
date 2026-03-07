@@ -1,3 +1,4 @@
+{ pkgs }:
 {
   utility.snacks-nvim = {
     enable = true;
@@ -30,6 +31,10 @@
       };
       picker = {
         enabled = true;
+
+        db = {
+          sqlite3_path = "${pkgs.sqlite.out}/lib/libsqlite3.so";
+        };
 
         sources = {
           explorer = {

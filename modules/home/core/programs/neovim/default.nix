@@ -51,7 +51,7 @@
         (import ./_config/git.nix)
         (import ./_config/mini.nix)
         (import ./_config/extra-plugins.nix { inherit pkgs; })
-        (import ./_config/snacks.nix)
+        (import ./_config/snacks.nix { inherit pkgs; })
         (import ./_config/lualine.nix)
         (import ./_config/noice.nix)
         (import ./_config/which-key.nix)

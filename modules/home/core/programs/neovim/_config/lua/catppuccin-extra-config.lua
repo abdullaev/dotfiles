@@ -23,6 +23,9 @@ do
 				SnacksPickerCol = {
 					fg = colors.subtext0,
 				},
+				TroubleCount = {
+					bg = colors.surface1,
+				},
 			}
 		end
 
