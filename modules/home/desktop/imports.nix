@@ -9,5 +9,6 @@
     telegram
     qbittorrent
     matrix
+    mangohud
   ];
 }
