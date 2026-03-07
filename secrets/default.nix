@@ -1,5 +1,8 @@
 {
   age.secrets = {
+    access-tokens.file = ./access-tokens.age;
+
+    # vpn
     awg-estonia.file = ./awg-estonia.conf.age;
     awg-poland.file = ./awg-poland.conf.age;
     awg-switzerland.file = ./awg-switzerland.conf.age;

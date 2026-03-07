@@ -10,6 +10,8 @@ let
   allKeys = userKeys ++ systemKeys;
 in
 {
+  "access-tokens.age".publicKeys = allKeys;
+
   "rs-awg2-latvia.conf.age".publicKeys = allKeys;
   "rs-awg2-germany.conf.age".publicKeys = allKeys;
   "rs-awg2-poland.conf.age".publicKeys = allKeys;

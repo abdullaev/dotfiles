@@ -1,19 +1,26 @@
 {
-  flake.modules.nixos.nix = {
-    nixpkgs.config.allowUnfree = true;
+  flake.modules.nixos.nix =
+    { config, ... }:
+    {
+      nixpkgs.config.allowUnfree = true;
+      nix = {
+        extraOptions = ''
+          !include ${config.age.secrets.access-tokens.path}
+        '';
 
-    nix.settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      auto-optimise-store = true;
-    };
+        settings = {
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+          auto-optimise-store = true;
+        };
 
-    nix.gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 14d";
+        gc = {
+          automatic = true;
+          dates = "weekly";
+          options = "--delete-older-than 14d";
+        };
+      };
     };
-  };
 }
