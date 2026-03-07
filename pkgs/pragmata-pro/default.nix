@@ -3,8 +3,8 @@
 stdenvNoCC.mkDerivation {
   pname = "pragmata-pro";
   version = "0.903";
-  src = fetchGit {
-    url = "git@github.com:abdullaev/font-pragmata-pro.git";
+  src = builtins.fetchGit {
+    url = "https://github.com/abdullaev/font-pragmata-pro.git";
     rev = "5c08979930149e31386b1bda24844b3354fef8c4";
   };
 
