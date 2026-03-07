@@ -1,5 +1,25 @@
 [
   {
+    mode = [
+      "n"
+      "i"
+    ];
+    key = "<A-s>";
+    action = "function() vim.lsp.buf.signature_help() end";
+    lua = true;
+    desc = "Signature help";
+  }
+  {
+    mode = [
+      "n"
+      "i"
+    ];
+    key = "<A-d>";
+    action = "function() vim.diagnostic.open_float(nil, { scope = \"cursor\" }) end";
+    lua = true;
+    desc = "Open diagnostic float";
+  }
+  {
     mode = "n";
     key = "gd";
     action = "function() Snacks.picker.lsp_definitions() end";

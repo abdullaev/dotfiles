@@ -78,6 +78,13 @@
   }
   {
     mode = "n";
+    key = "<leader>gw";
+    action = "function() Snacks.gitbrowse.open() end";
+    lua = true;
+    desc = "Open origin";
+  }
+  {
+    mode = "n";
     key = "<leader>gt";
     action = "function() MiniDiff.toggle_overlay() end";
     lua = true;

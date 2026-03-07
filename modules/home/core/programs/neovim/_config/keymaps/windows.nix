@@ -51,8 +51,8 @@
       "x"
     ];
     key = "<C-Left>";
-    action = "<C-\\><C-n><C-w>h";
-    desc = "Go to the left window";
+    action = "<C-\\><C-n><C-w><";
+    desc = "Decrease window width";
   }
   {
     mode = [
@@ -62,8 +62,8 @@
       "x"
     ];
     key = "<C-Down>";
-    action = "<C-\\><C-n><C-w>j";
-    desc = "Go to the down window";
+    action = "<C-\\><C-n><C-w>-";
+    desc = "Decrease window height";
   }
   {
     mode = [
@@ -73,8 +73,8 @@
       "x"
     ];
     key = "<C-Up>";
-    action = "<C-\\><C-n><C-w>k";
-    desc = "Go to the up window";
+    action = "<C-\\><C-n><C-w>+";
+    desc = "Increase window height";
   }
   {
     mode = [
@@ -84,7 +84,7 @@
       "x"
     ];
     key = "<C-Right>";
-    action = "<C-\\><C-n><C-w>l";
-    desc = "Go to the right window";
+    action = "<C-\\><C-n><C-w>>";
+    desc = "Increase window width";
   }
 ]
