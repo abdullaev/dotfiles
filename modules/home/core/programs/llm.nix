@@ -16,11 +16,5 @@
       };
 
       catppuccin.opencode.enable = true;
-
-      programs.codex = {
-        enable = true;
-        enableMcpIntegration = true;
-        package = llmAgents.codex;
-      };
     };
 }
