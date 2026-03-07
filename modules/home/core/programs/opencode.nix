@@ -1,10 +1,20 @@
 {
-  flake.modules.homeManager.opencode = {
-    programs.opencode = {
-      enable = true;
-      enableMcpIntegration = true;
-    };
+  flake.modules.homeManager.opencode =
+    {
+      inputs,
+      pkgs,
+      ...
+    }:
+    let
+      llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+    in
+    {
+      programs.opencode = {
+        enable = true;
+        enableMcpIntegration = true;
+        package = llmAgents.opencode;
+      };
 
-    catppuccin.opencode.enable = true;
-  };
+      catppuccin.opencode.enable = true;
+    };
 }
