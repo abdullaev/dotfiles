@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.opencode =
+  flake.modules.homeManager.llm =
     {
       inputs,
       pkgs,
@@ -16,5 +16,11 @@
       };
 
       catppuccin.opencode.enable = true;
+
+      programs.codex = {
+        enable = true;
+        enableMcpIntegration = true;
+        package = llmAgents.codex;
+      };
     };
 }

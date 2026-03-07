@@ -13,7 +13,7 @@
     direnv
     neovim
     fastfetch
-    opencode
+    llm
     eza
     zoxide
     fzf
