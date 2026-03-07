@@ -1,6 +1,10 @@
 {
   age.secrets = {
-    access-tokens.file = ./access-tokens.age;
+    access-tokens = {
+      file = ./access-tokens.age;
+      group = "wheel";
+      mode = "0440";
+    };
 
     # vpn
     awg-estonia.file = ./awg-estonia.conf.age;
