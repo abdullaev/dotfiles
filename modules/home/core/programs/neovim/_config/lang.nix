@@ -9,6 +9,22 @@
 
     trouble = {
       enable = true;
+      setupOpts = {
+        modes = {
+          symbols = {
+            win = {
+              position = "left";
+              size = 0.3;
+            };
+          };
+          lsp_base = {
+            win = {
+              position = "bottom";
+              size = 0.2;
+            };
+          };
+        };
+      };
     };
   };
 
