@@ -16,7 +16,7 @@
         ''
           {
             "filename",
-            path = 1,
+            path = 0,
             symbols = { modified = '', readonly = '' },
             separator = { left = "", right = "" },
           }
@@ -26,7 +26,7 @@
         ''
           {
             function()
-              return require("nvim-navic").get_location()
+              return require("nvim-navic").get_location({ separator = "  " })
             end,
             cond = function()
               return require("nvim-navic").is_available()
@@ -37,12 +37,19 @@
       x = [
         ''
           {
+            "diff",
+            colored = true,
+            symbols = { added = '+', modified = '~', removed = '-' },
+            separator = { left = "", right = "" },
+          }
+        ''
+        ''
+          {
             "diagnostics",
             symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌵 ' },
             colored = true,
             update_in_insert = false,
             always_visible = false,
-            padding = { left = 1, right = 0 },
             diagnostics_color = {
               color_error = { fg = 'red' },
               color_warn = { fg = 'yellow' },
@@ -66,15 +73,6 @@
         ''
       ];
       y = [
-        ''
-          {
-            "diff",
-            colored = true,
-            padding = { left = 1, right = 0 },
-            symbols = { added = '+', modified = '~', removed = '-' },
-            separator = { left = "", right = "" },
-          }
-        ''
         ''
           {
             "branch",
