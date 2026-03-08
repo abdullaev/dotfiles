@@ -5,7 +5,6 @@
     mpv
     discord
     ghostty
-    bitwarden
     telegram
     qbittorrent
     matrix
