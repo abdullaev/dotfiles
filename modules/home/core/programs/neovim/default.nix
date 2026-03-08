@@ -44,6 +44,12 @@
             motion.flash-nvim.enable = true;
           };
 
+          ui.breadcrumbs = {
+            enable = true;
+            lualine.winbar.alwaysRender = false;
+            lualine.winbar.enable = false;
+          };
+
           luaConfigPost = builtins.readFile ./_config/lua/lua-config-post.lua;
         }
 

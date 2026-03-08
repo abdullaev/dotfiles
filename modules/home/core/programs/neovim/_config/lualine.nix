@@ -25,10 +25,12 @@
       c = [
         ''
           {
-            "diff",
-            colored = true,
-            symbols = { added = '+', modified = '~', removed = '-' },
-            separator = { left = "", right = "" },
+            function()
+              return require("nvim-navic").get_location()
+            end,
+            cond = function()
+              return require("nvim-navic").is_available()
+            end,
           }
         ''
       ];
@@ -40,6 +42,7 @@
             colored = true,
             update_in_insert = false,
             always_visible = false,
+            padding = { left = 1, right = 0 },
             diagnostics_color = {
               color_error = { fg = 'red' },
               color_warn = { fg = 'yellow' },
@@ -65,6 +68,15 @@
       y = [
         ''
           {
+            "diff",
+            colored = true,
+            padding = { left = 1, right = 0 },
+            symbols = { added = '+', modified = '~', removed = '-' },
+            separator = { left = "", right = "" },
+          }
+        ''
+        ''
+          {
             "branch",
             icon = '',
             separator = { left = "", right = "" },
@@ -75,12 +87,14 @@
         ''
           {
             "location",
+            padding = { left = 1, right = 1 },
             separator = { left = "", right = "" }
           }
         ''
         ''
           {
             "progress",
+            padding = { left = 0, right = 1 },
             separator = { left = "", right = "" }
           }
         ''
