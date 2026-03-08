@@ -42,6 +42,7 @@
             layout = {
               layout = {
                 position = "right";
+                width = 0.25;
               };
             };
           };
