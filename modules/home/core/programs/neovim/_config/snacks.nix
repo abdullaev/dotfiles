@@ -5,7 +5,7 @@
     setupOpts = {
       styles = {
         zoom_indicator = {
-          text = "󰊓 zoom";
+          text = "󰊓";
         };
       };
 

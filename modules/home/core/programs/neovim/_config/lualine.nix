@@ -37,14 +37,6 @@
       x = [
         ''
           {
-            "diff",
-            colored = true,
-            symbols = { added = '+', modified = '~', removed = '-' },
-            separator = { left = "", right = "" },
-          }
-        ''
-        ''
-          {
             "diagnostics",
             symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌵 ' },
             colored = true,
@@ -55,6 +47,7 @@
               color_warn = { fg = 'yellow' },
               color_info = { fg = 'cyan' },
             },
+            padding = { left = 1, right = 0 },
             separator = { left = "", right = "" },
           }
         ''
@@ -73,6 +66,15 @@
         ''
       ];
       y = [
+        ''
+          {
+            "diff",
+            colored = true,
+            symbols = { added = '+', modified = '~', removed = '-' },
+            padding = { left = 1, right = 0 },
+            separator = { left = "", right = "" },
+          }
+        ''
         ''
           {
             "branch",
