@@ -2,11 +2,11 @@ let
   keys = import ../shared/keys.nix;
 
   userKeys = [
-    keys.users.sqxt
+    keys.users.sqxt.ssh
   ];
 
   systemKeys = [
-    keys.hosts.vega
+    keys.hosts.vega.ssh
   ];
 
   allKeys = userKeys ++ systemKeys;
@@ -17,8 +17,8 @@ in
 
   # passwords
   "passwords/sqxt-at-vega.age".publicKeys = [
-    keys.users.sqxt
-    keys.hosts.vega
+    keys.users.sqxt.ssh
+    keys.hosts.vega.ssh
   ];
 
   # vpn

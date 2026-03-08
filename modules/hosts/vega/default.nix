@@ -10,8 +10,13 @@ in
       fullName = "Amir Abdullaev";
       email = "me@sqxt.dev";
       shell = "fish";
+      gpg = {
+        enable = true;
+        signByDefault = true;
+        signingKey = keys.users.sqxt.gpg.signingKey;
+      };
       authorizedKeys = [
-        keys.users.sqxt
+        keys.users.sqxt.ssh
       ];
       passwordSecret = "sqxt-at-vega";
       groups = [

@@ -85,10 +85,32 @@ in
                   type = types.str;
                   default = "${config.homeDirectory}/dotfiles-nix";
                 };
-              };
-            }
-          )
-        );
+
+                gpg = mkOption {
+                  type = types.submodule {
+                    options = {
+                      enable = mkOption {
+                        type = types.bool;
+                        default = false;
+                      };
+
+                      signingKey = mkOption {
+                        type = with types; nullOr str;
+                        default = null;
+                      };
+
+                      signByDefault = mkOption {
+                        type = types.bool;
+                        default = false;
+                      };
+                    };
+                  };
+                  default = { };
+                };
+               };
+             }
+           )
+         );
       default = { };
     };
 

@@ -7,6 +7,7 @@
     fish
     starship
     git
+    gpg
     btop
     bat
     delta
