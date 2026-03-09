@@ -136,6 +136,12 @@
         ];
       };
       zen = {
+        toggles = {
+          dim = false;
+          git_signs = true;
+          mini_diff_signs = true;
+          diagnostics = true;
+        };
         zoom = {
           show = {
             tabline = false;
