@@ -35,6 +35,19 @@
             "Noto Color Emoji"
           ];
         };
+
+        localConf = ''
+          <?xml version="1.0"?>
+          <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+          <fontconfig>
+            <alias>
+              <family>ui-monospace</family>
+              <prefer>
+                <family>PragmataPro Mono Liga</family>
+              </prefer>
+            </alias>
+          </fontconfig>
+        '';
       };
     };
 }
