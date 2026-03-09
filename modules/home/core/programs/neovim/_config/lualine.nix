@@ -98,6 +98,13 @@
             separator = { left = "", right = "" }
           }
         ''
+        ''
+          {
+            "searchcount",
+            padding = { left = 0, right = 0 },
+            separator = { left = "", right = "" }
+          }
+        ''
       ];
     };
   };

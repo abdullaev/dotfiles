@@ -3,7 +3,7 @@
     enable = true;
     setupOpts = {
       messages = {
-        view_search = "mini";
+        view_search = false;
       };
       lsp = {
         signature.enabled = false;
