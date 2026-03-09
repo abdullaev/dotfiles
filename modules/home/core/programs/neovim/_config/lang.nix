@@ -1,7 +1,37 @@
 { pkgs }:
 {
-  autocomplete.blink-cmp.enable = true;
-  autocomplete.enableSharedCmpSources = true;
+  autocomplete = {
+    blink-cmp = {
+      enable = true;
+      friendly-snippets.enable = true;
+      setupOpts = {
+        completion = {
+          menu = {
+            enabled = true;
+            scrollbar = false;
+          };
+          documentation = {
+            enabled = true;
+            window = {
+              scrollbar = false;
+            };
+          };
+          signature = {
+            enabled = true;
+            window = {
+              scrollbar = false;
+            };
+          };
+        };
+      };
+      mappings = {
+        next = "<C-n>";
+        previous = "<C-p>";
+        scrollDocsDown = "<C-f>";
+        scrollDocsUp = "<C-b>";
+      };
+    };
+  };
 
   lsp = {
     enable = true;

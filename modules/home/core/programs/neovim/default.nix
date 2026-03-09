@@ -24,6 +24,7 @@
             shiftwidth = 2;
             autoindent = true;
             cursorline = false;
+            winborder = "rounded";
           };
 
           undoFile.enable = true;
@@ -41,13 +42,24 @@
           utility = {
             direnv.enable = true;
             nix-develop.enable = true;
-            motion.flash-nvim.enable = true;
+            motion.flash-nvim = {
+              enable = true;
+              setupOpts = {
+                prompt = {
+                  enabled = false;
+                };
+              };
+            };
           };
 
           ui.breadcrumbs = {
             enable = true;
             lualine.winbar.alwaysRender = false;
             lualine.winbar.enable = false;
+          };
+
+          ui.borders = {
+            enable = true;
           };
 
           luaConfigPost = builtins.readFile ./_config/lua/lua-config-post.lua;
