@@ -83,7 +83,7 @@ in
 
                 dotfilesPath = mkOption {
                   type = types.str;
-                  default = "${config.homeDirectory}/dotfiles-nix";
+                  default = "${config.homeDirectory}/dotfiles";
                 };
 
                 gpg = mkOption {
@@ -107,10 +107,10 @@ in
                   };
                   default = { };
                 };
-               };
-             }
-           )
-         );
+              };
+            }
+          )
+        );
       default = { };
     };
 
