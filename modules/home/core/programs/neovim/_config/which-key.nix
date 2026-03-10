@@ -1,5 +1,4 @@
 {
-
   binds.whichKey = {
     enable = true;
     setupOpts = {

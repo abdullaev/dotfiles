@@ -19,10 +19,6 @@
         disable_hint = true;
         disable_context_highlighting = false;
         signs = {
-          # hunk = [
-          #   ""
-          #   ""
-          # ];
           item = [
             ""
             ""
