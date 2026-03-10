@@ -15,6 +15,7 @@
             name = user.fullName;
             email = user.email;
           };
+          diff.tool = "vimdiff";
         };
       };
     };
