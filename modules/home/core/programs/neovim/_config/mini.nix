@@ -5,6 +5,13 @@
     };
     icons = {
       enable = true;
+      setupOpts = {
+        extension = {
+          go = {
+            glyph = "";
+          };
+        };
+      };
     };
     diff = {
       enable = true;
