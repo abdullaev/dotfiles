@@ -50,6 +50,9 @@
             };
           };
         };
+        preview = {
+          border = false;
+        };
       };
     };
   };
