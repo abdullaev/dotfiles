@@ -111,4 +111,10 @@
     lua = true;
     desc = "Toggle zen";
   }
+  {
+    mode = "n";
+    key = "<Space>q";
+    action = "<cmd>qa<CR>";
+    desc = "Quit all";
+  }
 ]
