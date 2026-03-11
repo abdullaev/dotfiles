@@ -37,6 +37,8 @@
     enable = true;
     formatOnSave = true;
 
+    mappings.toggleFormatOnSave = "\\f";
+
     trouble = {
       enable = true;
       setupOpts = {

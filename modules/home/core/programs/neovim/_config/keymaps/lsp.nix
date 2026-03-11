@@ -21,6 +21,20 @@
   }
   {
     mode = "n";
+    key = "\\t";
+    action = "function() toggle_diagnostic_virtual_text() end";
+    lua = true;
+    desc = "Toggle diagnostic virtual text";
+  }
+  {
+    mode = "n";
+    key = "\\e";
+    action = "function() toggle_diagnostic_virtual_lines() end";
+    lua = true;
+    desc = "Toggle diagnostic virtual lines";
+  }
+  {
+    mode = "n";
     key = "gd";
     action = "function() Snacks.picker.lsp_definitions() end";
     lua = true;

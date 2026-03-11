@@ -72,3 +72,30 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 	group = opencode_cleanup_group,
 	callback = kill_session_opencode,
 })
+
+-- Misc
+local function toggle_diagnostic_setting(option, label)
+	local current = vim.diagnostic.config()[option]
+	local backup_key = "diagnostic_" .. option .. "_config"
+
+	if current == false or current == nil then
+		vim.diagnostic.config({ [option] = vim.g[backup_key] or true })
+		vim.notify(label .. " enabled")
+		return
+	end
+
+	if type(current) == "table" then
+		vim.g[backup_key] = current
+	end
+
+	vim.diagnostic.config({ [option] = false })
+	vim.notify(label .. " disabled")
+end
+
+_G.toggle_diagnostic_virtual_text = function()
+	toggle_diagnostic_setting("virtual_text", "Diagnostic virtual text")
+end
+
+_G.toggle_diagnostic_virtual_lines = function()
+	toggle_diagnostic_setting("virtual_lines", "Diagnostic virtual lines")
+end

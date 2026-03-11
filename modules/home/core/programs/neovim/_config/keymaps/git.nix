@@ -85,9 +85,9 @@
   }
   {
     mode = "n";
-    key = "<leader>gt";
+    key = "\\g";
     action = "function() MiniDiff.toggle_overlay() end";
     lua = true;
-    desc = "Git hunk toggle overlay";
+    desc = "Toggle diff";
   }
 ]
