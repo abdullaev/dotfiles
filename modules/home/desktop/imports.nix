@@ -9,5 +9,6 @@
     qbittorrent
     matrix
     mangohud
+    obsidian
   ];
 }

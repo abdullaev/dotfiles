@@ -46,6 +46,20 @@
               };
             };
           };
+
+          projects = {
+            dev = [ "~" ];
+            patterns = [
+              ".obsidian"
+              ".git"
+              "_darcs"
+              ".hg"
+              ".bzr"
+              ".svn"
+              "package.json"
+              "Makefile"
+            ];
+          };
         };
 
         previewers = {
