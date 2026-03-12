@@ -65,7 +65,7 @@
           luaConfigPost = builtins.readFile ./_config/lua/lua-config-post.lua;
         }
 
-        (import ./_config/lang.nix { inherit pkgs; })
+        (import ./_config/lang.nix { inherit pkgs lib; })
         (import ./_config/git.nix)
         (import ./_config/mini.nix)
         (import ./_config/extra-plugins.nix { inherit pkgs; })

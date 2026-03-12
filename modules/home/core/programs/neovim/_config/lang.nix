@@ -1,10 +1,21 @@
-{ pkgs }:
+{ pkgs, lib }:
+let
+  inherit (lib.generators) mkLuaInline;
+in
 {
   autocomplete = {
     blink-cmp = {
       enable = true;
       friendly-snippets.enable = true;
       setupOpts = {
+        sources.providers.snippets.opts.filter_snippets = mkLuaInline ''
+          function(filetype, file)
+            return not (
+              filetype ~= "all"
+              and file:match("friendly%-snippets/snippets/global%.json$")
+            )
+          end
+        '';
         completion = {
           menu = {
             auto_show = true;
