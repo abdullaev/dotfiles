@@ -7,20 +7,20 @@
       setupOpts = {
         completion = {
           menu = {
-            enabled = true;
+            auto_show = true;
             scrollbar = false;
           };
           documentation = {
-            enabled = true;
+            auto_show = true;
             window = {
               scrollbar = false;
             };
           };
-          signature = {
-            enabled = true;
-            window = {
-              scrollbar = false;
-            };
+        };
+        signature = {
+          enabled = true;
+          window = {
+            scrollbar = false;
           };
         };
       };
@@ -140,6 +140,7 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      format.enable = true;
     };
     nix = {
       enable = true;
