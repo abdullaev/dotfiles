@@ -86,7 +86,7 @@
         };
       };
       words = {
-        debounce = 50;
+        debounce = 25;
         notify_jump = false;
         notify_end = true;
         foldopen = true;
