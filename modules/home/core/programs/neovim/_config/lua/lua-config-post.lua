@@ -73,7 +73,7 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 	callback = kill_session_opencode,
 })
 
--- Misc
+-- Toggles
 local function toggle_diagnostic_setting(option, label)
 	local current = vim.diagnostic.config()[option]
 	local backup_key = "diagnostic_" .. option .. "_config"
@@ -112,4 +112,18 @@ _G.toggle_snacks_indent_chunk = function()
 	end
 
 	Snacks.notify((enabled and "Enabled" or "Disabled") .. " indent chunk display", { title = "Snacks Indent" })
+end
+
+-- Helper for inserting ";" after next closing bracket
+_G.insert_semicolon_after_closing_bracket = function()
+	local line = vim.api.nvim_get_current_line()
+	local col = vim.api.nvim_win_get_cursor(0)[2]
+	local bracket_col = line:find("[%)%]%}]", col + 1)
+
+	if not bracket_col then
+		return ";"
+	end
+
+	local distance = vim.fn.strchars(line:sub(col + 1, bracket_col))
+	return ("<Right>"):rep(distance) .. ";" .. ("<Left>"):rep(distance + 1)
 end
