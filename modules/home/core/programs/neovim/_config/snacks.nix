@@ -29,6 +29,26 @@
         replace_netrw = true;
         trash = true;
       };
+      indent = {
+        enabled = true;
+        animate = {
+          enabled = false;
+        };
+        indent = {
+          enabled = false;
+        };
+        scope = {
+          enabled = false;
+        };
+        chunk = {
+          enabled = true;
+          char = {
+            corner_top = "╭";
+            corner_bottom = "╰";
+            arrow = "─";
+          };
+        };
+      };
       picker = {
         enabled = true;
 

@@ -35,6 +35,13 @@
   }
   {
     mode = "n";
+    key = "\\p";
+    action = "function() toggle_snacks_indent_chunk() end";
+    lua = true;
+    desc = "Toggle indent chunk display";
+  }
+  {
+    mode = "n";
     key = "gd";
     action = "function() Snacks.picker.lsp_definitions() end";
     lua = true;

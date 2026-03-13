@@ -99,3 +99,17 @@ end
 _G.toggle_diagnostic_virtual_lines = function()
 	toggle_diagnostic_setting("virtual_lines", "Diagnostic virtual lines")
 end
+
+_G.toggle_snacks_indent_chunk = function()
+	local chunk = Snacks.config.indent.chunk or {}
+	local enabled = not chunk.enabled
+
+	Snacks.config.indent.chunk = vim.tbl_deep_extend("force", chunk, { enabled = enabled })
+
+	if Snacks.indent.enabled then
+		Snacks.indent.disable()
+		Snacks.indent.enable()
+	end
+
+	Snacks.notify((enabled and "Enabled" or "Disabled") .. " indent chunk display", { title = "Snacks Indent" })
+end
