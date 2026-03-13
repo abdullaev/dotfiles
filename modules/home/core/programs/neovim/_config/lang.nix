@@ -82,6 +82,11 @@ in
   };
 
   languages = {
+    assembly = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
     astro = {
       enable = true;
       treesitter.enable = true;
@@ -113,6 +118,11 @@ in
       lsp.enable = true;
       format.enable = true;
     };
+    gleam = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
     go = {
       enable = true;
       treesitter.enable = true;
@@ -120,6 +130,17 @@ in
       dap.enable = true;
     };
     haskell = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
+    hcl = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      format.enable = true;
+    };
+    helm = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
@@ -165,7 +186,18 @@ in
       lsp.enable = true;
       format.enable = true;
     };
+    odin = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
     python = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      format.enable = true;
+    };
+    qml = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
@@ -191,6 +223,11 @@ in
       extraDiagnostics.enable = true;
       format.enable = true;
     };
+    terraform = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
     ts = {
       enable = true;
       treesitter.enable = true;
@@ -203,6 +240,16 @@ in
       treesitter.enable = true;
       lsp.enable = true;
       format.enable = true;
+    };
+    vala = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
+    wgsl = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
     };
     yaml = {
       enable = true;
