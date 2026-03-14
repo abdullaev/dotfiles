@@ -135,7 +135,7 @@
         ];
 
         input.keyboard = {
-          repeatDelay = 400;
+          repeatDelay = 300;
           repeatRate = 50;
           layouts = [
             { layout = "us"; }
