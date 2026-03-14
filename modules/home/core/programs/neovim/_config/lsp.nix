@@ -7,6 +7,11 @@
 
     trouble = {
       enable = true;
+      mappings = {
+        documentDiagnostics = "<leader>xd";
+        lspReferences = "<leader>xr";
+        workspaceDiagnostics = "<leader>xw";
+      };
       setupOpts = {
         modes = {
           symbols = {

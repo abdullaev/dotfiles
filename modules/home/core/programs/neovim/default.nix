@@ -11,6 +11,8 @@
           viAlias = true;
           vimAlias = true;
 
+          lazy.enable = true;
+
           theme = {
             enable = true;
             name = "catppuccin";
@@ -37,10 +39,6 @@
             registers = "unnamedplus";
           };
 
-          lazy.enable = true;
-
-          # binds.hardtime-nvim.enable = true;
-
           luaConfigPost = builtins.readFile ./_config/lua/lua-config-post.lua;
         }
 
@@ -58,7 +56,7 @@
         (import ./_config/treesitter.nix { inherit pkgs; })
         (import ./_config/ui.nix)
         (import ./_config/utility.nix)
-        (import ./_config/which-key.nix)
+        (import ./_config/binds.nix)
       ];
     in
     {

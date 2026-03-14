@@ -113,7 +113,7 @@
   }
   {
     mode = "n";
-    key = "<Space>q";
+    key = "<leader>q";
     action = "<cmd>qa<CR>";
     desc = "Quit all";
   }
