@@ -25,6 +25,8 @@
             autoindent = true;
             cursorline = false;
             winborder = "rounded";
+            complete = "";
+            wildchar = 0;
           };
 
           undoFile.enable = true;

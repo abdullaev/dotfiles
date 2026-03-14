@@ -16,6 +16,17 @@ in
             )
           end
         '';
+        keymap = {
+          preset = "default";
+        };
+        cmdline = {
+          keymap = {
+            "<C-y>" = [
+              "select_and_accept"
+              "fallback"
+            ];
+          };
+        };
         completion = {
           menu = {
             auto_show = true;
@@ -34,12 +45,6 @@ in
             scrollbar = false;
           };
         };
-      };
-      mappings = {
-        next = "<C-n>";
-        previous = "<C-p>";
-        scrollDocsDown = "<C-f>";
-        scrollDocsUp = "<C-b>";
       };
     };
   };
