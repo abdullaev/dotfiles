@@ -114,16 +114,16 @@ _G.toggle_snacks_indent_chunk = function()
 	Snacks.notify((enabled and "Enabled" or "Disabled") .. " indent chunk display", { title = "Snacks Indent" })
 end
 
--- Helper for inserting ";" after next closing bracket
-_G.insert_semicolon_after_closing_bracket = function()
+-- Helper for inserting char after next closing bracket
+_G.insert_char_after_closing_bracket = function(char)
 	local line = vim.api.nvim_get_current_line()
 	local col = vim.api.nvim_win_get_cursor(0)[2]
 	local bracket_col = line:find("[%)%]%}]", col + 1)
 
 	if not bracket_col then
-		return ";"
+		return char
 	end
 
 	local distance = vim.fn.strchars(line:sub(col + 1, bracket_col))
-	return ("<Right>"):rep(distance) .. ";" .. ("<Left>"):rep(distance + 1)
+	return ("<Right>"):rep(distance) .. char .. ("<Left>"):rep(distance + 1)
 end

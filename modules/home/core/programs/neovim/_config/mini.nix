@@ -29,12 +29,12 @@
       enable = true;
       setupOpts = {
         mappings = {
-          add = ",a";
-          delete = ",d";
-          find = ",f";
-          find_left = ",F";
-          highlight = ",h";
-          replace = ",r";
+          add = "gsa";
+          delete = "gsd";
+          find = "gsf";
+          find_left = "gsF";
+          highlight = "gsh";
+          replace = "gsr";
         };
       };
     };
