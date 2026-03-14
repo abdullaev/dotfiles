@@ -76,6 +76,7 @@
         (import ./_config/noice.nix)
         (import ./_config/which-key.nix)
         (import ./_config/keymaps.nix)
+        (import ./_config/lua-config-rc.nix { inherit pkgs lib; })
       ];
     in
     {
