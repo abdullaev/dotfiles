@@ -141,7 +141,10 @@
             { layout = "us"; }
             { layout = "ru"; }
           ];
-          options = [ "grp:win_space_toggle" ];
+          options = [
+            "grp:win_space_toggle"
+            "ctrl:nocaps"
+          ];
         };
 
         kwin.nightLight = {
