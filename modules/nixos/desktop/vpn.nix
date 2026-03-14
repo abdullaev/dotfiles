@@ -4,7 +4,7 @@
     {
       networking.wg-quick.interfaces.awg0 = {
         type = "amneziawg";
-        configFile = config.age.secrets.rs-awg2-latvia.path;
+        configFile = config.age.secrets.rs-awg2-lithuania.path;
         autostart = true;
       };
 
