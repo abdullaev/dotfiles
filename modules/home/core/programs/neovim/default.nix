@@ -41,42 +41,24 @@
 
           # binds.hardtime-nvim.enable = true;
 
-          utility = {
-            direnv.enable = true;
-            nix-develop.enable = true;
-            motion.flash-nvim = {
-              enable = true;
-              setupOpts = {
-                prompt = {
-                  enabled = false;
-                };
-              };
-            };
-          };
-
-          ui.breadcrumbs = {
-            enable = true;
-            lualine.winbar.alwaysRender = false;
-            lualine.winbar.enable = false;
-          };
-
-          ui.borders = {
-            enable = true;
-          };
-
           luaConfigPost = builtins.readFile ./_config/lua/lua-config-post.lua;
         }
 
-        (import ./_config/lang.nix { inherit pkgs lib; })
-        (import ./_config/git.nix)
-        (import ./_config/mini.nix)
+        (import ./_config/keymaps)
+        (import ./_config/autocomplete.nix { inherit lib; })
+        (import ./_config/diagnostics.nix)
         (import ./_config/extra-plugins.nix { inherit pkgs; })
-        (import ./_config/snacks.nix { inherit pkgs; })
-        (import ./_config/lualine.nix)
-        (import ./_config/noice.nix)
-        (import ./_config/which-key.nix)
-        (import ./_config/keymaps.nix)
+        (import ./_config/git.nix)
+        (import ./_config/languages.nix)
+        (import ./_config/lsp.nix)
         (import ./_config/lua-config-rc.nix { inherit pkgs lib; })
+        (import ./_config/lualine.nix)
+        (import ./_config/mini.nix)
+        (import ./_config/snacks.nix { inherit pkgs; })
+        (import ./_config/treesitter.nix { inherit pkgs; })
+        (import ./_config/ui.nix)
+        (import ./_config/utility.nix)
+        (import ./_config/which-key.nix)
       ];
     in
     {
