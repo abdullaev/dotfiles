@@ -1,6 +1,13 @@
 [
   {
     mode = "n";
+    key = "<leader>sp";
+    action = "function() Snacks.picker.pickers() end";
+    lua = true;
+    desc = "Pickers";
+  }
+  {
+    mode = "n";
     key = "<leader><leader>";
     action = "function() Snacks.picker.smart() end";
     lua = true;
@@ -226,6 +233,13 @@
   {
     mode = "n";
     key = "<leader>sR";
+    action = "function() Snacks.picker.resume() end";
+    lua = true;
+    desc = "Resume";
+  }
+  {
+    mode = "n";
+    key = "<leader>`";
     action = "function() Snacks.picker.resume() end";
     lua = true;
     desc = "Resume";
