@@ -14,6 +14,10 @@
       };
     };
 
+    nvim-ufo = {
+      enable = true;
+    };
+
     breadcrumbs = {
       enable = true;
       lualine.winbar.alwaysRender = false;

@@ -11,8 +11,6 @@
           viAlias = true;
           vimAlias = true;
 
-          lazy.enable = true;
-
           theme = {
             enable = true;
             name = "catppuccin";
@@ -29,6 +27,8 @@
             winborder = "rounded";
             complete = "";
             wildchar = 0;
+            foldlevel = 99;
+            foldlevelstart = 99;
           };
 
           undoFile.enable = true;
