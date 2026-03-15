@@ -16,8 +16,7 @@
         modes = {
           symbols = {
             win = {
-              position = "left";
-              size = 0.25;
+              position = "bottom";
             };
           };
         };

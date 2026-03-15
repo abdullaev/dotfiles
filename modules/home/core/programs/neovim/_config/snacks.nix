@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, lib }:
 {
   utility.snacks-nvim = {
     enable = true;
@@ -59,11 +59,13 @@
         sources = {
           explorer = {
             hidden = true;
+            ignored = true;
+            auto_close = true;
+            jump = {
+              close = true;
+            };
             layout = {
-              layout = {
-                position = "right";
-                width = 0.25;
-              };
+              preset = "vertical";
             };
           };
 

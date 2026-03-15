@@ -52,7 +52,7 @@
         (import ./_config/lua-config-rc.nix { inherit pkgs lib; })
         (import ./_config/lualine.nix)
         (import ./_config/mini.nix)
-        (import ./_config/snacks.nix { inherit pkgs; })
+        (import ./_config/snacks.nix { inherit pkgs lib; })
         (import ./_config/treesitter.nix { inherit pkgs; })
         (import ./_config/ui.nix)
         (import ./_config/utility.nix)
