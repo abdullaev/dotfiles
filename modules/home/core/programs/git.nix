@@ -16,6 +16,8 @@
             email = user.email;
           };
           diff.tool = "vimdiff";
+          rerere.enabled = true;
+          merge.conflictStyle = "zdiff3";
         };
       };
     };

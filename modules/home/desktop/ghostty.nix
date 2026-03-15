@@ -14,11 +14,18 @@
         enableZshIntegration = true;
         enableFishIntegration = true;
         settings = {
+          window-width = 180;
+          window-height = 48;
           window-padding-x = 0;
           window-padding-y = 0;
           window-padding-balance = true;
-          adjust-cursor-thickness = 2;
+
+          window-inherit-working-directory = false;
+          tab-inherit-working-directory = true;
+          split-inherit-working-directory = true;
+
           font-family = "monospace";
+          font-size = 14;
           font-codepoint-map = [
             "U+E000-U+F8FF=Symbols Nerd Font"
             "U+F0000-U+FFFFD=Symbols Nerd Font"
@@ -27,21 +34,20 @@
             "U+2705=emoji"
             "U+274C=emoji"
           ];
-          adjust-icon-height = "-50%";
-          font-size = 14;
-          app-notifications = false;
-          maximize = true;
-          window-width = 180;
-          window-height = 48;
-          click-repeat-interval = 0;
 
-          keybind = [ ];
+          adjust-icon-height = "-50%";
+          adjust-cursor-thickness = 2;
+
+          click-repeat-interval = 0;
+          app-notifications = false;
 
           custom-shader-animation = "always";
           custom-shader = [
             "shaders/cursor_warp.glsl"
             "shaders/ripple_cursor.glsl"
           ];
+
+          keybind = [ ];
         };
       };
 

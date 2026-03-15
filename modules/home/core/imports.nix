@@ -23,5 +23,6 @@
     ripgrep
     gh
     jq
+    cava
   ];
 }

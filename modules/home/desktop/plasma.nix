@@ -60,6 +60,10 @@
           };
         };
 
+        krunner = {
+          position = "center";
+        };
+
         kscreenlocker = {
           appearance = {
             inherit wallpaper;
@@ -113,11 +117,14 @@
                     iconSpacing = "medium";
                   };
                   launchers = [
+                    "applications:org.kde.dolphin.desktop"
                     "applications:firefox.desktop"
                     "applications:com.mitchellh.ghostty.desktop"
                     "applications:org.telegram.desktop.desktop"
                     "applications:discord.desktop"
                     "applications:element-desktop.desktop"
+                    "applications:org.qbittorrent.qBittorrent.desktop"
+                    "applications:mpv.desktop"
                     "applications:steam.desktop"
                   ];
                 };
