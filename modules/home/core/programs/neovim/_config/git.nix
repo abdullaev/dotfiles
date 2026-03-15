@@ -1,12 +1,5 @@
 {
   git = {
-    enable = true;
-
-    git-conflict.enable = false;
-    gitsigns.enable = false;
-    hunk-nvim.enable = false;
-    vim-fugitive.enable = false;
-
     neogit = {
       enable = true;
       mappings = {
