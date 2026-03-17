@@ -28,7 +28,7 @@
           ];
 
           monospace = [
-            "PragmataPro Mono Liga"
+            "PragmataPro Mono"
           ];
 
           emoji = [
@@ -43,7 +43,7 @@
             <alias>
               <family>ui-monospace</family>
               <prefer>
-                <family>PragmataPro Mono Liga</family>
+                <family>PragmataPro Mono</family>
               </prefer>
             </alias>
           </fontconfig>
