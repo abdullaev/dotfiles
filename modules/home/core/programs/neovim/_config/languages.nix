@@ -10,7 +10,7 @@
       treesitter.enable = true;
       lsp.enable = true;
       extraDiagnostics.enable = true;
-      format.enable = true;
+      format.enable = false;
     };
     bash = {
       enable = true;
