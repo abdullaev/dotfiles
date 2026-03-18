@@ -66,7 +66,7 @@
     html = {
       enable = true;
       treesitter.enable = true;
-      lsp.enable = false;
+      lsp.enable = true;
       format.enable = false;
     };
     json = {

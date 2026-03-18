@@ -11,6 +11,11 @@
           hover.enabled = false;
         };
         popupmenu.enabled = false;
+        views = {
+          popup.scrollbar = false;
+          popupmenu.scrollbar = false;
+          split.scrollbar = false;
+        };
       };
     };
 
