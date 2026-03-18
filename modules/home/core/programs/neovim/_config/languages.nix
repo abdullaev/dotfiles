@@ -9,7 +9,7 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      extraDiagnostics.enable = true;
+      extraDiagnostics.enable = false;
       format.enable = false;
     };
     bash = {
@@ -28,7 +28,7 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      format.enable = true;
+      format.enable = false;
     };
     elixir = {
       enable = true;
@@ -66,14 +66,14 @@
     html = {
       enable = true;
       treesitter.enable = true;
-      lsp.enable = true;
-      format.enable = true;
+      lsp.enable = false;
+      format.enable = false;
     };
     json = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      format.enable = true;
+      format.enable = false;
     };
     just = {
       enable = true;
@@ -90,7 +90,7 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      format.enable = true;
+      format.enable = false;
     };
     nix = {
       enable = true;
@@ -131,15 +131,15 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      extraDiagnostics.enable = true;
+      extraDiagnostics.enable = false;
       format.enable = true;
     };
     svelte = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      extraDiagnostics.enable = true;
-      format.enable = true;
+      extraDiagnostics.enable = false;
+      format.enable = false;
     };
     terraform = {
       enable = true;
@@ -150,8 +150,8 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      format.enable = true;
-      extraDiagnostics.enable = true;
+      format.enable = false;
+      extraDiagnostics.enable = false;
     };
     typst = {
       enable = true;
