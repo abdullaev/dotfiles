@@ -19,16 +19,27 @@
           };
 
           options = {
+            cursorline = false;
+
             scrolloff = 10;
+            sidescrolloff = 5;
+
             tabstop = 2;
             shiftwidth = 2;
+            softtabstop = 2;
+            expandtab = true;
+            smartindent = true;
             autoindent = true;
-            cursorline = false;
+
+            ignorecase = true;
+            smartcase = true;
+
+            foldlevel = 99;
+            foldlevelstart = 99;
+
             winborder = "rounded";
             complete = "";
             wildchar = 0;
-            foldlevel = 99;
-            foldlevelstart = 99;
           };
 
           undoFile.enable = true;

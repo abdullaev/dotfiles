@@ -4,6 +4,5 @@
     ++ (import ./git.nix)
     ++ (import ./lsp.nix)
     ++ (import ./terminal.nix)
-    ++ (import ./windows.nix)
-    ++ (import ./edit.nix);
+    ++ (import ./windows.nix);
 }

@@ -1,3 +1,5 @@
+vim.opt.iskeyword:append("-")
+
 -- DAP symbols
 vim.fn.sign_define("DapBreakpoint", { text = " ", texthl = "DiagnosticError" })
 vim.fn.sign_define("DapBreakpointCondition", { text = " ", texthl = "DiagnosticError" })
@@ -50,12 +52,4 @@ _G.toggle_snacks_indent_chunk = function()
 	end
 
 	Snacks.notify((enabled and "Enabled" or "Disabled") .. " indent chunk display", { title = "Snacks Indent" })
-end
-
--- Helper for inserting char at end of line while keeping cursor position
-_G.insert_char_at_end_of_line = function(char)
-	local line = vim.api.nvim_get_current_line()
-	local col = vim.api.nvim_win_get_cursor(0)[2]
-	local distance = vim.fn.strchars(line:sub(col + 1))
-	return ("<Right>"):rep(distance) .. char .. ("<Left>"):rep(distance + 1)
 end

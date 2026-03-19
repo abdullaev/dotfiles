@@ -189,6 +189,7 @@
         };
         zoom = {
           show = {
+            statusline = true;
             tabline = false;
           };
         };
@@ -197,6 +198,10 @@
             transparent = false;
             blend = 80;
           };
+        };
+        show = {
+          statusline = true;
+          tabline = false;
         };
       };
     };
