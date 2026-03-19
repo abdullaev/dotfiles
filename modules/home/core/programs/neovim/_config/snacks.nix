@@ -26,6 +26,13 @@
       };
       notifier = {
         enabled = true;
+        icons = {
+          error = "";
+          warn = "";
+          info = "";
+          debug = "";
+          trace = "";
+        };
       };
       explorer = {
         enabled = true;
@@ -177,13 +184,18 @@
       zen = {
         toggles = {
           dim = false;
-          git_signs = true;
           mini_diff_signs = true;
           diagnostics = true;
         };
         zoom = {
           show = {
             tabline = false;
+          };
+        };
+        win = {
+          backdrop = {
+            transparent = false;
+            blend = 80;
           };
         };
       };
