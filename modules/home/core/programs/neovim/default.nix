@@ -44,7 +44,7 @@
 
         (import ./_config/keymaps)
         (import ./_config/autocomplete.nix { inherit lib; })
-        (import ./_config/diagnostics.nix { inherit pkgs lib; })
+        (import ./_config/diagnostics.nix)
         (import ./_config/formatters.nix { inherit pkgs lib; })
         (import ./_config/git.nix)
         (import ./_config/languages.nix)

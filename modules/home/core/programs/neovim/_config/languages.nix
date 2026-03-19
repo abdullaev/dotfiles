@@ -96,7 +96,7 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      extraDiagnostics.enable = true;
+      extraDiagnostics.enable = false;
     };
     ocaml = {
       enable = true;
