@@ -92,27 +92,33 @@
         typescriptreact = lib.generators.mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
+
+        vue = lib.generators.mkLuaInline ''
+          { "biome", "prettierd", "oxfmt", stop_after_first = true }
+        '';
+        svelte = lib.generators.mkLuaInline ''
+          { "biome", "prettierd", stop_after_first = true }
+        '';
+        astro = lib.generators.mkLuaInline ''
+          { "biome", "prettierd", stop_after_first = true }
+        '';
+
+        graphql = lib.generators.mkLuaInline ''
+          { "biome", "prettierd", "oxfmt", stop_after_first = true }
+        '';
         json = lib.generators.mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
         jsonc = lib.generators.mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        json5 = lib.generators.mkLuaInline ''
-          { "prettierd", "oxfmt", stop_after_first = true }
+        html = lib.generators.mkLuaInline ''
+          { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
         css = lib.generators.mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        scss = lib.generators.mkLuaInline ''
-          { "prettierd", "oxfmt", stop_after_first = true }
-        '';
-        less = lib.generators.mkLuaInline ''
-          { "prettierd", "oxfmt", stop_after_first = true }
-        '';
-        html = lib.generators.mkLuaInline ''
-          { "prettierd", "oxfmt", stop_after_first = true }
-        '';
+
         yaml = lib.generators.mkLuaInline ''
           { "prettierd", "oxfmt", stop_after_first = true }
         '';
@@ -122,20 +128,9 @@
         mdx = lib.generators.mkLuaInline ''
           { "prettierd", "oxfmt", stop_after_first = true }
         '';
-        graphql = lib.generators.mkLuaInline ''
-          { "biome", "prettierd", "oxfmt", stop_after_first = true }
-        '';
-        vue = lib.generators.mkLuaInline ''
-          { "prettierd", "oxfmt", stop_after_first = true }
-        '';
+
         toml = lib.generators.mkLuaInline ''
           { "oxfmt", stop_after_first = true }
-        '';
-        svelte = lib.generators.mkLuaInline ''
-          { "prettierd", stop_after_first = true }
-        '';
-        astro = lib.generators.mkLuaInline ''
-          { "prettierd", stop_after_first = true }
         '';
       };
     };

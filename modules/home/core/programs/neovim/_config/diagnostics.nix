@@ -1,39 +1,4 @@
 { pkgs, lib }:
-let
-  oxlintConfigFiles = [
-    ".oxlintrc.json"
-    ".oxlintrc.jsonc"
-    "oxlint.config.ts"
-  ];
-
-  biomeConfigFiles = [
-    "biome.json"
-    "biome.jsonc"
-    ".biome.json"
-    ".biome.jsonc"
-  ];
-
-  eslintConfigFiles = [
-    ".eslintrc"
-    ".eslintrc.js"
-    ".eslintrc.cjs"
-    ".eslintrc.json"
-    ".eslintrc.yml"
-    ".eslintrc.yaml"
-    "eslint.config.js"
-    "eslint.config.cjs"
-    "eslint.config.mjs"
-    "eslint.config.ts"
-    "eslint.config.mts"
-    "eslint.config.cts"
-  ];
-
-  jsTsLinters = [
-    "oxlint"
-    "eslint_d"
-    "biomejs"
-  ];
-in
 {
   extraPackages = [
     pkgs.biome
@@ -61,7 +26,11 @@ in
           ];
           ignore_exitcode = true;
           stdin = false;
-          required_files = oxlintConfigFiles;
+          required_files = [
+            ".oxlintrc.json"
+            ".oxlintrc.jsonc"
+            "oxlint.config.ts"
+          ];
         };
         biomejs = {
           cmd = lib.meta.getExe pkgs.biome;
@@ -69,7 +38,12 @@ in
           args = [ "lint" ];
           ignore_exitcode = true;
           stdin = false;
-          required_files = biomeConfigFiles;
+          required_files = [
+            "biome.json"
+            "biome.jsonc"
+            ".biome.json"
+            ".biome.jsonc"
+          ];
         };
         eslint_d = {
           cmd = lib.meta.getExe pkgs.eslint_d;
@@ -83,15 +57,65 @@ in
           ];
           ignore_exitcode = true;
           stdin = true;
-          required_files = eslintConfigFiles;
+          required_files = [
+            ".eslintrc"
+            ".eslintrc.js"
+            ".eslintrc.cjs"
+            ".eslintrc.json"
+            ".eslintrc.yml"
+            ".eslintrc.yaml"
+            "eslint.config.js"
+            "eslint.config.cjs"
+            "eslint.config.mjs"
+            "eslint.config.ts"
+            "eslint.config.mts"
+            "eslint.config.cts"
+          ];
         };
       };
 
       linters_by_ft = {
-        javascript = jsTsLinters;
-        javascriptreact = jsTsLinters;
-        typescript = jsTsLinters;
-        typescriptreact = jsTsLinters;
+        javascript = [
+          "oxlint"
+          "eslint_d"
+          "biomejs"
+        ];
+        javascriptreact = [
+          "oxlint"
+          "eslint_d"
+          "biomejs"
+        ];
+        typescript = [
+          "oxlint"
+          "eslint_d"
+          "biomejs"
+        ];
+        typescriptreact = [
+          "oxlint"
+          "eslint_d"
+          "biomejs"
+        ];
+        vue = [
+          "oxlint"
+          "biomejs"
+          "eslint_d"
+        ];
+        svelte = [
+          "oxlint"
+          "biomejs"
+          "eslint_d"
+        ];
+        astro = [
+          "oxlint"
+          "biomejs"
+          "eslint_d"
+        ];
+
+        json = [ "biomejs" ];
+        jsonc = [ "biomejs" ];
+        css = [ "biomejs" ];
+        graphql = [ "biomejs" ];
+        html = [ "biomejs" ];
       };
     };
   };

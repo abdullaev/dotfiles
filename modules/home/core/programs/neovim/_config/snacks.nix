@@ -18,6 +18,9 @@
       input = {
         enabled = true;
       };
+      image = {
+        enabled = false;
+      };
       terminal = {
         enabled = true;
       };
