@@ -5,7 +5,6 @@
     nvidia
     bluetooth
     steam
-    firefox
     plasma
     vpn
     fonts
