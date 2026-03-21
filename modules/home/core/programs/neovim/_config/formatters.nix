@@ -1,4 +1,12 @@
 { pkgs, lib }:
+let
+  inherit (lib.generators) mkLuaInline;
+  inherit (lib.meta) getExe;
+
+  fromNodeModulesOrPackage = pkg: bin: mkLuaInline ''
+    require("conform.util").find_executable({ "node_modules/.bin/${bin}" }, ${builtins.toJSON (getExe pkg)})
+  '';
+in
 {
   extraPackages = [
     pkgs.biome
@@ -11,13 +19,13 @@
     setupOpts = {
       formatters = {
         oxfmt = {
-          command = lib.meta.getExe pkgs.oxfmt;
+          command = fromNodeModulesOrPackage pkgs.oxfmt "oxfmt";
           args = [
             "--stdin-filepath"
             "$FILENAME"
           ];
           stdin = true;
-          cwd = lib.generators.mkLuaInline ''
+          cwd = mkLuaInline ''
             require("conform.util").root_file({
               ".oxfmtrc.json",
               ".oxfmtrc.jsonc",
@@ -27,7 +35,7 @@
         };
 
         biome = {
-          command = lib.meta.getExe pkgs.biome;
+          command = fromNodeModulesOrPackage pkgs.biome "biome";
           args = [
             "check"
             "--write"
@@ -36,7 +44,7 @@
           ];
           stdin = true;
           require_cwd = true;
-          cwd = lib.generators.mkLuaInline ''
+          cwd = mkLuaInline ''
             require("conform.util").root_file({
               "biome.json",
               "biome.jsonc",
@@ -47,7 +55,7 @@
         };
 
         prettierd = {
-          command = lib.meta.getExe pkgs.prettierd;
+          command = fromNodeModulesOrPackage pkgs.prettierd "prettierd";
           args = [
             "--stdin"
             "--stdin-filepath"
@@ -55,7 +63,7 @@
           ];
           stdin = true;
           require_cwd = true;
-          cwd = lib.generators.mkLuaInline ''
+          cwd = mkLuaInline ''
             require("conform.util").root_file({
               ".prettierrc",
               ".prettierrc.json",
@@ -77,56 +85,56 @@
       };
 
       formatters_by_ft = {
-        javascript = lib.generators.mkLuaInline ''
+        javascript = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        javascriptreact = lib.generators.mkLuaInline ''
+        javascriptreact = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        typescript = lib.generators.mkLuaInline ''
+        typescript = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        typescriptreact = lib.generators.mkLuaInline ''
+        typescriptreact = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
 
-        vue = lib.generators.mkLuaInline ''
+        vue = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        svelte = lib.generators.mkLuaInline ''
+        svelte = mkLuaInline ''
           { "biome", "prettierd", stop_after_first = true }
         '';
-        astro = lib.generators.mkLuaInline ''
+        astro = mkLuaInline ''
           { "biome", "prettierd", stop_after_first = true }
         '';
 
-        graphql = lib.generators.mkLuaInline ''
+        graphql = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        json = lib.generators.mkLuaInline ''
+        json = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        jsonc = lib.generators.mkLuaInline ''
+        jsonc = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        html = lib.generators.mkLuaInline ''
+        html = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
-        css = lib.generators.mkLuaInline ''
+        css = mkLuaInline ''
           { "biome", "prettierd", "oxfmt", stop_after_first = true }
         '';
 
-        yaml = lib.generators.mkLuaInline ''
+        yaml = mkLuaInline ''
           { "prettierd", "oxfmt", stop_after_first = true }
         '';
-        markdown = lib.generators.mkLuaInline ''
+        markdown = mkLuaInline ''
           { "prettierd", "oxfmt", stop_after_first = true }
         '';
-        mdx = lib.generators.mkLuaInline ''
+        mdx = mkLuaInline ''
           { "prettierd", "oxfmt", stop_after_first = true }
         '';
 
-        toml = lib.generators.mkLuaInline ''
+        toml = mkLuaInline ''
           { "oxfmt", stop_after_first = true }
         '';
       };
