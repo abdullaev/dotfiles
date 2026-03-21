@@ -11,7 +11,8 @@
       setupOpts = {
         disable_hint = true;
         disable_context_highlighting = false;
-        graph_style = "kitty";
+        console_timeout = 15000;
+        graph_style = "unicode";
         signs = {
           item = [
             ""
