@@ -59,7 +59,7 @@
         (import ./_config/formatters.nix { inherit pkgs lib; })
         (import ./_config/git.nix)
         (import ./_config/languages.nix)
-        (import ./_config/lsp.nix)
+        (import ./_config/lsp { inherit pkgs lib; })
         (import ./_config/lua-config-rc.nix { inherit pkgs lib; })
         (import ./_config/lualine.nix)
         (import ./_config/mini.nix)

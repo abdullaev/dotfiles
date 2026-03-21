@@ -149,7 +149,10 @@
     ts = {
       enable = true;
       treesitter.enable = true;
-      lsp.enable = true;
+      lsp = {
+        enable = true;
+        servers = [ ];
+      };
       format.enable = false;
       extraDiagnostics.enable = false;
     };

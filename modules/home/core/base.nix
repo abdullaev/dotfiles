@@ -22,6 +22,7 @@
         lsof
         nil
         sqlite
+        devenv
         inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };

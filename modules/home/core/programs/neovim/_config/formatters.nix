@@ -31,9 +31,6 @@
           args = [
             "check"
             "--write"
-            "--formatter-enabled=true"
-            "--linter-enabled=false"
-            "--assist-enabled=true"
             "--stdin-file-path"
             "$FILENAME"
           ];
