@@ -1,32 +1,30 @@
 { pkgs, lib }:
-lib.recursiveUpdate
-  {
-    lsp = {
+lib.recursiveUpdate {
+  lsp = {
+    enable = true;
+    formatOnSave = true;
+
+    mappings.toggleFormatOnSave = "\\f";
+
+    trouble = {
       enable = true;
-      formatOnSave = true;
-
-      mappings.toggleFormatOnSave = "\\f";
-
-      trouble = {
-        enable = true;
-        mappings = {
-          documentDiagnostics = "<leader>xd";
-          lspReferences = "<leader>xr";
-          workspaceDiagnostics = "<leader>xw";
-        };
-        setupOpts = {
-          modes = {
-            symbols = {
-              win = {
-                position = "bottom";
-              };
+      mappings = {
+        documentDiagnostics = "<leader>xd";
+        lspReferences = "<leader>xr";
+        workspaceDiagnostics = "<leader>xw";
+      };
+      setupOpts = {
+        modes = {
+          symbols = {
+            win = {
+              position = "bottom";
             };
           };
-          preview = {
-            border = false;
-          };
+        };
+        preview = {
+          border = false;
         };
       };
     };
-  }
-  (import ./tsgo.nix { inherit pkgs lib; })
+  };
+} (import ./tsgo.nix { inherit pkgs lib; })

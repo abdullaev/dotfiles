@@ -41,6 +41,11 @@
       treesitter.enable = true;
       lsp.enable = true;
     };
+    glsl = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
     go = {
       enable = true;
       treesitter.enable = true;
@@ -86,6 +91,11 @@
       lsp.enable = true;
       format.enable = true;
     };
+    make = {
+      enable = true;
+      treesitter.enable = true;
+      format.enable = true;
+    };
     markdown = {
       enable = true;
       treesitter.enable = true;
@@ -96,6 +106,7 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+      format.enable = false;
       extraDiagnostics.enable = false;
     };
     ocaml = {
@@ -146,12 +157,18 @@
       treesitter.enable = true;
       lsp.enable = true;
     };
+    toml = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      format.enable = false;
+    };
     ts = {
       enable = true;
       treesitter.enable = true;
       lsp = {
         enable = true;
-        servers = [ ];
+        servers = [ "tsgo" ];
       };
       format.enable = false;
       extraDiagnostics.enable = false;
@@ -168,6 +185,11 @@
       lsp.enable = true;
     };
     wgsl = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
+    xml = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
