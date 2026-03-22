@@ -149,7 +149,7 @@
             { layout = "ru"; }
           ];
           options = [
-            "grp:win_space_toggle"
+            "grp:alt_shift_toggle"
             "ctrl:nocaps"
           ];
         };
