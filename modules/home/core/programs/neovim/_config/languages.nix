@@ -24,6 +24,11 @@
       lsp.enable = true;
       dap.enable = true;
     };
+    cmake = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
     css = {
       enable = true;
       treesitter.enable = true;
