@@ -114,7 +114,13 @@
   {
     mode = "n";
     key = "<leader>q";
-    action = "<cmd>qa<CR>";
+    action = "<cmd>qa!<CR>";
     desc = "Quit all";
+  }
+  {
+    mode = "n";
+    key = "<leader>w";
+    action = "<cmd>wa<CR>";
+    desc = "Write all";
   }
 ]
