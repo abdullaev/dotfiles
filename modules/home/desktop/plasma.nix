@@ -163,18 +163,6 @@
           };
           temperature.night = 4000;
         };
-
-        startup.startupScript."ghostty-daemon" = {
-          runAlways = true;
-          priority = 8;
-          text = ''
-            ${pkgs.ghostty}/bin/ghostty \
-              --gtk-single-instance=true \
-              --initial-window=false \
-              --quit-after-last-window-closed=false \
-              >/dev/null 2>&1 &
-          '';
-        };
       };
 
       gtk = {
