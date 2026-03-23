@@ -21,6 +21,13 @@
   }
   {
     mode = "n";
+    key = "<leader>xx";
+    action = "function() toggle_qf_or_loclist() end";
+    lua = true;
+    desc = "Toggle Quickfix/Location List";
+  }
+  {
+    mode = "n";
     key = "\\t";
     action = "function() toggle_diagnostic_virtual_text() end";
     lua = true;
