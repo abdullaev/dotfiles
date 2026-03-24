@@ -1,6 +1,7 @@
 {
   flake.modules.homeManager.plasma =
     {
+      config,
       pkgs,
       ...
     }:
@@ -174,6 +175,7 @@
           };
           name = "catppuccin-mocha-lavender-standard";
         };
+        gtk4.theme = config.gtk.theme;
         iconTheme = {
           name = "breeze";
           package = pkgs.kdePackages.breeze-icons;
