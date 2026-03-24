@@ -1,15 +1,6 @@
 [
   {
     mode = [
-      "t"
-      "i"
-    ];
-    key = "<C-w>";
-    action = "<C-\\><C-n><C-w>";
-    desc = "Window actions";
-  }
-  {
-    mode = [
       "n"
       "t"
       "i"

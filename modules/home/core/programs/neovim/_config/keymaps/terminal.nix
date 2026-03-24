@@ -6,18 +6,6 @@
       "i"
       "x"
     ];
-    key = "<C-`>";
-    action = "function() Snacks.terminal.toggle(nil, { count = 0 }) end";
-    lua = true;
-    desc = "Toggle Terminal 0";
-  }
-  {
-    mode = [
-      "n"
-      "t"
-      "i"
-      "x"
-    ];
     key = "<C-1>";
     action = "function() Snacks.terminal.toggle(nil, { count = 1 }) end";
     lua = true;
