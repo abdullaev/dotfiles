@@ -33,7 +33,7 @@
             "U+274C=emoji"
           ];
 
-          adjust-icon-height = "-60%";
+          adjust-icon-height = "-55%";
           adjust-cursor-thickness = 2;
 
           click-repeat-interval = 0;
