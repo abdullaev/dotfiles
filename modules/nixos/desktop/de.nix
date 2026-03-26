@@ -1,14 +1,20 @@
 {
-  flake.modules.nixos.de = {
-    services.xserver.enable = true;
+  flake.modules.nixos.de =
+    { pkgs, ... }:
+    {
+      services.xserver.enable = true;
 
-    services.pulseaudio.enable = false;
-    security.rtkit.enable = true;
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
+      services.pulseaudio.enable = false;
+      security.rtkit.enable = true;
+      services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+      };
+
+      environment.systemPackages = with pkgs; [
+        wl-clipboard
+      ];
     };
-  };
 }
