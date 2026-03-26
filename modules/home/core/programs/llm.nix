@@ -9,6 +9,19 @@
       llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
     in
     {
+      programs.mcp = {
+        enable = true;
+        servers = {
+          playwright = {
+            command = "${pkgs.playwright-mcp}/bin/mcp-server-playwright";
+            args = [
+              "--headless"
+              "--isolated"
+            ];
+          };
+        };
+      };
+
       programs.opencode = {
         enable = true;
         enableMcpIntegration = true;
