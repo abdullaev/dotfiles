@@ -24,5 +24,6 @@
     gh
     jq
     cava
+    process-compose
   ];
 }
