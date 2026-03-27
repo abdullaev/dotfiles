@@ -35,4 +35,16 @@
     action = "<cmd>wa<CR>";
     desc = "Write all";
   }
+  {
+    mode = "n";
+    key = "<X1Mouse>";
+    action = "<C-O>";
+    desc = "Jump backward";
+  }
+  {
+    mode = "n";
+    key = "<X2Mouse>";
+    action = "<C-I>";
+    desc = "Jump forward";
+  }
 ]
