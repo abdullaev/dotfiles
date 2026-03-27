@@ -85,6 +85,11 @@
       lsp.enable = true;
       format.enable = false;
     };
+    jinja = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
     json = {
       enable = true;
       treesitter.enable = true;
