@@ -35,6 +35,12 @@
       lsp.enable = true;
       format.enable = false;
     };
+    dart = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      flutter-tools.enable = false;
+    };
     elixir = {
       enable = true;
       treesitter.enable = true;
