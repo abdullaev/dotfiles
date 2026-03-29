@@ -126,6 +126,7 @@
                     "applications:element-desktop.desktop"
                     "applications:org.qbittorrent.qBittorrent.desktop"
                     "applications:mpv.desktop"
+                    "applications:aseprite.desktop"
                     "applications:steam.desktop"
                   ];
                 };
