@@ -21,10 +21,10 @@
   }
   {
     mode = "n";
-    key = "<leader>xx";
-    action = "function() toggle_qf_or_loclist() end";
+    key = "<leader>q";
+    action = "function() toggle_quickfix() end";
     lua = true;
-    desc = "Toggle Quickfix/Location List";
+    desc = "Quickfix";
   }
   {
     mode = "n";

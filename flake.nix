@@ -43,9 +43,9 @@
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
-    let
-      outputs = flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
-    in
-    removeAttrs outputs [ "modules" ];
+    inputs@{
+      flake-parts,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

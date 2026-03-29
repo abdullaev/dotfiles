@@ -54,25 +54,15 @@ _G.toggle_snacks_indent_chunk = function()
 	Snacks.notify((enabled and "Enabled" or "Disabled") .. " indent chunk display", { title = "Snacks Indent" })
 end
 
-_G.toggle_qf_or_loclist = function()
-	local current_tab = vim.api.nvim_tabpage_get_number(0)
-	for _, win in ipairs(vim.fn.getwininfo()) do
-		if win.tabnr == current_tab and win.quickfix == 1 then
-			if win.loclist == 1 then
-				vim.cmd.lclose()
-				return
-			end
+_G.toggle_quickfix = function()
+	local windows = vim.fn.getwininfo()
+	for _, win in pairs(windows) do
+		if win["quickfix"] == 1 then
 			vim.cmd.cclose()
 			return
 		end
 	end
-	if #vim.fn.getloclist(0) > 0 then
-		vim.cmd.lopen()
-		return
-	end
-	if #vim.fn.getqflist() > 0 then
+	if not vim.tbl_isempty(vim.fn.getqflist()) then
 		vim.cmd.copen()
-		return
 	end
-	vim.notify("Quickfix and loclists are empty", vim.log.levels.INFO)
 end
