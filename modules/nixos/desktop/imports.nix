@@ -6,6 +6,7 @@
     bluetooth
     steam
     plasma
+    keyd
     vpn
     fonts
   ];

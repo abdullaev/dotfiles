@@ -152,7 +152,6 @@
           ];
           options = [
             "grp:alt_shift_toggle"
-            "ctrl:nocaps"
           ];
         };
 
