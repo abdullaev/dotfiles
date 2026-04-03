@@ -5,9 +5,6 @@
       pkgs,
       ...
     }:
-    let
-      wallpaper = ../../../images/wallpaper.png;
-    in
     {
       home.packages = [
         (pkgs.catppuccin-kde.override {
@@ -47,7 +44,7 @@
         };
 
         workspace = {
-          inherit wallpaper;
+          wallpaper = ../../../images/wallpaper.png;
           colorScheme = "CatppuccinMochaLavender";
           iconTheme = "breeze";
           cursor = {
@@ -66,9 +63,7 @@
         };
 
         kscreenlocker = {
-          appearance = {
-            inherit wallpaper;
-          };
+          appearance.wallpaper = config.programs.plasma.workspace.wallpaper;
           autoLock = true;
           timeout = 30;
           passwordRequired = true;
