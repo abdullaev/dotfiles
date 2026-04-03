@@ -1,24 +1,34 @@
 {
-  flake.modules.homeManager.git =
-    { lib, user, ... }:
+  den.aspects.git = { user, ... }:
+    let
+      gpg = user.gpg or { };
+      gpgEnable = gpg.enable or false;
+      signingKey = gpg.signingKey or null;
+      signByDefault = gpg.signByDefault or false;
+      fullName = user.fullName or user.userName;
+      email = user.email or "";
+    in
     {
-      programs.git = {
-        enable = true;
-        signing = lib.mkIf user.gpg.enable {
-          format = "openpgp";
-          key = user.gpg.signingKey;
-          signByDefault = user.gpg.signByDefault && user.gpg.signingKey != null;
-        };
-        settings = {
-          init.defaultBranch = "main";
-          user = {
-            name = user.fullName;
-            email = user.email;
+      homeManager = { lib, ... }:
+        {
+          programs.git = {
+            enable = true;
+            signing = lib.mkIf gpgEnable {
+              format = "openpgp";
+              key = signingKey;
+              signByDefault = signByDefault && signingKey != null;
+            };
+            settings = {
+              init.defaultBranch = "main";
+              user = {
+                name = fullName;
+                email = email;
+              };
+              diff.tool = "vimdiff";
+              rerere.enabled = true;
+              merge.conflictStyle = "zdiff3";
+            };
           };
-          diff.tool = "vimdiff";
-          rerere.enabled = true;
-          merge.conflictStyle = "zdiff3";
         };
-      };
     };
 }

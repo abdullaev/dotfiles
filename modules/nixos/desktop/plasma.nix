@@ -1,6 +1,5 @@
 {
-  flake.modules.nixos.plasma =
-    {
+  den.aspects.plasma.nixos = {
       config,
       pkgs,
       ...

@@ -1,4 +1,4 @@
 { inputs, ... }:
 {
-  imports = [ inputs.flake-parts.flakeModules.modules ];
+  imports = [ inputs.den.flakeModule ];
 }

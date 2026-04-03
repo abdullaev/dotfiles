@@ -7,9 +7,9 @@
       ...
     }:
     let
-      hostPackages = lib.pipe config.nixosHosts [
-        (lib.filterAttrs (_: host: host.system == system))
-        (lib.mapAttrsToList (_: host: host.finalPackage))
+      hostPackages = lib.pipe (config.flake.nixosConfigurations or { }) [
+        (lib.filterAttrs (_: host: host.pkgs.stdenv.hostPlatform.system == system))
+        (lib.mapAttrsToList (_: host: host.config.system.build.toplevel))
       ];
     in
     lib.optionalAttrs (hostPackages != [ ]) {

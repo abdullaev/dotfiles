@@ -1,7 +1,6 @@
-{ config, ... }:
+{ den, ... }:
 {
-  flake.modules.nixos.core.imports = with config.flake.modules.nixos; [
-    stateVersion
+  den.aspects.nixosCore.includes = with den.aspects; [
     bootloader
     nix
     networking

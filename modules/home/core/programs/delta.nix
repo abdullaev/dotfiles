@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.delta = {
+  den.aspects.delta.homeManager = {
     programs.delta = {
       enable = true;
       enableGitIntegration = true;

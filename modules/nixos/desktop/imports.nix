@@ -1,13 +1,12 @@
-{ config, ... }:
+{ den, ... }:
 {
-  flake.modules.nixos.desktop.imports = with config.flake.modules.nixos; [
-    de
-    nvidia
-    bluetooth
-    steam
-    plasma
-    keyd
-    vpn
-    fonts
+  den.aspects.nixosDesktop.includes = [
+    den.aspects.de
+    den.aspects.nvidia
+    den.aspects.bluetooth
+    den.aspects.gaming
+    den.aspects.keyd
+    den.aspects.vpn
+    den.aspects.fonts
   ];
 }

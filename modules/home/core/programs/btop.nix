@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.btop =
-    { pkgs, ... }:
+  den.aspects.btop.homeManager = { pkgs, ... }:
     {
       programs.btop = {
         enable = true;

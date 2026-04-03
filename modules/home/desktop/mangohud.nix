@@ -1,9 +1,23 @@
 {
-  flake.modules.homeManager.mangohud = {
-    programs.mangohud = {
-      enable = true;
-    };
+  den.aspects.gaming.nixos = { pkgs, ... }: {
+    programs = {
+      steam = {
+        enable = true;
+        package = pkgs.steam.override {
+          extraEnv = {
+            MANGOHUD = "1";
+            GAMEMODERUN = "1";
+          };
+        };
+      };
 
-    catppuccin.mangohud.enable = true;
+      gamemode.enable = true;
+      gamescope.enable = true;
+    };
+  };
+
+  den.aspects.gamingHome.homeManager = {
+      programs.mangohud.enable = true;
+      catppuccin.mangohud.enable = true;
   };
 }

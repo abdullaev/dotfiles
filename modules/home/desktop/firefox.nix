@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.firefox =
-    { pkgs, ... }:
+  den.aspects.firefox.homeManager = { pkgs, ... }:
     {
       programs.firefox = {
         enable = true;

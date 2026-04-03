@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.nvidia = { config, ... }: {
+  den.aspects.nvidia.nixos = { config, ... }: {
     hardware.graphics.enable = true;
 
     boot.initrd.kernelModules = [ "nvidia" ];

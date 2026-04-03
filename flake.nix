@@ -8,6 +8,9 @@
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
     };
+    den = {
+      url = "github:vic/den";
+    };
     import-tree = {
       url = "github:vic/import-tree";
     };

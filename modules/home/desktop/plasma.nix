@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.plasma =
-    {
+  den.aspects.plasma.homeManager = {
       config,
       pkgs,
       ...

@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.llm =
-    {
+  den.aspects.llm.homeManager = {
       inputs,
       pkgs,
       ...

@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.ghostty =
-    { pkgs, ... }:
+  den.aspects.ghostty.homeManager = { pkgs, ... }:
     {
       home.file.".config/ghostty/shaders".source = pkgs.fetchFromGitHub {
         owner = "sahaj-b";

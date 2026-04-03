@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.jq = _: {
+  den.aspects.jq.homeManager = _: {
     programs.jq = {
       enable = true;
     };

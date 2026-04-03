@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.neovim =
-    {
+  den.aspects.neovim.homeManager = {
       pkgs,
       lib,
       ...

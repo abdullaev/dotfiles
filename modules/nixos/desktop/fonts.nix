@@ -1,6 +1,5 @@
 {
-  flake.modules.nixos.fonts =
-    { pkgs, ... }:
+  den.aspects.fonts.nixos = { pkgs, ... }:
     let
       pragmata-pro = pkgs.callPackage ../../../pkgs/pragmata-pro { };
     in

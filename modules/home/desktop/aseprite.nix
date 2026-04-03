@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.aseprite =
-    { lib, pkgs, ... }:
+  den.aspects.aseprite.homeManager = { lib, pkgs, ... }:
     let
       catppuccinMochaExtension = pkgs.fetchurl {
         url = "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-mocha.aseprite-extension";

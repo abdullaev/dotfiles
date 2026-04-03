@@ -1,6 +1,5 @@
 {
-  flake.modules.nixos.vpn =
-    { config, ... }:
+  den.aspects.vpn.nixos = { config, ... }:
     {
       networking.wg-quick.interfaces.awg0 = {
         type = "amneziawg";

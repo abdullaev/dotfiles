@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.networking = {
+  den.aspects.networking.nixos = {
     networking.nftables.enable = true;
     networking.networkmanager.enable = true;
 

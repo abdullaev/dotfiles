@@ -1,12 +1,14 @@
-{ config, ... }:
+{
+  den,
+  inputs,
+  lib,
+  ...
+}:
 let
   keys = import ../../../shared/keys.nix;
 in
 {
-  nixosHosts.vega = {
-    system = "x86_64-linux";
-
-    users.sqxt = {
+  den.hosts.x86_64-linux.vega.users.sqxt = {
       fullName = "Amir Abdullaev";
       email = "me@sqxt.dev";
       shell = "fish";
@@ -19,27 +21,59 @@ in
         keys.users.sqxt.ssh
       ];
       passwordSecret = "sqxt-at-vega";
-      groups = [
-        "networkmanager"
-        "wheel"
-      ];
-      extraHomeManagerModules = with config.flake.modules.homeManager; [
-        desktop
-      ];
     };
 
-    modules = [
-      ./_nixos
-    ]
-    ++ (with config.flake.modules.nixos; [
-      desktop
-    ]);
+  den.aspects.vega = {
+    includes = with den.aspects; [
+      nixosCore
+      nixosDesktop
+    ];
 
-    homeManagerModules = [
-      ./_home
-    ]
-    ++ (with config.flake.modules.homeManager; [
-      core
-    ]);
+    nixos.imports = [
+      inputs.agenix.nixosModules.default
+      inputs.disko.nixosModules.disko
+      ./_nixos
+    ];
+  };
+
+  den.aspects.sqxt = {
+    includes = with den; [
+      provides.define-user
+      provides.primary-user
+      (provides.user-shell "fish")
+      aspects.homeCore
+      aspects.homeDesktop
+      ({ user, ... }:
+        let
+          homeDirectory = user.homeDirectory or "/home/${user.userName}";
+          groups = user.groups or [ ];
+          authorizedKeys = user.authorizedKeys or [ ];
+          passwordSecret = user.passwordSecret or null;
+          linger = user.linger or true;
+          fullName = user.fullName or user.userName;
+        in
+        {
+        nixos = { config, ... }: {
+          users.users.${user.userName} =
+            {
+              description = fullName;
+              extraGroups = groups;
+              home = homeDirectory;
+              linger = linger;
+            }
+            // lib.optionalAttrs (authorizedKeys != [ ]) {
+              openssh.authorizedKeys.keys = authorizedKeys;
+            }
+            // lib.optionalAttrs (passwordSecret != null) {
+              hashedPasswordFile = config.age.secrets.${passwordSecret}.path;
+            };
+        };
+
+        homeManager = {
+          home.username = user.userName;
+          home.homeDirectory = homeDirectory;
+        };
+      })
+    ];
   };
 }

@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.fd = {
+  den.aspects.fd.homeManager = {
     programs.fd.enable = true;
   };
 }

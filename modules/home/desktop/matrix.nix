@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.matrix = {
+  den.aspects.matrix.homeManager = {
     programs.element-desktop = {
       enable = true;
     };

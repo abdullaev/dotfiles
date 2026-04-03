@@ -1,22 +1,28 @@
 {
-  flake.modules.homeManager.gpg =
+  den.aspects.gpg = { user, ... }:
+    let
+      gpg = user.gpg or { };
+      shell = user.shell or "zsh";
+    in
     {
-      lib,
-      pkgs,
-      user,
-      ...
-    }:
-    lib.mkIf user.gpg.enable {
-      programs.gpg.enable = true;
+      homeManager =
+        {
+          lib,
+          pkgs,
+          ...
+        }:
+        lib.mkIf (gpg.enable or false) {
+          programs.gpg.enable = true;
 
-      services.gpg-agent = {
-        enable = true;
-        defaultCacheTtl = 1800;
-        maxCacheTtl = 7200;
-        pinentry.package = pkgs.pinentry-qt;
-        enableBashIntegration = user.shell == "bash";
-        enableFishIntegration = user.shell == "fish";
-        enableZshIntegration = user.shell == "zsh";
-      };
+          services.gpg-agent = {
+            enable = true;
+            defaultCacheTtl = 1800;
+            maxCacheTtl = 7200;
+            pinentry.package = pkgs.pinentry-qt;
+            enableBashIntegration = shell == "bash";
+            enableFishIntegration = shell == "fish";
+            enableZshIntegration = shell == "zsh";
+          };
+        };
     };
 }

@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.keyd = {
+  den.aspects.keyd.nixos = {
     services.keyd = {
       enable = true;
       keyboards.default.settings.main = {

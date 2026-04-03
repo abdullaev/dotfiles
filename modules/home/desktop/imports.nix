@@ -1,15 +1,15 @@
-{ config, ... }:
+{ den, ... }:
 {
-  flake.modules.homeManager.desktop.imports = with config.flake.modules.homeManager; [
-    plasma
-    mpv
-    aseprite
-    discord
-    ghostty
-    telegram
-    qbittorrent
-    matrix
-    mangohud
-    firefox
+  den.aspects.homeDesktop.includes = [
+    den.aspects.plasma
+    den.aspects.mpv
+    den.aspects.aseprite
+    den.aspects.discord
+    den.aspects.ghostty
+    den.aspects.telegram
+    den.aspects.qbittorrent
+    den.aspects.matrix
+    den.aspects.gamingHome
+    den.aspects.firefox
   ];
 }

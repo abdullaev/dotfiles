@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.fzf =
-    { lib, ... }:
+  den.aspects.fzf.homeManager = { lib, ... }:
     {
       programs.fzf = {
         enable = true;

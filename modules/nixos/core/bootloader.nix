@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.bootloader = { pkgs, ... }: {
+  den.aspects.bootloader.nixos = { pkgs, ... }: {
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
     boot.kernelPackages = pkgs.linuxPackages_zen;

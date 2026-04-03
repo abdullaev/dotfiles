@@ -1,6 +1,6 @@
-{ config, ... }:
+{ den, ... }:
 {
-  flake.modules.homeManager.core.imports = with config.flake.modules.homeManager; [
+  den.aspects.homeCore.includes = with den.aspects; [
     stateVersion
     base
     zsh

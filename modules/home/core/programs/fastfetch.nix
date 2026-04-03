@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.fastfetch = {
+  den.aspects.fastfetch.homeManager = {
     programs.fastfetch.enable = true;
   };
 }

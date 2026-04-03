@@ -1,6 +1,5 @@
 {
-  flake.modules.homeManager.process-compose =
-    { pkgs, ... }:
+  den.aspects.process-compose.homeManager = { pkgs, ... }:
     {
       home.packages = with pkgs; [
         process-compose

@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.starship = {
+  den.aspects.starship.homeManager = {
     programs.starship = {
       enable = true;
       enableZshIntegration = true;

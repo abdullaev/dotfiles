@@ -1,10 +1,10 @@
 {
-  flake.modules.homeManager.nh =
-    { user, ... }:
-    {
+  den.aspects.nh = { user, ... }: {
+    homeManager = {
       programs.nh = {
         enable = true;
-        flake = user.dotfilesPath;
+        flake = user.dotfilesPath or "/home/${user.userName}/dotfiles";
       };
     };
+  };
 }
