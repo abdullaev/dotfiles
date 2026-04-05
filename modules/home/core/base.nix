@@ -20,7 +20,6 @@
       home.packages = with pkgs; [
         wget
         lsof
-        nil
         sqlite
         inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
