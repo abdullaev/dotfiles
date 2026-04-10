@@ -1,10 +1,5 @@
 {
   languages = {
-    assembly = {
-      enable = true;
-      treesitter.enable = true;
-      lsp.enable = true;
-    };
     astro = {
       enable = true;
       treesitter.enable = true;
@@ -130,11 +125,6 @@
       treesitter.enable = true;
       lsp.enable = true;
       format.enable = true;
-    };
-    odin = {
-      enable = true;
-      treesitter.enable = true;
-      lsp.enable = true;
     };
     python = {
       enable = true;
