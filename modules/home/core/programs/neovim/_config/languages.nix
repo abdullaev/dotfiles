@@ -1,5 +1,10 @@
 {
   languages = {
+    assembly = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+    };
     astro = {
       enable = true;
       treesitter.enable = true;
