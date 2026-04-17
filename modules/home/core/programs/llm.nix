@@ -45,6 +45,8 @@
         permissions.allow = [
           "Read(/nix/store/**)"
           "Read(/tmp/**)"
+          "Bash(/nix/store/**)"
+          "Bash(/tmp/**)"
         ];
       };
 
