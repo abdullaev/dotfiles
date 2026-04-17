@@ -27,4 +27,4 @@ lib.recursiveUpdate {
       };
     };
   };
-} (import ./tsgo.nix { inherit pkgs lib; })
+} (import ./typescript-go.nix { inherit pkgs lib; })

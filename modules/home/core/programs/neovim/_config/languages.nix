@@ -179,7 +179,7 @@
       treesitter.enable = true;
       lsp = {
         enable = true;
-        servers = [ "tsgo" ];
+        servers = [ "typescript-go" ];
       };
       format.enable = false;
       extraDiagnostics.enable = false;

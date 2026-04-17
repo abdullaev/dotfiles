@@ -34,6 +34,19 @@
         };
       };
 
+      programs.claude-code = {
+        enable = true;
+        enableMcpIntegration = true;
+        package = llmAgents.claude-code;
+        settings = {
+          theme = "dark-ansi";
+          permissions.allow = [
+            "Read(/nix/store/**)"
+            "Read(/tmp/**)"
+          ];
+        };
+      };
+
       catppuccin.opencode.enable = true;
     };
 }

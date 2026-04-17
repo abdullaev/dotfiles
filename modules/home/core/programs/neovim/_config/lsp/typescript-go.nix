@@ -9,7 +9,7 @@ in
     pkgs.typescript-go
   ];
 
-  lsp.servers.tsgo = {
+  lsp.servers.typescript-go = {
     cmd = mkForce (mkLuaInline ''
       function(dispatchers, config)
         local cmd = ${builtins.toJSON (getExe pkgs.typescript-go)}
