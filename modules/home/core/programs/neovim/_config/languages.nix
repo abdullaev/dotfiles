@@ -174,7 +174,7 @@
       lsp.enable = true;
       format.enable = false;
     };
-    ts = {
+    typescript = {
       enable = true;
       treesitter.enable = true;
       lsp = {
