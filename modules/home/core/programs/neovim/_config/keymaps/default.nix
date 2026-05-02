@@ -1,4 +1,6 @@
 {
+  vendoredKeymaps.enable = false;
+
   keymaps =
     (import ./pickers.nix)
     ++ (import ./git.nix)
