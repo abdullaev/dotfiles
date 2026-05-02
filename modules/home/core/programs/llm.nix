@@ -13,7 +13,7 @@
         enable = true;
         servers = {
           playwright = {
-            command = "${pkgs.playwright-mcp}/bin/mcp-server-playwright";
+            command = "${pkgs.playwright-mcp}/bin/playwright-mcp";
             args = [
               "--headless"
               "--isolated"
