@@ -13,6 +13,8 @@
         })
       ];
 
+      home.file.".local/share/wallpapers/wallpaper.png".source = ../../../images/wallpaper.png;
+
       programs.plasma = {
         enable = true;
 
@@ -44,7 +46,7 @@
         };
 
         workspace = {
-          wallpaper = ../../../images/wallpaper.png;
+          wallpaper = "${config.home.homeDirectory}/.local/share/wallpapers/wallpaper.png";
           colorScheme = "CatppuccinMochaLavender";
           iconTheme = "breeze";
           cursor = {
