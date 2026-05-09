@@ -48,6 +48,21 @@
           ip route flush table ${toString ruTable} 2>/dev/null || true
         '';
       };
+
+      waitForDns = pkgs.writeShellApplication {
+        name = "wg-wait-for-dns";
+        runtimeInputs = [ pkgs.getent ];
+        text = ''
+          for i in $(seq 1 30); do
+            if getent hosts cloudflare.com >/dev/null 2>&1; then
+              echo "DNS ready after $i attempts"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "DNS still not working after 60s; letting wg-quick try anyway"
+        '';
+      };
     in
     {
       networking.wg-quick.interfaces.awg0 = {
@@ -56,9 +71,22 @@
         autostart = true;
       };
 
-      systemd.services."wg-quick-awg0".serviceConfig = {
-        Restart = "on-failure";
-        RestartSec = 10;
+      systemd.services."wg-quick-awg0" = {
+        after = [
+          "network-online.target"
+          "nss-lookup.target"
+        ];
+        wants = [
+          "network-online.target"
+          "nss-lookup.target"
+        ];
+        serviceConfig = {
+          ExecStartPre = "${waitForDns}/bin/wg-wait-for-dns";
+          Restart = "on-failure";
+          RestartSec = 15;
+        };
+        startLimitBurst = 5;
+        startLimitIntervalSec = 180;
       };
 
       systemd.services.ru-direct-routes = {
