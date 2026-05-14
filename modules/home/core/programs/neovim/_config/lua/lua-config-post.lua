@@ -1,5 +1,33 @@
 vim.opt.iskeyword:append("-")
 
+-- Workaround for blink.cmp 1.10.1 race in win:close (Invalid window id from
+-- nvim_win_close in lib/window/init.lua). Drop once upstream validates self.id.
+do
+	local function patch()
+		local ok, win = pcall(require, "blink.cmp.lib.window")
+		if not ok or win.__patched_close then
+			return ok
+		end
+		win.__patched_close = true
+		local original = win.close
+		win.close = function(self)
+			if self.id and not vim.api.nvim_win_is_valid(self.id) then
+				self.id = nil
+			end
+			return original(self)
+		end
+		return true
+	end
+	if not patch() then
+		vim.api.nvim_create_autocmd("InsertEnter", {
+			once = true,
+			callback = function()
+				vim.schedule(patch)
+			end,
+		})
+	end
+end
+
 -- DAP symbols
 vim.fn.sign_define("DapBreakpoint", { text = " ", texthl = "DiagnosticError" })
 vim.fn.sign_define("DapBreakpointCondition", { text = " ", texthl = "DiagnosticError" })
