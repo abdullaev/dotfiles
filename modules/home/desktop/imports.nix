@@ -8,7 +8,6 @@
     ghostty
     telegram
     qbittorrent
-    matrix
     mangohud
     firefox
   ];
