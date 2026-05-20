@@ -51,5 +51,10 @@
       };
 
       catppuccin.opencode.enable = true;
+
+      home.shellAliases = {
+        cc = "claude --dangerously-skip-permissions";
+        oc = "opencode";
+      };
     };
 }
