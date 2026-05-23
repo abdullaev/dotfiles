@@ -19,6 +19,13 @@
               "--isolated"
             ];
           };
+          pixellab = {
+            url = "https://api.pixellab.ai/mcp";
+            transport = "http";
+            headers = {
+              Authorization = "{env:PIXELLAB_TOKEN}";
+            };
+          };
         };
       };
 
@@ -56,5 +63,9 @@
         cc = "claude --dangerously-skip-permissions";
         oc = "opencode";
       };
+
+      programs.fish.shellInit = ''
+        set -gx PIXELLAB_TOKEN (cat /run/agenix/pixellab-token)
+      '';
     };
 }

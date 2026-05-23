@@ -6,6 +6,11 @@
       group = "wheel";
       mode = "0440";
     };
+    pixellab-token = {
+      file = ./misc/pixellab-token.age;
+      group = "wheel";
+      mode = "0440";
+    };
 
     # passwords
     sqxt-at-vega = {
