@@ -23,7 +23,7 @@
             url = "https://api.pixellab.ai/mcp";
             transport = "http";
             headers = {
-              Authorization = "{env:PIXELLAB_TOKEN}";
+              Authorization = "\${PIXELLAB_TOKEN}";
             };
           };
         };
