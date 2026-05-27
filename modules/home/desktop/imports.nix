@@ -10,5 +10,6 @@
     qbittorrent
     mangohud
     firefox
+    pob
   ];
 }
