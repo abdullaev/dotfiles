@@ -15,6 +15,8 @@
       catppuccin = {
         flavor = "mocha";
         accent = "lavender";
+        autoEnable = false;
+        enable = true;
       };
 
       home.packages = with pkgs; [
