@@ -7,6 +7,7 @@
     discord
     ghostty
     telegram
+    google-chrome
     qbittorrent
     mangohud
     firefox
