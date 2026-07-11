@@ -1,5 +1,5 @@
 {
-  vendoredKeymaps.enable = false;
+  vendoredKeymaps.enable = true;
 
   keymaps =
     (import ./pickers.nix)

@@ -65,6 +65,7 @@
         (import ./_config/mini.nix)
         (import ./_config/snacks.nix { inherit pkgs lib; })
         (import ./_config/treesitter.nix { inherit pkgs; })
+        (import ./_config/plugins.nix { inherit pkgs lib; })
         (import ./_config/ui.nix)
         (import ./_config/utility.nix)
         (import ./_config/binds.nix)
