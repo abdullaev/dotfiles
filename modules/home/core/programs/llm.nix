@@ -19,13 +19,6 @@
               "--isolated"
             ];
           };
-          pixellab = {
-            url = "https://api.pixellab.ai/mcp";
-            transport = "http";
-            headers = {
-              Authorization = "\${PIXELLAB_TOKEN}";
-            };
-          };
         };
       };
 
@@ -49,23 +42,15 @@
 
       home.file.".claude/settings.local.json".text = builtins.toJSON {
         theme = "dark-ansi";
-        permissions.allow = [
-          "Read(/nix/store/**)"
-          "Read(/tmp/**)"
-          "Bash(/nix/store/**)"
-          "Bash(/tmp/**)"
-        ];
+        effortLevel = "xhigh";
+        skipAutoPermissionPrompt = true;
       };
 
       catppuccin.opencode.enable = true;
 
       home.shellAliases = {
-        cc = "claude --dangerously-skip-permissions";
+        cc = "claude";
         oc = "opencode";
       };
-
-      programs.fish.shellInit = ''
-        set -gx PIXELLAB_TOKEN (cat /run/agenix/pixellab-token)
-      '';
     };
 }

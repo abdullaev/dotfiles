@@ -14,7 +14,6 @@ in
 {
   # misc
   "misc/access-tokens.age".publicKeys = allKeys;
-  "misc/pixellab-token.age".publicKeys = allKeys;
 
   # passwords
   "passwords/sqxt-at-vega.age".publicKeys = [
