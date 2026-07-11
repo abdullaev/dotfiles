@@ -5,7 +5,7 @@
       programs.fzf = {
         enable = true;
         enableZshIntegration = true;
-        enableFishIntegration = false;
+        enableFishIntegration = true;
         colors = {
           bg = lib.mkForce "-1";
         };

@@ -1,5 +1,4 @@
-{ pkgs, lib }:
-lib.recursiveUpdate {
+{
   lsp = {
     enable = true;
     formatOnSave = true;
@@ -27,4 +26,4 @@ lib.recursiveUpdate {
       };
     };
   };
-} (import ./typescript-go.nix { inherit pkgs lib; })
+}
