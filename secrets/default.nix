@@ -17,5 +17,6 @@
 
     # vpn
     rs-awg2-latvia.file = ./vpn/rs-awg2-latvia.conf.age;
+    rs-awg2-germany.file = ./vpn/rs-awg2-germany.conf.age;
   };
 }

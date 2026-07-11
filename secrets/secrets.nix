@@ -23,4 +23,5 @@ in
 
   # vpn
   "vpn/rs-awg2-latvia.conf.age".publicKeys = allKeys;
+  "vpn/rs-awg2-germany.conf.age".publicKeys = allKeys;
 }
