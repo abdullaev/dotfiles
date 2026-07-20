@@ -26,24 +26,41 @@
         enable = true;
         enableMcpIntegration = true;
         package = llmAgents.opencode;
-        settings.permission = {
-          external_directory = {
-            "/nix/store/**" = "allow";
-            "/tmp/**" = "allow";
-          };
-        };
       };
 
       programs.claude-code = {
         enable = true;
         enableMcpIntegration = true;
         package = llmAgents.claude-code;
-      };
-
-      home.file.".claude/settings.local.json".text = builtins.toJSON {
-        theme = "dark-ansi";
-        effortLevel = "xhigh";
-        skipAutoPermissionPrompt = true;
+        settings = {
+          model = "claude-fable-5";
+          theme = "dark-ansi";
+          effortLevel = "xhigh";
+          tui = "default";
+          permissions = {
+            defaultMode = "auto";
+            deny = [
+              "Read(~/.ssh/id_*)"
+              "Read(**/.env)"
+              "Read(**/.env.local)"
+            ];
+            disableBypassPermissionsMode = "disable";
+          };
+          statusLine = {
+            type = "command";
+            command = toString (
+              pkgs.writeShellScript "claude-statusline" ''
+                export PATH=${
+                  pkgs.lib.makeBinPath [
+                    pkgs.jq
+                    pkgs.coreutils
+                  ]
+                }:"$PATH"
+                ${builtins.readFile ./statusline-command.sh}
+              ''
+            );
+          };
+        };
       };
 
       catppuccin.opencode.enable = true;
