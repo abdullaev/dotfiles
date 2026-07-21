@@ -45,6 +45,15 @@
         enableMcpIntegration = true;
         package = llmAgents.opencode;
         inherit skills;
+        settings = {
+          permission = {
+            read = {
+              "~/.ssh/id_*" = "deny";
+              "**/.env" = "deny";
+              "**/.env.local" = "deny";
+            };
+          };
+        };
       };
 
       catppuccin.opencode.enable = true;
@@ -87,7 +96,7 @@
 
       home.shellAliases = {
         cc = "claude";
-        oc = "opencode";
+        oc = "opencode --auto";
       };
     };
 }
