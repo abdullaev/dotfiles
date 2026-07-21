@@ -7,5 +7,6 @@
     networking
     locale
     openssh
+    maintenance
   ];
 }
