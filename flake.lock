@@ -466,7 +466,8 @@
         "nvf": "nvf",
         "plasma-manager": "plasma-manager",
         "pragmata-pro": "pragmata-pro",
-        "ru-ip-list": "ru-ip-list"
+        "ru-ip-list": "ru-ip-list",
+        "ru-ip-list-v6": "ru-ip-list-v6"
       }
     },
     "ru-ip-list": {
@@ -479,6 +480,18 @@
       "original": {
         "type": "file",
         "url": "https://www.ipdeny.com/ipblocks/data/countries/ru.zone"
+      }
+    },
+    "ru-ip-list-v6": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-KNlNG5n2IBhptyx6UK5IEy9U1g9ORhESIfwuGKW+2/0=",
+        "type": "file",
+        "url": "https://www.ipdeny.com/ipv6/ipaddresses/blocks/ru.zone"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://www.ipdeny.com/ipv6/ipaddresses/blocks/ru.zone"
       }
     },
     "systems": {

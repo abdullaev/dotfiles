@@ -65,6 +65,10 @@
       url = "file+https://www.ipdeny.com/ipblocks/data/countries/ru.zone";
       flake = false;
     };
+    ru-ip-list-v6 = {
+      url = "file+https://www.ipdeny.com/ipv6/ipaddresses/blocks/ru.zone";
+      flake = false;
+    };
   };
 
   outputs =
