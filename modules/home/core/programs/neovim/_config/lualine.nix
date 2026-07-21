@@ -71,6 +71,14 @@
             "diff",
             colored = true,
             symbols = { added = '+', modified = '~', removed = '-' },
+            source = function()
+              local summary = vim.b.minidiff_summary
+              return summary and {
+                added = summary.add,
+                modified = summary.change,
+                removed = summary.delete,
+              }
+            end,
             padding = { left = 1, right = 0 },
             separator = { left = "", right = "" },
           }
