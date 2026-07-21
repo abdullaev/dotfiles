@@ -2,11 +2,29 @@
   flake.modules.homeManager.llm =
     {
       inputs,
+      lib,
       pkgs,
       ...
     }:
     let
       llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+
+      anthropicSkills = lib.genAttrs [
+        "mcp-builder"
+      ] (name: "${inputs.anthropic-skills}/skills/${name}");
+
+      mattpocockSkills = lib.listToAttrs (
+        map (path: {
+          name = lib.last (lib.splitString "/" path);
+          value = "${inputs.mattpocock-skills}/skills/${path}";
+        }) [ "productivity/handoff" ]
+      );
+
+      localSkills = lib.mapAttrs (name: _: ./_skills + "/${name}") (
+        lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./_skills)
+      );
+
+      skills = anthropicSkills // mattpocockSkills // localSkills;
     in
     {
       programs.mcp = {
@@ -26,12 +44,16 @@
         enable = true;
         enableMcpIntegration = true;
         package = llmAgents.opencode;
+        inherit skills;
       };
+
+      catppuccin.opencode.enable = true;
 
       programs.claude-code = {
         enable = true;
         enableMcpIntegration = true;
         package = llmAgents.claude-code;
+        inherit skills;
         settings = {
           model = "claude-fable-5";
           theme = "dark-ansi";
@@ -56,14 +78,12 @@
                     pkgs.coreutils
                   ]
                 }:"$PATH"
-                ${builtins.readFile ./statusline-command.sh}
+                ${builtins.readFile ./claude-statusline-command.sh}
               ''
             );
           };
         };
       };
-
-      catppuccin.opencode.enable = true;
 
       home.shellAliases = {
         cc = "claude";
