@@ -119,6 +119,18 @@
         "type": "github"
       }
     },
+    "catppuccin-aseprite": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-sR/iCU9QHkCPAjPkgnBdyGhMzcTHJxa8APBLYTLifX0=",
+        "type": "file",
+        "url": "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-mocha.aseprite-extension"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-mocha.aseprite-extension"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -234,6 +246,22 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "ghostty-cursor-shaders": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781606293,
+        "narHash": "sha256-B7B6K7Ee4uJlW8zzLP3ILgddnbcIQyNimY+rVllzbR0=",
+        "owner": "sahaj-b",
+        "repo": "ghostty-cursor-shaders",
+        "rev": "0a274beac8b93ee6ce6b94402b7313a0417b8e38",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sahaj-b",
+        "repo": "ghostty-cursor-shaders",
         "type": "github"
       }
     },
@@ -405,20 +433,52 @@
         "type": "github"
       }
     },
+    "pragmata-pro": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771147942,
+        "narHash": "sha256-kCZnZt1/VmNPHZdWp8yC5AJF5RmeMvsYlYHz1W4xoow=",
+        "ref": "refs/heads/main",
+        "rev": "5c08979930149e31386b1bda24844b3354fef8c4",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@github.com/abdullaev/font-pragmata-pro.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/abdullaev/font-pragmata-pro.git"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
         "anthropic-skills": "anthropic-skills",
         "catppuccin": "catppuccin",
+        "catppuccin-aseprite": "catppuccin-aseprite",
         "disko": "disko",
         "flake-parts": "flake-parts",
+        "ghostty-cursor-shaders": "ghostty-cursor-shaders",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "llm-agents": "llm-agents",
         "mattpocock-skills": "mattpocock-skills",
         "nixpkgs": "nixpkgs",
         "nvf": "nvf",
-        "plasma-manager": "plasma-manager"
+        "plasma-manager": "plasma-manager",
+        "pragmata-pro": "pragmata-pro",
+        "ru-ip-list": "ru-ip-list"
+      }
+    },
+    "ru-ip-list": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-7sjSFthvgtQiDqEq118/0MulIp47ao+tbenQTgLtUaw=",
+        "type": "file",
+        "url": "https://www.ipdeny.com/ipblocks/data/countries/ru.zone"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://www.ipdeny.com/ipblocks/data/countries/ru.zone"
       }
     },
     "systems": {

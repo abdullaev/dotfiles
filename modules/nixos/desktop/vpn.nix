@@ -1,14 +1,11 @@
 {
   flake.modules.nixos.vpn =
-    { config, pkgs, ... }:
+    { config, inputs, pkgs, ... }:
     let
       ruTable = 51821;
       rulePrio = 100;
 
-      ruIpList = pkgs.fetchurl {
-        url = "https://www.ipdeny.com/ipblocks/data/countries/ru.zone";
-        hash = "sha256-4gbHTlqZpK/akmqXbxZ+MipElocVcD8Ok3S19hApDSE=";
-      };
+      ruIpList = inputs.ru-ip-list;
 
       ruRoutesApply = pkgs.writeShellApplication {
         name = "ru-routes-apply";

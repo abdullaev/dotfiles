@@ -1,13 +1,8 @@
 {
   flake.modules.homeManager.ghostty =
-    { pkgs, ... }:
+    { inputs, ... }:
     {
-      home.file.".config/ghostty/shaders".source = pkgs.fetchFromGitHub {
-        owner = "sahaj-b";
-        repo = "ghostty-cursor-shaders";
-        rev = "4faa83e4b9306750fc8de64b38c6f53c57862db8";
-        hash = "sha256-ruhEqXnWRCYdX5mRczpY3rj1DTdxyY3BoN9pdlDOKrE=";
-      };
+      home.file.".config/ghostty/shaders".source = inputs.ghostty-cursor-shaders;
 
       programs.ghostty = {
         enable = true;

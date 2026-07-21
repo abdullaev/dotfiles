@@ -1,17 +1,12 @@
 {
   flake.modules.homeManager.aseprite =
-    { lib, pkgs, ... }:
+    { inputs, pkgs, ... }:
     let
-      catppuccinMochaExtension = pkgs.fetchurl {
-        url = "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-mocha.aseprite-extension";
-        hash = "sha256-embvGNZaGGim9JpWaigbIkt5NxHXpSI+2AaNkgKwMK4=";
-      };
-
       catppuccinMochaTheme =
         pkgs.runCommand "catppuccin-theme-mocha"
           {
             nativeBuildInputs = [ pkgs.unzip ];
-            src = catppuccinMochaExtension;
+            src = inputs.catppuccin-aseprite;
           }
           ''
             unzip -qq "$src"

@@ -49,6 +49,22 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+    ghostty-cursor-shaders = {
+      url = "github:sahaj-b/ghostty-cursor-shaders";
+      flake = false;
+    };
+    pragmata-pro = {
+      url = "git+ssh://git@github.com/abdullaev/font-pragmata-pro.git";
+      flake = false;
+    };
+    catppuccin-aseprite = {
+      url = "file+https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-mocha.aseprite-extension";
+      flake = false;
+    };
+    ru-ip-list = {
+      url = "file+https://www.ipdeny.com/ipblocks/data/countries/ru.zone";
+      flake = false;
+    };
   };
 
   outputs =

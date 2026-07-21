@@ -1,13 +1,9 @@
-{ stdenvNoCC }:
+{ stdenvNoCC, src }:
 
 stdenvNoCC.mkDerivation {
   pname = "pragmata-pro";
   version = "0.903";
-  src = builtins.fetchGit {
-    url = "https://github.com/abdullaev/font-pragmata-pro.git";
-    rev = "5c08979930149e31386b1bda24844b3354fef8c4";
-    narHash = "sha256-kCZnZt1/VmNPHZdWp8yC5AJF5RmeMvsYlYHz1W4xoow=";
-  };
+  inherit src;
 
   installPhase = ''
     runHook preInstall
