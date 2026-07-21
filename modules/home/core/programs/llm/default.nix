@@ -114,7 +114,7 @@
       };
 
       home.shellAliases = {
-        cc = "claude";
+        cl = "claude";
         oc = "opencode --auto";
       };
     };

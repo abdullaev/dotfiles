@@ -66,7 +66,6 @@
     key = "gr";
     action = "function() Snacks.picker.lsp_references() end";
     lua = true;
-    nowait = true;
     desc = "References";
   }
   {

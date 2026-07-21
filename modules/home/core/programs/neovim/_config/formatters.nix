@@ -3,15 +3,18 @@ let
   inherit (lib.generators) mkLuaInline;
   inherit (lib.meta) getExe;
 
-  fromNodeModulesOrPackage = pkg: bin: mkLuaInline ''
-    require("conform.util").find_executable({ "node_modules/.bin/${bin}" }, ${builtins.toJSON (getExe pkg)})
-  '';
+  fromNodeModulesOrPackage =
+    pkg: bin:
+    mkLuaInline ''
+      require("conform.util").find_executable({ "node_modules/.bin/${bin}" }, ${builtins.toJSON (getExe pkg)})
+    '';
 in
 {
   extraPackages = [
     pkgs.biome
     pkgs.prettierd
     pkgs.oxfmt
+    pkgs.haskellPackages.cabal-fmt
   ];
 
   formatter.conform-nvim = {
