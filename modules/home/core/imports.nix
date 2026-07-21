@@ -15,6 +15,7 @@
     neovim
     fastfetch
     llm
+    skills
     eza
     zoxide
     fzf
