@@ -25,6 +25,33 @@
       );
 
       skills = anthropicSkills // mattpocockSkills // localSkills;
+
+      sensitivePaths = [
+        "~/.ssh/**"
+        "/etc/ssh/ssh_host_*_key"
+        "/run/agenix/**"
+        "~/.gnupg/**"
+        "~/.config/gh/hosts.yml"
+        "~/.claude/.credentials.json"
+        "~/.local/share/opencode/auth.json"
+        "~/.local/share/fish/fish_history"
+        "~/.local/share/kwalletd/**"
+        "~/.netrc"
+        "~/.git-credentials"
+        "~/.npmrc"
+        "~/.pypirc"
+        "~/.cargo/credentials.toml"
+        "~/.aws/credentials"
+        "~/.kube/config"
+        "~/.docker/config.json"
+        "**/.env"
+        "**/.env.local"
+        "**/.env.production"
+        "**/.env.development"
+        "**/*.pem"
+        "**/*.tfstate"
+        "**/*.tfvars"
+      ];
     in
     {
       programs.mcp = {
@@ -47,11 +74,7 @@
         inherit skills;
         settings = {
           permission = {
-            read = {
-              "~/.ssh/id_*" = "deny";
-              "**/.env" = "deny";
-              "**/.env.local" = "deny";
-            };
+            read = lib.genAttrs sensitivePaths (_: "deny");
           };
         };
       };
@@ -70,11 +93,7 @@
           tui = "default";
           permissions = {
             defaultMode = "auto";
-            deny = [
-              "Read(~/.ssh/id_*)"
-              "Read(**/.env)"
-              "Read(**/.env.local)"
-            ];
+            deny = map (path: "Read(${path})") sensitivePaths;
             disableBypassPermissionsMode = "disable";
           };
           statusLine = {

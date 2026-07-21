@@ -23,6 +23,7 @@
         wget
         lsof
         sqlite
+        python3
         inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };
