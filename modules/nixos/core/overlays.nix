@@ -3,6 +3,7 @@
     nixpkgs.overlays = [
       # amneziawg kernel module fails to build against kernels without the
       # ipv6 stub; drop once the fix lands in nixpkgs' amneziawg
+      # https://github.com/amnezia-vpn/amneziawg-linux-kernel-module/pull/176
       (final: prev: {
         linuxPackages_zen = prev.linuxPackages_zen.extend (
           lpfinal: lpprev: {
