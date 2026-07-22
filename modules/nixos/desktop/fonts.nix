@@ -30,7 +30,7 @@
           ];
 
           monospace = [
-            "PragmataPro Mono"
+            "PragmataPro Mono Liga"
           ];
 
           emoji = [
