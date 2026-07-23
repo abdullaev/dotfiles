@@ -12,8 +12,6 @@
         sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
       };
 
-      shortcuts."services/com.mitchellh.ghostty.desktop"."_launch" = "Meta+Return";
-
       configFile = {
         # The "Get Plasma Browser Integration" reminder hides itself once
         # shownCount > 3, but overrideConfig wipes the counter on every
