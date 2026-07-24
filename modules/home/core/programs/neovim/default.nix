@@ -60,7 +60,6 @@
         (import ./_config/git.nix { inherit pkgs lib; })
         (import ./_config/languages.nix)
         (import ./_config/lsp)
-        (import ./_config/lua-config-rc.nix { inherit pkgs lib; })
         (import ./_config/lualine.nix)
         (import ./_config/mini.nix)
         (import ./_config/snacks.nix { inherit pkgs lib; })

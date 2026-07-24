@@ -14,7 +14,6 @@ in
     pkgs.biome
     pkgs.prettierd
     pkgs.oxfmt
-    pkgs.haskellPackages.cabal-fmt
   ];
 
   formatter.conform-nvim = {
