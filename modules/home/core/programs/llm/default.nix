@@ -87,7 +87,6 @@
         package = llmAgents.claude-code;
         inherit skills;
         settings = {
-          model = "claude-fable-5";
           theme = "dark-ansi";
           effortLevel = "xhigh";
           tui = "default";
