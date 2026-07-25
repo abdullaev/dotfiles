@@ -174,6 +174,16 @@
       lsp.enable = true;
       format.enable = false;
     };
+    tsx = {
+      enable = true;
+      treesitter.enable = true;
+      lsp = {
+        enable = true;
+        servers = [ "typescript-go" ];
+      };
+      format.enable = false;
+      extraDiagnostics.enable = false;
+    };
     typescript = {
       enable = true;
       treesitter.enable = true;
