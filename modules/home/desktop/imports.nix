@@ -12,5 +12,6 @@
     mangohud
     firefox
     pob
+    obsidian
   ];
 }

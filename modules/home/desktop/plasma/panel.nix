@@ -32,6 +32,7 @@
                 "applications:com.mitchellh.ghostty.desktop"
                 "applications:org.telegram.desktop.desktop"
                 "applications:discord.desktop"
+                "applications:obsidian.desktop"
                 "applications:org.qbittorrent.qBittorrent.desktop"
                 "applications:mpv.desktop"
                 "applications:aseprite.desktop"
