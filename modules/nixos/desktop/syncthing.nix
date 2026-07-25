@@ -47,11 +47,6 @@
           label = "Documents";
         };
 
-        downloads = {
-          path = "${user.homeDirectory}/Downloads/Sync";
-          label = "Downloads";
-        };
-
         music = {
           path = "${user.homeDirectory}/Music/Sync";
           label = "Music";
