@@ -41,11 +41,26 @@
       lsp.enable = true;
       flutter-tools.enable = false;
     };
+    docker = {
+      enable = true;
+      format.enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
     elixir = {
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
       format.enable = true;
+    };
+    env = {
+      enable = true;
+    };
+    fish = {
+      enable = true;
+      format.enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
     };
     gleam = {
       enable = true;
@@ -204,6 +219,13 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
+    };
+    vue = {
+      enable = true;
+      treesitter.enable = true;
+      lsp.enable = true;
+      extraDiagnostics.enable = false;
+      format.enable = false;
     };
     wgsl = {
       enable = true;
