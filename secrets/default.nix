@@ -14,6 +14,11 @@
       group = "root";
       mode = "0400";
     };
+    syncthing-gui = {
+      file = ./passwords/syncthing-gui.age;
+      owner = "sqxt";
+      mode = "0400";
+    };
 
     # vpn
     vpn.file = ./vpn/vpn.conf.age;

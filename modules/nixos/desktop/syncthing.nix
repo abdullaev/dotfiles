@@ -55,10 +55,7 @@
           label = "Notes";
 
           ignorePatterns = [
-            ".obsidian/appearance.json"
-            ".obsidian/themes"
-            ".obsidian/workspace.json"
-            ".obsidian/workspace-mobile.json"
+            ".obsidian"
             ".trash"
           ];
         };
@@ -93,6 +90,8 @@
         inherit group;
         user = name;
 
+        guiPasswordFile = config.age.secrets.syncthing-gui.path;
+
         dataDir = user.homeDirectory;
         configDir = "${user.homeDirectory}/.config/syncthing";
 
@@ -108,6 +107,8 @@
             ${hostName}.id = keys.hosts.${hostName}.syncthing;
             iphone.id = keys.devices.iphone.syncthing;
           };
+
+          gui.user = name;
 
           inherit folders;
 

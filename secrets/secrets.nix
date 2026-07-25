@@ -20,6 +20,10 @@ in
     keys.users.sqxt.ssh
     keys.hosts.vega.ssh
   ];
+  "passwords/syncthing-gui.age".publicKeys = [
+    keys.users.sqxt.ssh
+    keys.hosts.vega.ssh
+  ];
 
   # vpn
   "vpn/vpn.conf.age".publicKeys = allKeys;
