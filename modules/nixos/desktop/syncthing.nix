@@ -59,6 +59,10 @@
         pictures = {
           path = "${user.homeDirectory}/Pictures/Sync";
           label = "Pictures";
+          # A backup target: photos arrive from the phone and nothing here is
+          # pushed back. Versioning is kept deliberately -- a deletion on the
+          # phone is still applied here, and .stversions is what survives it.
+          type = "receiveonly";
         };
 
         notes = {
