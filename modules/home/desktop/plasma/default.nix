@@ -4,6 +4,11 @@
       enable = true;
       overrideConfig = true;
 
+      resetFilesExclude = [
+        "kdeglobals"
+        "plasmarc"
+      ];
+
       krunner = {
         position = "center";
       };
@@ -13,9 +18,6 @@
       };
 
       configFile = {
-        # The "Get Plasma Browser Integration" reminder hides itself once
-        # shownCount > 3, but overrideConfig wipes the counter on every
-        # rebuild; declaring the "do not show again" state keeps it hidden.
         kded6rc = {
           "Module-browserintegrationreminder".autoload = false;
           PlasmaBrowserIntegration.shownCount = 100;
