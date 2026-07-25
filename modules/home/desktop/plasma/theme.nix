@@ -55,5 +55,9 @@
         package = pkgs.kdePackages.breeze;
         size = 24;
       };
+
+      home.sessionVariablesExtra = ''
+        unset XCURSOR_SIZE
+      '';
     };
 }

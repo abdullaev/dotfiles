@@ -8,7 +8,6 @@
           package = pkgs.steam.override {
             extraEnv = {
               MANGOHUD = "1";
-              XCURSOR_SIZE = "30";
             };
           };
         };

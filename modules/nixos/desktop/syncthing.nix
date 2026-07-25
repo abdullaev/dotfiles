@@ -55,6 +55,8 @@
           label = "Notes";
 
           ignorePatterns = [
+            ".obsidian/appearance.json"
+            ".obsidian/themes"
             ".obsidian/workspace.json"
             ".obsidian/workspace-mobile.json"
             ".trash"
