@@ -11,6 +11,14 @@
   hosts = {
     vega = {
       ssh = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL5WZ+NS5wrzmIviPSGiKZ3z4eamVdoj92IN478iRTl0 root@vega";
+      syncthing = "KFYITS5-JF3GLMZ-UJBJLT2-YKI3J5G-LHPD3T2-LBPDYR4-3X5JPQD-ESO5CQN";
+    };
+  };
+
+  # Peers that are not NixOS hosts.
+  devices = {
+    iphone = {
+      syncthing = "57RHG5Q-FTPDGUW-SI5BOJS-65EDOMA-PP6BRT6-YCPRJ2P-GT3PSLA-TWZ2AAI";
     };
   };
 }
