@@ -19,33 +19,52 @@
         "iphone"
       ];
 
-      # Archives what Syncthing itself replaces or deletes, i.e. changes
-      # arriving from a peer. Deletions made locally on this host are not
-      # covered -- the file is already gone by the time it is noticed.
-      versioning = {
-        type = "simple";
-        params = {
-          keep = "10";
-          cleanoutDays = "0";
+      # Applied to every folder below; per-folder attributes win.
+      folderDefaults = {
+        devices = peers;
+
+        # Archives what Syncthing itself replaces or deletes, i.e. changes
+        # arriving from a peer. Deletions made locally on this host are not
+        # covered -- the file is already gone by the time it is noticed.
+        versioning = {
+          type = "simple";
+          params = {
+            keep = "10";
+            cleanoutDays = "0";
+          };
+          cleanupIntervalS = 3600;
         };
-        cleanupIntervalS = 3600;
       };
 
-      folders = {
+      folders = lib.mapAttrs (_: folder: folderDefaults // folder) {
         sync = {
           path = "${user.homeDirectory}/Sync";
           label = "Sync";
-          type = "sendreceive";
-          devices = peers;
-          inherit versioning;
+        };
+
+        documents = {
+          path = "${user.homeDirectory}/Documents/Sync";
+          label = "Documents";
+        };
+
+        downloads = {
+          path = "${user.homeDirectory}/Downloads/Sync";
+          label = "Downloads";
+        };
+
+        music = {
+          path = "${user.homeDirectory}/Music/Sync";
+          label = "Music";
+        };
+
+        pictures = {
+          path = "${user.homeDirectory}/Pictures/Sync";
+          label = "Pictures";
         };
 
         notes = {
           path = "${user.homeDirectory}/Notes/Sync";
           label = "Notes";
-          type = "sendreceive";
-          devices = peers;
-          inherit versioning;
 
           # Obsidian rewrites its window state every time a vault is opened, on
           # each device independently. Syncing that earns a conflict a day and
@@ -61,10 +80,10 @@
           path = "${user.homeDirectory}/Videos/Sync";
           label = "Video";
           # One way: peers play what this host publishes and never push player
-          # scratch files back. Versioning is deliberately absent -- a sendonly
-          # folder never applies remote changes, so it could never fire.
+          # scratch files back. Versioning goes with it -- a sendonly folder
+          # never applies a remote change, so it could never fire.
           type = "sendonly";
-          devices = peers;
+          versioning = null;
         };
       };
 
