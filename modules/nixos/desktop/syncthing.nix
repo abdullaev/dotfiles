@@ -55,6 +55,10 @@
         music = {
           path = "${user.homeDirectory}/Music/Sync";
           label = "Music";
+          # A library curated here, so the same one-way reasoning as video
+          # applies, versioning included.
+          type = "sendonly";
+          versioning = null;
         };
 
         pictures = {
