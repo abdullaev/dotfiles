@@ -50,12 +50,6 @@
           versioning = null;
         };
 
-        pictures = {
-          path = "${user.homeDirectory}/Pictures/Sync";
-          label = "Pictures";
-          type = "receiveonly";
-        };
-
         notes = {
           path = "${user.homeDirectory}/Notes/Sync";
           label = "Notes";
