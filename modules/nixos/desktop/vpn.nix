@@ -162,7 +162,7 @@
     {
       networking.wg-quick.interfaces.${vpnIface} = {
         type = "amneziawg";
-        configFile = config.age.secrets.rs-awg2-latvia.path;
+        configFile = config.age.secrets.vpn.path;
         autostart = true;
       };
 
