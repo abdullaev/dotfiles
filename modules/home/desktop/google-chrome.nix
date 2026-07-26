@@ -1,9 +1,8 @@
 {
-  flake.modules.homeManager.google-chrome =
-    { pkgs, ... }:
-    {
-      home.packages = with pkgs; [
-        google-chrome
-      ];
+  flake.modules.homeManager.google-chrome = {
+    programs.google-chrome = {
+      enable = true;
+      plasmaSupport = true;
     };
+  };
 }

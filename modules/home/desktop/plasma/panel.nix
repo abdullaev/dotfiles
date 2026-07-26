@@ -29,6 +29,7 @@
               launchers = [
                 "applications:org.kde.dolphin.desktop"
                 "applications:firefox.desktop"
+                "applications:google-chrome.desktop"
                 "applications:com.mitchellh.ghostty.desktop"
                 "applications:org.telegram.desktop.desktop"
                 "applications:discord.desktop"
