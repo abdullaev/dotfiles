@@ -49,6 +49,10 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+    kepano-skills = {
+      url = "github:kepano/obsidian-skills";
+      flake = false;
+    };
     ghostty-cursor-shaders = {
       url = "github:sahaj-b/ghostty-cursor-shaders";
       flake = false;

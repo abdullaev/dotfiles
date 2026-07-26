@@ -24,6 +24,7 @@
         lsof
         sqlite
         python3
+        defuddle
         inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };

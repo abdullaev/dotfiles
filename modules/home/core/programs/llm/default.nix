@@ -13,6 +13,14 @@
         "mcp-builder"
       ] (name: "${inputs.anthropic-skills}/skills/${name}");
 
+      obsidianSkills = lib.genAttrs [
+        "defuddle"
+        "json-canvas"
+        "obsidian-bases"
+        "obsidian-cli"
+        "obsidian-markdown"
+      ] (name: "${inputs.kepano-skills}/skills/${name}");
+
       mattpocockSkills = lib.listToAttrs (
         map (path: {
           name = lib.last (lib.splitString "/" path);
@@ -24,7 +32,7 @@
         lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./_skills)
       );
 
-      skills = anthropicSkills // mattpocockSkills // localSkills;
+      skills = anthropicSkills // obsidianSkills // mattpocockSkills // localSkills;
 
       sensitivePaths = [
         "~/.ssh/**"
