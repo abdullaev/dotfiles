@@ -6,6 +6,11 @@
       group = "wheel";
       mode = "0440";
     };
+    t-token-readonly = {
+      file = ./misc/t-token-readonly.age;
+      owner = "sqxt";
+      mode = "0400";
+    };
 
     # passwords
     sqxt-at-vega = {

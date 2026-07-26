@@ -14,6 +14,7 @@ in
 {
   # misc
   "misc/access-tokens.age".publicKeys = allKeys;
+  "misc/t-token-readonly.age".publicKeys = allKeys;
 
   # passwords
   "passwords/sqxt-at-vega.age".publicKeys = [

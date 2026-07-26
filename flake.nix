@@ -73,6 +73,10 @@
       url = "file+https://www.ipdeny.com/ipv6/ipaddresses/blocks/ru.zone";
       flake = false;
     };
+    russian-trusted-root-ca = {
+      url = "file+https://gu-st.ru/content/Other/doc/russian_trusted_root_ca.cer";
+      flake = false;
+    };
   };
 
   outputs =

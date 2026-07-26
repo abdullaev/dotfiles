@@ -66,7 +66,7 @@
         enable = true;
         servers = {
           playwright = {
-            command = "${pkgs.playwright-mcp}/bin/playwright-mcp";
+            command = lib.getExe pkgs.playwright-mcp;
             args = [
               "--headless"
               "--isolated"
