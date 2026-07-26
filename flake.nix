@@ -49,7 +49,7 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
-    kepano-skills = {
+    obsidian-skills = {
       url = "github:kepano/obsidian-skills";
       flake = false;
     };

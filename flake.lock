@@ -254,22 +254,6 @@
         "type": "github"
       }
     },
-    "kepano-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1780935121,
-        "narHash": "sha256-/Kr3cMaN81WXFxgWMNt/QQhEMzuu3e3WJpspqjrnPss=",
-        "owner": "kepano",
-        "repo": "obsidian-skills",
-        "rev": "a1dc48e68138490d522c04cbf5822214c6eb1202",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kepano",
-        "repo": "obsidian-skills",
-        "type": "github"
-      }
-    },
     "llm-agents": {
       "inputs": {
         "bun2nix": "bun2nix",
@@ -376,6 +360,22 @@
         "type": "github"
       }
     },
+    "obsidian-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780935121,
+        "narHash": "sha256-/Kr3cMaN81WXFxgWMNt/QQhEMzuu3e3WJpspqjrnPss=",
+        "owner": "kepano",
+        "repo": "obsidian-skills",
+        "rev": "a1dc48e68138490d522c04cbf5822214c6eb1202",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kepano",
+        "repo": "obsidian-skills",
+        "type": "github"
+      }
+    },
     "plasma-manager": {
       "inputs": {
         "home-manager": [
@@ -426,11 +426,11 @@
         "ghostty-cursor-shaders": "ghostty-cursor-shaders",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
-        "kepano-skills": "kepano-skills",
         "llm-agents": "llm-agents",
         "mattpocock-skills": "mattpocock-skills",
         "nixpkgs": "nixpkgs",
         "nvf": "nvf",
+        "obsidian-skills": "obsidian-skills",
         "plasma-manager": "plasma-manager",
         "pragmata-pro": "pragmata-pro",
         "ru-ip-list": "ru-ip-list",

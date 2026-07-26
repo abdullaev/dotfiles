@@ -19,7 +19,7 @@
         "obsidian-bases"
         "obsidian-cli"
         "obsidian-markdown"
-      ] (name: "${inputs.kepano-skills}/skills/${name}");
+      ] (name: "${inputs.obsidian-skills}/skills/${name}");
 
       mattpocockSkills = lib.listToAttrs (
         map (path: {
