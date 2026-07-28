@@ -85,9 +85,6 @@
           pkgs.gawk
         ];
         text = ''
-          # Returns 1 if there is no usable non-VPN default route, 2 on any
-          # real failure. Callers invoke this inside a condition, which
-          # suspends errexit in the body, hence the explicit "|| return 2"s.
           apply_family() {
             local fam="$1" list="$2"
             local gw="" iface=""
@@ -201,10 +198,6 @@
         };
       };
 
-      # Reapply direct routes when the default route may have changed
-      # (roaming, DHCP renew), and recover wg-quick if it exhausted its
-      # start limit while offline. A manually stopped (not failed) VPN is
-      # left alone.
       networking.networkmanager.dispatcherScripts = [
         {
           source = pkgs.writeText "ru-routes-dispatcher" ''

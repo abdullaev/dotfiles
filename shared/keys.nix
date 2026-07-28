@@ -15,7 +15,6 @@
     };
   };
 
-  # Peers that are not NixOS hosts.
   devices = {
     iphone = {
       syncthing = "57RHG5Q-FTPDGUW-SI5BOJS-65EDOMA-PP6BRT6-YCPRJ2P-GT3PSLA-TWZ2AAI";
