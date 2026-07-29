@@ -41,6 +41,7 @@
         documents = {
           path = "${user.homeDirectory}/Documents/Sync";
           label = "Documents";
+          devices = peers ++ [ "boox" ];
         };
 
         music = {
@@ -57,6 +58,16 @@
           ignorePatterns = [
             ".obsidian"
             ".trash"
+          ];
+        };
+
+        boox-notes = {
+          path = "${user.homeDirectory}/Notes/Boox";
+          label = "Boox Notes";
+          type = "receiveonly";
+          devices = [
+            hostName
+            "boox"
           ];
         };
 
@@ -106,6 +117,7 @@
           devices = {
             ${hostName}.id = keys.hosts.${hostName}.syncthing;
             iphone.id = keys.devices.iphone.syncthing;
+            boox.id = keys.devices.boox.syncthing;
           };
 
           gui.user = name;

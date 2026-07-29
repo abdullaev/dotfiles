@@ -19,5 +19,9 @@
     iphone = {
       syncthing = "57RHG5Q-FTPDGUW-SI5BOJS-65EDOMA-PP6BRT6-YCPRJ2P-GT3PSLA-TWZ2AAI";
     };
+
+    boox = {
+      syncthing = "56TELT3-CZ6PRCQ-6GQS3NJ-PZCL6E4-2CLTBVJ-EBSJGFT-LLMMMRQ-KFTIFQ2";
+    };
   };
 }
