@@ -44,7 +44,7 @@
             agent_panel_sort = "priority";
             hide_tab_bar_when_single_tab = true;
             toast = {
-              delivery = "system";
+              delivery = "terminal";
               clipboard.enabled = false;
             };
           };
