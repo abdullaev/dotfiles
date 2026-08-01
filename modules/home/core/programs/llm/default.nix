@@ -60,6 +60,12 @@
         "**/*.tfstate"
         "**/*.tfvars"
       ];
+
+      # Claude Code reads a single leading slash as "relative to the settings
+      # source" — for these settings that is ~/.claude, so `/run/agenix/**`
+      # would guard ~/.claude/run/agenix. Only `//` anchors at the filesystem
+      # root. `~/…` and bare `**/…` patterns mean the same to both agents.
+      toClaudePattern = path: if lib.hasPrefix "/" path then "/${path}" else path;
     in
     {
       programs.mcp = {
@@ -100,7 +106,7 @@
           tui = "default";
           permissions = {
             defaultMode = "auto";
-            deny = map (path: "Read(${path})") sensitivePaths;
+            deny = map (path: "Read(${toClaudePattern path})") sensitivePaths;
             disableBypassPermissionsMode = "disable";
           };
           statusLine = {
