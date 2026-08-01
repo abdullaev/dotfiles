@@ -15,6 +15,7 @@
     neovim
     fastfetch
     llm
+    herdr
     eza
     zoxide
     fzf
