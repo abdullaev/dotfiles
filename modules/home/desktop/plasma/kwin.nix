@@ -1,19 +1,21 @@
 {
-  flake.modules.homeManager.plasma = {
-    programs.plasma.kwin = {
-      virtualDesktops = {
-        number = 4;
-        rows = 1;
-      };
-      nightLight = {
-        enable = true;
-        mode = "location";
-        location = {
-          latitude = "55.7558";
-          longitude = "37.6176";
+  flake.modules.homeManager.plasma =
+    { osConfig, ... }:
+    {
+      programs.plasma.kwin = {
+        virtualDesktops = {
+          number = 4;
+          rows = 1;
         };
-        temperature.night = 4000;
+        nightLight = {
+          enable = true;
+          mode = "location";
+          location = {
+            latitude = toString osConfig.location.latitude;
+            longitude = toString osConfig.location.longitude;
+          };
+          temperature.night = 4000;
+        };
       };
     };
-  };
 }

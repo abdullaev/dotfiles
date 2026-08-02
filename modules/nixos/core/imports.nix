@@ -7,7 +7,9 @@
     nix
     networking
     locale
+    location
     openssh
     maintenance
+    users
   ];
 }

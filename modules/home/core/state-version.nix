@@ -1,5 +1,6 @@
+{ lib, ... }:
 {
   flake.modules.homeManager.stateVersion = {
-    home.stateVersion = "25.11";
+    home.stateVersion = lib.mkDefault "25.11";
   };
 }

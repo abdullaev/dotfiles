@@ -26,6 +26,7 @@ in
 
               modules = [
                 inputs.agenix.nixosModules.default
+                ../../../secrets
                 config.flake.modules.nixos.core
                 { networking.hostName = name; }
               ];

@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+# No shebang: this file is embedded into a writeShellScript in default.nix.
 input=$(cat)
 
 model=$(echo "$input" | jq -r '.model.display_name // "Unknown Model"')

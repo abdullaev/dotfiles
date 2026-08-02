@@ -10,9 +10,19 @@
     let
       keys = import ../../../shared/keys.nix;
 
-      name = lib.head (lib.attrNames users);
+      # `throw` instead of an assertion: `name` is forced while evaluating the
+      # config below, so an assertion could never fire first.
+      name =
+        if lib.length (lib.attrNames users) == 1 then
+          lib.head (lib.attrNames users)
+        else
+          throw "flake.modules.nixos.syncthing expects exactly one user, got ${toString (lib.length (lib.attrNames users))}; name one explicitly on multi-user hosts.";
       user = users.${name};
       group = config.users.users.${name}.group;
+
+      hostId =
+        keys.hosts.${hostName}.syncthing
+          or (throw "shared/keys.nix is missing hosts.${hostName}.syncthing for flake.modules.nixos.syncthing");
 
       peers = [
         hostName
@@ -89,13 +99,6 @@
       );
     in
     {
-      assertions = [
-        {
-          assertion = lib.length (lib.attrNames users) == 1;
-          message = "flake.modules.nixos.syncthing runs as a single user; name one explicitly on multi-user hosts.";
-        }
-      ];
-
       services.syncthing = {
         enable = true;
         inherit group;
@@ -115,7 +118,7 @@
 
         settings = {
           devices = {
-            ${hostName}.id = keys.hosts.${hostName}.syncthing;
+            ${hostName}.id = hostId;
             iphone.id = keys.devices.iphone.syncthing;
             boox.id = keys.devices.boox.syncthing;
           };

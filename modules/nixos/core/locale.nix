@@ -1,6 +1,7 @@
+{ lib, ... }:
 {
   flake.modules.nixos.locale = {
-    time.timeZone = "Europe/Moscow";
+    time.timeZone = lib.mkDefault "Europe/Moscow";
 
     i18n.defaultLocale = "en_US.UTF-8";
 
