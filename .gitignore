@@ -1,3 +1,4 @@
 result
 .direnv/
 *.vim
+.claude/settings.local.json

@@ -33,6 +33,8 @@
         in
         if row == null then
           throw "location: time.timeZone ${tz} has no coordinates in zone1970.tab; set location.latitude/longitude manually"
+        else if m == null then
+          throw "location: cannot parse coordinates '${lib.elemAt row 1}' for ${tz} in zone1970.tab; set location.latitude/longitude manually"
         else
           {
             latitude = toDecimal (lib.elemAt m 0) (lib.elemAt m 1) (lib.elemAt m 2) (lib.elemAt m 3);

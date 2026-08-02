@@ -12,7 +12,6 @@
           size = 50000;
           save = 50000;
           share = true;
-          ignoreDups = true;
           ignoreSpace = true;
           expireDuplicatesFirst = true;
           extended = true;
