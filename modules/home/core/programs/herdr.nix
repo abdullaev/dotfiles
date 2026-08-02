@@ -46,6 +46,7 @@
             name = "catppuccin";
             custom = {
               inherit accent;
+              surface_dim = palette.surface0.hex;
             };
           };
 
@@ -63,6 +64,10 @@
             inherit accent;
             agent_panel_sort = "priority";
             hide_tab_bar_when_single_tab = true;
+            sidebar = {
+              agents.row_gap = 1;
+              spaces.row_gap = 1;
+            };
             toast = {
               delivery = "terminal";
               clipboard.enabled = false;
