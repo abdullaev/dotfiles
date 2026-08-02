@@ -2,7 +2,7 @@
   flake.modules.nixos.de =
     { pkgs, ... }:
     {
-      services.xserver.enable = true;
+      programs.ssh.enableAskPassword = true;
 
       services.pulseaudio.enable = false;
       security.rtkit.enable = true;
