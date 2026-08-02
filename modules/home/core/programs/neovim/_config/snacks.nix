@@ -1,4 +1,4 @@
-{ pkgs, lib }:
+{ pkgs }:
 {
   utility.snacks-nvim = {
     enable = true;

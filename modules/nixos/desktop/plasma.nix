@@ -1,15 +1,9 @@
 {
-  flake.modules.nixos.plasma =
-    {
-      config,
-      pkgs,
-      ...
-    }:
-    {
-      services.desktopManager.plasma6.enable = true;
+  flake.modules.nixos.plasma = {
+    services.desktopManager.plasma6.enable = true;
 
-      services.displayManager.plasma-login-manager = {
-        enable = true;
-      };
+    services.displayManager.plasma-login-manager = {
+      enable = true;
     };
+  };
 }

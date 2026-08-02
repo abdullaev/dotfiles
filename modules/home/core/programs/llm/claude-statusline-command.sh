@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 input=$(cat)
 
 model=$(echo "$input" | jq -r '.model.display_name // "Unknown Model"')
@@ -18,23 +16,23 @@ if [ -n "$transcript" ] && [ -f "$transcript" ]; then
   # a timestamp, so scan the first few lines for the first one that has it.
   start_iso=$(head -n 50 "$transcript" 2>/dev/null | jq -r 'select(.timestamp) | .timestamp' 2>/dev/null | head -n 1)
   if [ -n "$start_iso" ]; then
-    start_time=$(date -d "$start_iso" +%s 2>/dev/null \
-              || date -j -f "%Y-%m-%dT%H:%M:%S" "${start_iso%.*}" +%s 2>/dev/null \
-              || echo "")
+    start_time=$(date -d "$start_iso" +%s 2>/dev/null ||
+      date -j -f "%Y-%m-%dT%H:%M:%S" "${start_iso%.*}" +%s 2>/dev/null ||
+      echo "")
   fi
   if [ -z "$start_time" ]; then
     start_time=$(stat -f "%B" "$transcript" 2>/dev/null || stat -c "%W" "$transcript" 2>/dev/null || echo "")
-    case "$start_time" in ''|*[!0-9]*) start_time="" ;; esac
+    case "$start_time" in '' | *[!0-9]*) start_time="" ;; esac
     if [ -z "$start_time" ] || [ "$start_time" = "0" ]; then
       start_time=$(stat -f "%m" "$transcript" 2>/dev/null || stat -c "%Y" "$transcript" 2>/dev/null || echo "")
-      case "$start_time" in ''|*[!0-9]*) start_time="" ;; esac
+      case "$start_time" in '' | *[!0-9]*) start_time="" ;; esac
     fi
   fi
   now=$(date +%s)
   if [ -n "$start_time" ] && [ "$start_time" != "0" ]; then
-    elapsed=$(( now - start_time ))
-    hours=$(( elapsed / 3600 ))
-    minutes=$(( (elapsed % 3600) / 60 ))
+    elapsed=$((now - start_time))
+    hours=$((elapsed / 3600))
+    minutes=$(((elapsed % 3600) / 60))
     if [ "$hours" -gt 0 ]; then
       duration="${hours}h${minutes}m"
     else
@@ -54,20 +52,20 @@ ctx_size=$(echo "$input" | jq -r '.context_window.context_window_size // 0')
 current_input=$(echo "$input" | jq -r '.context_window.current_usage | ((.input_tokens // 0) + (.cache_read_input_tokens // 0) + (.cache_creation_input_tokens // 0))')
 # Cached tokens (cache_read = served from cache this request)
 cache_read=$(echo "$input" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0')
-cache_k=$(( cache_read / 1000 ))
+cache_k=$((cache_read / 1000))
 
 # Format context size in K
-ctx_k=$(( ctx_size / 1000 ))
+ctx_k=$((ctx_size / 1000))
 
 # If used_percentage is null but we have token counts, compute it ourselves
 # (pure bash arithmetic — avoids `bc`, which isn't installed on minimal Ubuntu)
 if [ -z "$used_pct" ] && [ "$ctx_size" -gt 0 ] && [ "$current_input" -gt 0 ]; then
-  used_pct=$(( current_input * 100 / ctx_size ))
+  used_pct=$((current_input * 100 / ctx_size))
 fi
 
 if [ -n "$used_pct" ] && [ "$used_pct" != "0" ]; then
   pct_int=$(printf "%.0f" "$used_pct")
-  ctx_k_used=$(( current_input / 1000 ))
+  ctx_k_used=$((current_input / 1000))
   if [ "$pct_int" -lt 50 ]; then
     pct_colored="\033[32m${pct_int}%\033[0m"
   elif [ "$pct_int" -lt 80 ]; then
@@ -100,15 +98,18 @@ color_pct() {
 
 fmt_reset() {
   local target="$1"
-  case "$target" in ''|*[!0-9]*) return 0 ;; esac
+  case "$target" in '' | *[!0-9]*) return 0 ;; esac
   local now remaining h m
   now=$(date +%s)
-  remaining=$(( target - now ))
-  [ "$remaining" -le 0 ] && { printf "0s"; return 0; }
-  h=$(( remaining / 3600 ))
-  m=$(( (remaining % 3600) / 60 ))
-  local d=$(( h / 24 ))
-  local hr=$(( h % 24 ))
+  remaining=$((target - now))
+  [ "$remaining" -le 0 ] && {
+    printf "0s"
+    return 0
+  }
+  h=$((remaining / 3600))
+  m=$(((remaining % 3600) / 60))
+  local d=$((h / 24))
+  local hr=$((h % 24))
   if [ "$d" -gt 0 ]; then
     printf "%dd%dh" "$d" "$hr"
   elif [ "$h" -gt 9 ]; then

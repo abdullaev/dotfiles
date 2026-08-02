@@ -1,12 +1,15 @@
 {
   flake.modules.nixos.nix =
-    { config, ... }:
+    { config, inputs, ... }:
     {
       nixpkgs.config.allowUnfree = true;
       nix = {
         extraOptions = ''
           !include ${config.age.secrets.access-tokens.path}
         '';
+
+        registry.nixpkgs.flake = inputs.nixpkgs;
+        nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
         settings = {
           experimental-features = [

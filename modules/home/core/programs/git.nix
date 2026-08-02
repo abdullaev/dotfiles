@@ -13,7 +13,7 @@
           init.defaultBranch = "main";
           user = {
             name = user.fullName;
-            email = user.email;
+            inherit (user) email;
           };
           diff.tool = "vimdiff";
           rerere.enabled = true;

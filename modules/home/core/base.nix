@@ -9,7 +9,7 @@
     {
       home = {
         username = user.name;
-        homeDirectory = user.homeDirectory;
+        inherit (user) homeDirectory;
       };
 
       catppuccin = {

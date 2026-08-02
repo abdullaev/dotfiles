@@ -9,8 +9,7 @@
 let
   shellPackages = {
     bash = pkgs.bashInteractive;
-    zsh = pkgs.zsh;
-    fish = pkgs.fish;
+    inherit (pkgs) zsh fish;
   };
 in
 {
@@ -37,7 +36,7 @@ in
       description = user.fullName;
       extraGroups = user.groups;
       home = user.homeDirectory;
-      linger = user.linger;
+      inherit (user) linger;
       shell = shellPackages.${user.shell};
     }
     // lib.optionalAttrs (user.authorizedKeys != [ ]) {
