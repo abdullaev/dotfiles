@@ -56,8 +56,7 @@
           keys = {
             prefix = "alt+w";
             switch_workspace = "prefix+shift+1..9";
-            next_workspace = "prefix+shift+j";
-            previous_workspace = "prefix+shift+k";
+            focus_agent = "prefix+alt+1..9";
           };
 
           ui = {
@@ -72,7 +71,6 @@
 
           experimental = {
             kitty_graphics = true;
-            pane_history = true;
           };
         };
       };
