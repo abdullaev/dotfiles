@@ -2,8 +2,6 @@
   flake.modules.nixos.nvidia = { config, ... }: {
     hardware.graphics.enable = true;
 
-    boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
-
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
