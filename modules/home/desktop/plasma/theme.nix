@@ -20,22 +20,31 @@
         })
       ];
 
-      programs.plasma.workspace = {
-        wallpaper = builtins.path {
-          name = "wallpaper.png";
-          path = ../../../../images/wallpaper.png;
+      programs.plasma = {
+        workspace = {
+          wallpaper = builtins.path {
+            name = "wallpaper.png";
+            path = ../../../../images/wallpaper.png;
+          };
+          colorScheme = "Catppuccin${lib.toSentenceCase flavor}${lib.toSentenceCase accent}";
+          iconTheme = "breeze";
+          cursor = {
+            theme = cursorName;
+            size = cursorSize;
+            cursorFeedback = "None";
+          };
+          splashScreen.theme = "None";
+          windowDecorations = {
+            library = "org.kde.breeze";
+            theme = "Breeze";
+          };
         };
-        colorScheme = "Catppuccin${lib.toSentenceCase flavor}${lib.toSentenceCase accent}";
-        iconTheme = "breeze";
-        cursor = {
-          theme = cursorName;
-          size = cursorSize;
-          cursorFeedback = "None";
-        };
-        splashScreen.theme = "None";
-        windowDecorations = {
-          library = "org.kde.breeze";
-          theme = "Breeze";
+        configFile = {
+          kdeglobals = {
+            General = {
+              DeviceLedsAccentColored = true;
+            };
+          };
         };
       };
 
