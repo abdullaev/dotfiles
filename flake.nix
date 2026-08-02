@@ -65,8 +65,12 @@
       url = "git+ssh://git@github.com/abdullaev/font-pragmata-pro.git";
       flake = false;
     };
-    catppuccin-aseprite = {
+    catppuccin-aseprite-mocha = {
       url = "file+https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-mocha.aseprite-extension";
+      flake = false;
+    };
+    catppuccin-aseprite-latte = {
+      url = "file+https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-latte.aseprite-extension";
       flake = false;
     };
     ru-ip-list = {

@@ -1,17 +1,31 @@
 {
   flake.modules.homeManager.aseprite =
-    { inputs, pkgs, ... }:
+    {
+      config,
+      inputs,
+      pkgs,
+      ...
+    }:
     let
-      catppuccinMochaTheme =
-        pkgs.runCommand "catppuccin-theme-mocha"
+      inherit (config.catppuccin) flavor;
+
+      themeSources = {
+        mocha = inputs.catppuccin-aseprite-mocha;
+        latte = inputs.catppuccin-aseprite-latte;
+      };
+
+      catppuccinTheme =
+        pkgs.runCommand "catppuccin-theme-${flavor}"
           {
             nativeBuildInputs = [ pkgs.unzip ];
-            src = inputs.catppuccin-aseprite;
+            src =
+              themeSources.${flavor}
+                or (throw "aseprite: no catppuccin-aseprite-${flavor} flake input; add one in flake.nix");
           }
           ''
             unzip -qq "$src"
             mkdir -p "$out"
-            cp -r catppuccin-theme-mocha/. "$out"/
+            cp -r catppuccin-theme-${flavor}/. "$out"/
           '';
     in
     {
@@ -19,8 +33,8 @@
         aseprite
       ];
 
-      home.file.".config/aseprite/extensions/catppuccin-theme-mocha" = {
-        source = catppuccinMochaTheme;
+      home.file.".config/aseprite/extensions/catppuccin-theme-${flavor}" = {
+        source = catppuccinTheme;
         recursive = true;
       };
     };

@@ -8,9 +8,9 @@ model=$(echo "$input" | jq -r '.model.display_name // "Unknown Model"')
 cost_usd=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
 cost_display=$(printf '$%.2f' "$cost_usd")
 
-# Session duration: prefer first transcript entry's timestamp (works the same
-# on macOS and Linux, unlike FS birth time which is unreliable on ext4 and
-# whose mtime fallback is meaningless because the jsonl is appended to).
+# Session duration: prefer first transcript entry's timestamp (FS birth time
+# is unreliable on ext4, and mtime is meaningless because the jsonl is
+# appended to). GNU date/stat only — the wrapper pins coreutils into PATH.
 transcript=$(echo "$input" | jq -r '.transcript_path // empty')
 if [ -n "$transcript" ] && [ -f "$transcript" ]; then
   start_time=""
@@ -18,15 +18,13 @@ if [ -n "$transcript" ] && [ -f "$transcript" ]; then
   # a timestamp, so scan the first few lines for the first one that has it.
   start_iso=$(head -n 50 "$transcript" 2>/dev/null | jq -r 'select(.timestamp) | .timestamp' 2>/dev/null | head -n 1)
   if [ -n "$start_iso" ]; then
-    start_time=$(date -d "$start_iso" +%s 2>/dev/null ||
-      date -j -f "%Y-%m-%dT%H:%M:%S" "${start_iso%.*}" +%s 2>/dev/null ||
-      echo "")
+    start_time=$(date -d "$start_iso" +%s 2>/dev/null || echo "")
   fi
   if [ -z "$start_time" ]; then
-    start_time=$(stat -f "%B" "$transcript" 2>/dev/null || stat -c "%W" "$transcript" 2>/dev/null || echo "")
+    start_time=$(stat -c "%W" "$transcript" 2>/dev/null || echo "")
     case "$start_time" in '' | *[!0-9]*) start_time="" ;; esac
     if [ -z "$start_time" ] || [ "$start_time" = "0" ]; then
-      start_time=$(stat -f "%m" "$transcript" 2>/dev/null || stat -c "%Y" "$transcript" 2>/dev/null || echo "")
+      start_time=$(stat -c "%Y" "$transcript" 2>/dev/null || echo "")
       case "$start_time" in '' | *[!0-9]*) start_time="" ;; esac
     fi
   fi

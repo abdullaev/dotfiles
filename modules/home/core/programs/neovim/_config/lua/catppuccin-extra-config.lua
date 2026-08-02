@@ -17,7 +17,8 @@ do
 		opts.custom_highlights = function(colors)
 			return {
 				SnacksPickerMatch = {
-					fg = colors.lavender,
+					-- @accent@ is substituted with catppuccin.accent at nix eval time.
+					fg = colors["@accent@"],
 					bold = true,
 				},
 				SnacksPickerCol = {

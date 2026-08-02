@@ -50,6 +50,8 @@
         "~/.claude/.credentials.json"
         "~/.local/share/opencode/auth.json"
         "~/.local/share/fish/fish_history"
+        "~/.zsh_history"
+        "~/.bash_history"
         "~/.local/share/kwalletd/**"
         "~/.netrc"
         "~/.git-credentials"
@@ -120,6 +122,8 @@
             type = "command";
             command = toString (
               pkgs.writeShellScript "claude-statusline" ''
+                # `printf %.2f` parses floats locale-dependently.
+                export LC_ALL=C
                 export PATH=${
                   pkgs.lib.makeBinPath [
                     pkgs.jq

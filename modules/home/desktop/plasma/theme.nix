@@ -6,17 +6,20 @@
       pkgs,
       ...
     }:
+    let
+      inherit (config.catppuccin) flavor accent;
+    in
     {
       home.packages = [
         (pkgs.catppuccin-kde.override {
-          flavour = [ "mocha" ];
-          accents = [ "lavender" ];
+          flavour = [ flavor ];
+          accents = [ accent ];
         })
       ];
 
       programs.plasma.workspace = {
         wallpaper = ../../../../images/wallpaper.png;
-        colorScheme = "CatppuccinMochaLavender";
+        colorScheme = "Catppuccin${lib.toSentenceCase flavor}${lib.toSentenceCase accent}";
         iconTheme = "breeze";
         cursor = {
           theme = "breeze_cursors";
@@ -34,10 +37,10 @@
         enable = true;
         theme = {
           package = pkgs.catppuccin-gtk.override {
-            variant = "mocha";
-            accents = [ "lavender" ];
+            variant = flavor;
+            accents = [ accent ];
           };
-          name = "catppuccin-mocha-lavender-standard";
+          name = "catppuccin-${flavor}-${accent}-standard";
         };
         gtk4.theme = config.gtk.theme;
         iconTheme = {

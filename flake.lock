@@ -94,7 +94,19 @@
         "type": "github"
       }
     },
-    "catppuccin-aseprite": {
+    "catppuccin-aseprite-latte": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-ooCx06ET/iXO0STbbzqfr6M4fKPzUKIFSgCa6cwii74=",
+        "type": "file",
+        "url": "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-latte.aseprite-extension"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-latte.aseprite-extension"
+      }
+    },
+    "catppuccin-aseprite-mocha": {
       "flake": false,
       "locked": {
         "narHash": "sha256-sR/iCU9QHkCPAjPkgnBdyGhMzcTHJxa8APBLYTLifX0=",
@@ -422,7 +434,8 @@
         "agenix": "agenix",
         "anthropic-skills": "anthropic-skills",
         "catppuccin": "catppuccin",
-        "catppuccin-aseprite": "catppuccin-aseprite",
+        "catppuccin-aseprite-latte": "catppuccin-aseprite-latte",
+        "catppuccin-aseprite-mocha": "catppuccin-aseprite-mocha",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "ghostty-cursor-shaders": "ghostty-cursor-shaders",

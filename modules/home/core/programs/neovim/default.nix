@@ -1,6 +1,7 @@
 {
   flake.modules.homeManager.neovim =
     {
+      config,
       pkgs,
       lib,
       ...
@@ -15,7 +16,9 @@
             enable = true;
             name = "catppuccin";
             style = "auto";
-            extraConfig = builtins.readFile ./_config/lua/catppuccin-extra-config.lua;
+            extraConfig = lib.replaceStrings [ "@accent@" ] [ config.catppuccin.accent ] (
+              builtins.readFile ./_config/lua/catppuccin-extra-config.lua
+            );
           };
 
           options = {

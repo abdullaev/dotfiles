@@ -1,13 +1,18 @@
 {
   flake.modules.homeManager.process-compose =
-    { pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       home.packages = with pkgs; [
         process-compose
       ];
 
       home.file.".config/process-compose/settings.yaml".text = ''
-        theme: "Catppuccin Mocha"
+        theme: "Catppuccin ${lib.toSentenceCase config.catppuccin.flavor}"
       '';
     };
 }
