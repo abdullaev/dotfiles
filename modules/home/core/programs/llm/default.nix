@@ -28,11 +28,18 @@
         }) [ "productivity/handoff" ]
       );
 
+      herdrSkills = {
+        herdr = pkgs.runCommand "herdr-skill" { } ''
+          mkdir -p "$out"
+          cp ${pkgs.herdr.src}/SKILL.md "$out/SKILL.md"
+        '';
+      };
+
       localSkills = lib.mapAttrs (name: _: ./_skills + "/${name}") (
         lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./_skills)
       );
 
-      skills = anthropicSkills // obsidianSkills // mattpocockSkills // localSkills;
+      skills = anthropicSkills // obsidianSkills // mattpocockSkills // herdrSkills // localSkills;
 
       sensitivePaths = [
         "~/.ssh/**"

@@ -12,6 +12,27 @@
         .${config.catppuccin.flavor}.colors;
 
       accent = palette.${config.catppuccin.accent}.hex;
+
+      # The agent integrations are shims embedded in the herdr binary that report
+      # the pane's agent session back over HERDR_SOCKET_PATH, so the agent panel
+      # can track and resume it. `herdr integration install` drops them in place
+      # imperatively and rewrites ~/.claude/settings.json, which home-manager owns
+      # and links read-only — so unpack the shims from the packaged binary and wire
+      # them up here instead. They stay in lockstep with the herdr package.
+      integrations = pkgs.runCommand "herdr-integrations" { } ''
+        export HOME="$NIX_BUILD_TOP/home"
+        mkdir -p "$HOME/.claude" "$HOME/.config/opencode" "$out"
+
+        herdr=${lib.getExe config.programs.herdr.package}
+        "$herdr" integration install claude
+        "$herdr" integration install opencode
+
+        cp "$HOME/.claude/hooks/herdr-agent-state.sh" "$out/claude-agent-state.sh"
+        cp "$HOME/.config/opencode/plugins/herdr-agent-state.js" "$out/opencode-agent-state.js"
+      '';
+
+      # `herdr integration status` looks for the hook at this exact path.
+      claudeHook = ".claude/hooks/herdr-agent-state.sh";
     in
     {
       programs.herdr = {
@@ -53,6 +74,31 @@
             kitty_graphics = true;
             pane_history = true;
           };
+        };
+      };
+
+      programs.claude-code = lib.mkIf config.programs.claude-code.enable {
+        settings.hooks.SessionStart = [
+          {
+            matcher = "*";
+            hooks = [
+              {
+                type = "command";
+                command = "bash '${config.home.homeDirectory}/${claudeHook}' session";
+                timeout = 10;
+              }
+            ];
+          }
+        ];
+      };
+
+      home.file = {
+        ${claudeHook} = lib.mkIf config.programs.claude-code.enable {
+          source = "${integrations}/claude-agent-state.sh";
+        };
+
+        ".config/opencode/plugins/herdr-agent-state.js" = lib.mkIf config.programs.opencode.enable {
+          source = "${integrations}/opencode-agent-state.js";
         };
       };
 
