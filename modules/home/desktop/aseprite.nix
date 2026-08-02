@@ -33,7 +33,7 @@
         aseprite
       ];
 
-      home.file.".config/aseprite/extensions/catppuccin-theme-${flavor}" = {
+      xdg.configFile."aseprite/extensions/catppuccin-theme-${flavor}" = {
         source = catppuccinTheme;
         recursive = true;
       };

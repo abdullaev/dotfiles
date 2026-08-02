@@ -2,6 +2,8 @@
   flake.modules.nixos.steam =
     { pkgs, ... }:
     {
+      boot.kernelModules = [ "ntsync" ];
+
       programs = {
         steam = {
           enable = true;

@@ -19,14 +19,11 @@
         };
 
         setOptions = [
-          "APPEND_HISTORY"
-          "INC_APPEND_HISTORY"
           "HIST_FCNTL_LOCK"
           "HIST_IGNORE_ALL_DUPS"
           "HIST_SAVE_NO_DUPS"
           "HIST_FIND_NO_DUPS"
           "HIST_REDUCE_BLANKS"
-          "SHARE_HISTORY"
           "AUTO_MENU"
           "MENU_COMPLETE"
           "AUTO_CD"

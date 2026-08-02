@@ -64,10 +64,6 @@
             inherit accent;
             agent_panel_sort = "priority";
             hide_tab_bar_when_single_tab = true;
-            sidebar = {
-              agents.row_gap = 1;
-              spaces.row_gap = 1;
-            };
             toast = {
               delivery = "terminal";
               clipboard.enabled = false;
@@ -95,14 +91,12 @@
         ];
       };
 
-      home.file = {
-        ${claudeHook} = lib.mkIf config.programs.claude-code.enable {
-          source = "${integrations}/claude-agent-state.sh";
-        };
+      home.file.${claudeHook} = lib.mkIf config.programs.claude-code.enable {
+        source = "${integrations}/claude-agent-state.sh";
+      };
 
-        ".config/opencode/plugins/herdr-agent-state.js" = lib.mkIf config.programs.opencode.enable {
-          source = "${integrations}/opencode-agent-state.js";
-        };
+      xdg.configFile."opencode/plugins/herdr-agent-state.js" = lib.mkIf config.programs.opencode.enable {
+        source = "${integrations}/opencode-agent-state.js";
       };
 
       programs.fish.interactiveShellInit = ''

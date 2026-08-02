@@ -65,6 +65,8 @@
         "**/.env.local"
         "**/.env.production"
         "**/.env.development"
+        "**/.env.staging"
+        "**/.env.test"
         "**/*.pem"
         "**/*.tfstate"
         "**/*.tfvars"

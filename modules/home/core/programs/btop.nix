@@ -1,10 +1,14 @@
 {
   flake.modules.homeManager.btop =
-    { pkgs, ... }:
+    { osConfig, pkgs, ... }:
     {
       programs.btop = {
         enable = true;
-        package = pkgs.btop-cuda;
+        package =
+          if builtins.elem "nvidia" (osConfig.services.xserver.videoDrivers or [ ]) then
+            pkgs.btop-cuda
+          else
+            pkgs.btop;
         settings = {
           theme_background = false;
           vim_keys = true;

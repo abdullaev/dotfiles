@@ -8,6 +8,9 @@
     }:
     let
       inherit (config.catppuccin) flavor accent;
+
+      cursorName = "breeze_cursors";
+      cursorSize = 24;
     in
     {
       home.packages = [
@@ -18,12 +21,15 @@
       ];
 
       programs.plasma.workspace = {
-        wallpaper = ../../../../images/wallpaper.png;
+        wallpaper = builtins.path {
+          name = "wallpaper.png";
+          path = ../../../../images/wallpaper.png;
+        };
         colorScheme = "Catppuccin${lib.toSentenceCase flavor}${lib.toSentenceCase accent}";
         iconTheme = "breeze";
         cursor = {
-          theme = "breeze_cursors";
-          size = 24;
+          theme = cursorName;
+          size = cursorSize;
           cursorFeedback = "None";
         };
         splashScreen.theme = "None";
@@ -54,11 +60,13 @@
       home.pointerCursor = {
         enable = true;
         gtk.enable = true;
-        name = "breeze_cursors";
+        name = cursorName;
         package = pkgs.kdePackages.breeze;
-        size = 24;
+        size = cursorSize;
       };
 
+      # home.pointerCursor exports XCURSOR_SIZE, which overrides Plasma's
+      # per-screen cursor scaling; unset it and let kcminputrc win.
       home.sessionVariablesExtra = ''
         unset XCURSOR_SIZE
       '';

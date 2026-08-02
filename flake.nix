@@ -8,6 +8,9 @@
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
     };
+    systems = {
+      url = "github:nix-systems/default";
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,6 +22,8 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
+      inputs.systems.follows = "systems";
+      inputs.darwin.follows = "";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -44,6 +49,9 @@
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.systems.follows = "systems";
     };
     anthropic-skills = {
       url = "github:anthropics/skills";

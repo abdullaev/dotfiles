@@ -2,7 +2,7 @@
   flake.modules.homeManager.ghostty =
     { inputs, ... }:
     {
-      home.file.".config/ghostty/shaders".source = inputs.ghostty-cursor-shaders;
+      xdg.configFile."ghostty/shaders".source = inputs.ghostty-cursor-shaders;
 
       programs.ghostty = {
         enable = true;
@@ -39,8 +39,6 @@
             "shaders/cursor_warp.glsl"
             "shaders/ripple_cursor.glsl"
           ];
-
-          keybind = [ ];
         };
       };
 

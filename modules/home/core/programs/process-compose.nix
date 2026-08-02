@@ -11,7 +11,7 @@
         process-compose
       ];
 
-      home.file.".config/process-compose/settings.yaml".text = ''
+      xdg.configFile."process-compose/settings.yaml".text = ''
         theme: "Catppuccin ${lib.toSentenceCase config.catppuccin.flavor}"
       '';
     };

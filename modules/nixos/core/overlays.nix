@@ -10,6 +10,13 @@
           patches = (old.patches or [ ]) ++ [ ../../../pkgs/herdr/underline-color.patch ];
         });
       })
+
+      # nvf's conform mix preset still references the deprecated `elixir`
+      # alias, which spams an eval warning on every rebuild. Resolve the alias
+      # to the real package; drop once nvf uses beamPackages.elixir.
+      (final: _: {
+        elixir = final.beamPackages.elixir;
+      })
     ];
   };
 }

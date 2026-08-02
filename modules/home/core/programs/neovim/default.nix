@@ -7,7 +7,7 @@
       ...
     }:
     let
-      vimConfig = lib.foldl' lib.recursiveUpdate { } [
+      vimConfig = lib.mkMerge [
         {
           viAlias = true;
           vimAlias = true;
