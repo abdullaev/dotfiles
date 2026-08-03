@@ -6,11 +6,16 @@
         enable = true;
         configPath = "${config.xdg.configHome}/mozilla/firefox";
         nativeMessagingHosts = [ pkgs.kdePackages.plasma-browser-integration ];
+
         profiles.default = {
-          settings = {
-            "widget.use-xdg-desktop-portal.file-picker" = 1;
-          };
+          search.force = true;
+          handlers.force = true;
         };
+      };
+
+      catppuccin.firefox = {
+        profiles.default.enable = true;
+        force = true;
       };
     };
 }
