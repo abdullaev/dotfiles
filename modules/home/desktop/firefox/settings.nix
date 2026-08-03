@@ -19,7 +19,12 @@
       "browser.ai.control.sidebarChatbot" = "blocked";
       "browser.ai.control.smartTabGroups" = "blocked";
       "browser.ai.control.smartWindow" = "blocked";
-      "browser.ai.control.translations" = "blocked";
+
+      "browser.ai.control.translations" = "available";
+      "browser.translations.enable" = true;
+      "browser.translations.select.enable" = true;
+      "browser.translations.automaticallyPopup" = false;
+      "browser.translations.mostRecentTargetLanguages" = "ru";
 
       "browser.startup.homepage" = "about:blank";
       "browser.newtabpage.enabled" = false;
