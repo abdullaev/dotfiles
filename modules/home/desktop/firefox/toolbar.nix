@@ -21,7 +21,6 @@
       ublock = button addons.ublock-origin.addonId;
       sponsorblock = button addons.sponsorblock.addonId;
       bitwarden = button addons.bitwarden.addonId;
-      seventv = button addons."7tv".addonId;
       reactDevtools = button addons.react-devtools.addonId;
       plasma = button addons.plasma-integration.addonId;
       firefoxColor = button addons.firefox-color.addonId;
@@ -41,7 +40,6 @@
               "downloads-button"
               "unified-extensions-button"
               sponsorblock
-              seventv
               ublock
               reactDevtools
               bitwarden
@@ -63,7 +61,6 @@
             reactDevtools
             bitwarden
             sponsorblock
-            seventv
             ublock
             "reset-pbm-toolbar-button"
             plasma

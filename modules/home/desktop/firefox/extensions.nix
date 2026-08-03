@@ -12,7 +12,6 @@
           addons.bitwarden
           addons.react-devtools
           addons.plasma-integration
-          addons."7tv"
           addons.firefox-color
         ];
 
