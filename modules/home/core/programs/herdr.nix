@@ -65,7 +65,7 @@
             agent_panel_sort = "priority";
             hide_tab_bar_when_single_tab = true;
             toast = {
-              delivery = "terminal";
+              delivery = "system";
               clipboard.enabled = false;
             };
           };
@@ -75,6 +75,11 @@
           };
         };
       };
+
+      # `toast.delivery = "system"` runs `notify-send`, which lives in libnotify
+      # and is not otherwise part of the closure. Without it herdr silently
+      # falls back to showing nothing.
+      home.packages = [ pkgs.libnotify ];
 
       programs.claude-code = lib.mkIf config.programs.claude-code.enable {
         settings.hooks.SessionStart = [
