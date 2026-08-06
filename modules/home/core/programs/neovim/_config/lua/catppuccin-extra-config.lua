@@ -1,35 +1,34 @@
 do
-	local catppuccin = require("catppuccin")
+  local catppuccin = require("catppuccin")
 
-	local base_setup = catppuccin.setup
-	catppuccin.setup = function(opts)
-		opts = opts or {}
+  local base_setup = catppuccin.setup
+  catppuccin.setup = function(opts)
+    opts = opts or {}
 
-		opts.lsp_styles = opts.lsp_styles or {}
-		opts.lsp_styles.underlines = vim.tbl_deep_extend("force", opts.lsp_styles.underlines or {}, {
-			errors = { "undercurl" },
-			hints = { "undercurl" },
-			warnings = { "undercurl" },
-			information = { "undercurl" },
-			ok = { "undercurl" },
-		})
+    opts.lsp_styles = opts.lsp_styles or {}
+    opts.lsp_styles.underlines = vim.tbl_deep_extend("force", opts.lsp_styles.underlines or {}, {
+      errors = { "undercurl" },
+      hints = { "undercurl" },
+      warnings = { "undercurl" },
+      information = { "undercurl" },
+      ok = { "undercurl" },
+    })
 
-		opts.custom_highlights = function(colors)
-			return {
-				SnacksPickerMatch = {
-					-- @accent@ is substituted with catppuccin.accent at nix eval time.
-					fg = colors["@accent@"],
-					bold = true,
-				},
-				SnacksPickerCol = {
-					fg = colors.subtext0,
-				},
-				TroubleCount = {
-					bg = colors.surface1,
-				},
-			}
-		end
+    opts.custom_highlights = function(colors)
+      return {
+        SnacksPickerMatch = {
+          fg = colors["@accent@"],
+          bold = true,
+        },
+        SnacksPickerCol = {
+          fg = colors.subtext0,
+        },
+        TroubleCount = {
+          bg = colors.surface1,
+        },
+      }
+    end
 
-		return base_setup(opts)
-	end
+    return base_setup(opts)
+  end
 end
