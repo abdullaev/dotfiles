@@ -13,16 +13,9 @@ let
       require("conform.util").find_executable({ "node_modules/.bin/${bin}" }, ${builtins.toJSON (getExe pkg)})
     '';
 
-  # `lsp_format = "never"` per filetype, not globally: nvf sets lsp_format =
-  # "fallback", so once every formatter below is gated on `require_cwd` an
-  # unconfigured repo would fall through to vtsls/cssls/html-lsp reformatting the
-  # buffer in tsserver's style. Languages conform doesn't own here (Go, Rust, Nix,
-  # C) keep the fallback, where the LSP *is* the project's formatter.
   chain =
     names:
-    mkLuaInline "{ ${
-      lib.concatMapStringsSep ", " (n: ''"${n}"'') names
-    }, stop_after_first = true, lsp_format = \"never\" }";
+    mkLuaInline "{ ${lib.concatMapStringsSep ", " (n: ''"${n}"'') names}, stop_after_first = true }";
 
   full = chain [
     "biome-check"
