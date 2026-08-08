@@ -34,6 +34,7 @@ in
           useGlobalPkgs = true;
           useUserPackages = true;
           sharedModules = [
+            inputs.sops-nix.homeManagerModules.sops
             inputs.nvf.homeManagerModules.default
             inputs.plasma-manager.homeModules.plasma-manager
             inputs.catppuccin.homeModules.catppuccin

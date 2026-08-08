@@ -48,6 +48,8 @@
         "/run/secrets/**"
         "/run/secrets.d/**"
         "/run/secrets-for-users/**"
+        "/run/user/*/secrets.d/**"
+        "~/.config/sops-nix/**"
         "~/.gnupg/**"
         "~/.config/gh/hosts.yml"
         "~/.claude/.credentials.json"
