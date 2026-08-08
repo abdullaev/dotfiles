@@ -30,11 +30,11 @@
     "anthropic-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1784923954,
-        "narHash": "sha256-RH2B03gj4kzw1j5LORezgUZPPu8mW+mWb+Kl2U7WUbY=",
+        "lastModified": 1786122854,
+        "narHash": "sha256-vTqAu8eRY+8ymbf065SWHHjNX/li3SOR+sWq1npteTM=",
         "owner": "anthropics",
         "repo": "skills",
-        "rev": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "rev": "f17010c9bb483898c1d9c9f42dde2b3a98889434",
         "type": "github"
       },
       "original": {
@@ -150,11 +150,11 @@
         "typescript-src": "typescript-src"
       },
       "locked": {
-        "lastModified": 1786111321,
-        "narHash": "sha256-UZ44Gc/Sq63GBHxDEZrl2FOE5SPMEFM9VCudUvXuAiw=",
+        "lastModified": 1786187884,
+        "narHash": "sha256-pCJR6lZ4q2+M6+k7XZrT7UDJEL3zNfXjlry7Q82HJ80=",
         "owner": "Effect-TS",
         "repo": "tsgo",
-        "rev": "698aea9c5fec551e4fcc71de4fe8d3d636561370",
+        "rev": "8423f68f068ccc0b4d77c026f38ac6e69588370c",
         "type": "github"
       },
       "original": {
@@ -171,11 +171,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1786075368,
-        "narHash": "sha256-vSiTq6wa9WiKGHOdCRlABkKksOgfrsUuRz/K6tQ9EYA=",
+        "lastModified": 1786177081,
+        "narHash": "sha256-k8oMgW50OIXcGEz6Unic8sV3c+GTvinL3UUZL1TRayM=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "f516bdb9bc003c9d1f041d8ad9f0a9627fe800d2",
+        "rev": "e56e2b53b293be127a1360c7d30c713eaaadce08",
         "type": "gitlab"
       },
       "original": {
@@ -287,11 +287,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786117558,
-        "narHash": "sha256-rVWY8+GTKfv7mQzFS0pxVvtxvwLzGFrf98iHLlhUVE8=",
+        "lastModified": 1786166533,
+        "narHash": "sha256-cDbBQvFQJcu3RNO7duTSrA2MMXm9JTPJ+T1sGt1cx8g=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "6cf74c9868d6322bb08e9620cd71f789f41f2f5e",
+        "rev": "df0664e9fdc0f06099ffeb1fe4878fcf58e13905",
         "type": "github"
       },
       "original": {
@@ -486,7 +486,7 @@
     "ru-ip-list": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-nbCwVOU1n7AG8fJGAUw113dGYmsOK8QSIfTfaNYb0YE=",
+        "narHash": "sha256-Y2KVsHJVWyVuVvSTCKPGztN0589CK2Rys9jQPDAkB6Y=",
         "type": "file",
         "url": "https://www.ipdeny.com/ipblocks/data/countries/ru.zone"
       },
