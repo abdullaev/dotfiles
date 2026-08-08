@@ -59,3 +59,29 @@ jobs:
           nix eval --raw --no-update-lock-file \
             .#nixosConfigurations.vega.config.system.build.toplevel.drvPath
           echo
+
+  full-build:
+    name: Full system build
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    needs: eval
+    # The ~30 GiB closure build: only on the weekly update-flake-lock PRs
+    # (their head branch is fixed) and manual dispatch — never on regular PRs.
+    if: (github.event_name == 'pull_request' && github.head_ref == 'update_flake_lock_action') || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v7
+      # Frees ~115 GB for /nix by purging runner bloat; must precede Nix install.
+      - uses: wimpysworld/nothing-but-nix@v10
+      - name: Load deploy key for private font repo
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            download-attempts = 5
+            connect-timeout = 10
+      - name: Build full system closure
+        run: |
+          nix build --no-update-lock-file --no-link -L \
+            .#checks.x86_64-linux.nixos-hosts
