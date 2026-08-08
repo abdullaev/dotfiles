@@ -18,7 +18,7 @@ in
       authorizedKeys = [
         keys.users.sqxt.ssh
       ];
-      passwordSecret = "sqxt-at-vega";
+      sopsPassword = true;
       groups = [
         "networkmanager"
         "wheel"

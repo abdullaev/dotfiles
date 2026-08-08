@@ -99,12 +99,19 @@
       );
     in
     {
+      sops.secrets."syncthing/gui-password" = {
+        sopsFile = ../../../secrets/hosts + "/${hostName}.yaml";
+        owner = name;
+        mode = "0400";
+        restartUnits = [ "syncthing-init.service" ];
+      };
+
       services.syncthing = {
         enable = true;
         inherit group;
         user = name;
 
-        guiPasswordFile = config.age.secrets.syncthing-gui.path;
+        guiPasswordFile = config.sops.secrets."syncthing/gui-password".path;
 
         dataDir = user.homeDirectory;
         configDir = "${user.homeDirectory}/.config/syncthing";

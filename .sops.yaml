@@ -1,0 +1,33 @@
+# Recipients are age-converted SSH ed25519 pubkeys from shared/keys.nix
+# (ssh-to-age <<< "<pubkey>"). Keep both files in sync when keys change.
+#
+# Growth: new host -> add &host_X anchor, add a hosts/X.yaml rule, append
+# *host_X to the shared.yaml rule (and to users/<u>.yaml rules for users
+# that exist on it), then: sops updatekeys secrets/shared.yaml secrets/users/*.yaml
+# New user on an existing host -> add their hash under user-passwords: in
+# that host's file; add &user_X + a users/X.yaml rule if they get own secrets.
+keys:
+  - &user_sqxt age1j3n32amu9su833crw8c4s2m69km6v280dsmzw2f5w000hlmwnvlsz2hagm
+  - &host_vega age180hyaevp4nhawtcpv0vmzlx4398rxtnk8qdc5rmyk7l65ha28u7q0jtm7c
+
+creation_rules:
+  # Per-host secrets: the host itself + admins who edit
+  - path_regex: ^secrets/hosts/vega\.yaml$
+    key_groups:
+      - age:
+          - *host_vega
+          - *user_sqxt
+
+  # Per-user secrets: the user + every host that user exists on
+  - path_regex: ^secrets/users/sqxt\.yaml$
+    key_groups:
+      - age:
+          - *user_sqxt
+          - *host_vega
+
+  # Shared: every host + admins
+  - path_regex: ^secrets/shared\.yaml$
+    key_groups:
+      - age:
+          - *user_sqxt
+          - *host_vega

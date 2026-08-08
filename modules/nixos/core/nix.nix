@@ -2,10 +2,16 @@
   flake.modules.nixos.nix =
     { config, inputs, ... }:
     {
+      sops.secrets.nix-access-tokens = {
+        sopsFile = ../../../secrets/shared.yaml;
+        group = "wheel";
+        mode = "0440";
+      };
+
       nixpkgs.config.allowUnfree = true;
       nix = {
         extraOptions = ''
-          !include ${config.age.secrets.access-tokens.path}
+          !include ${config.sops.secrets.nix-access-tokens.path}
         '';
 
         registry.nixpkgs.flake = inputs.nixpkgs;

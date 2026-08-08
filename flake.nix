@@ -18,12 +18,9 @@
     import-tree = {
       url = "github:vic/import-tree";
     };
-    agenix = {
-      url = "github:ryantm/agenix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.systems.follows = "systems";
-      inputs.darwin.follows = "";
     };
     home-manager = {
       url = "github:nix-community/home-manager";

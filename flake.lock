@@ -1,32 +1,5 @@
 {
   "nodes": {
-    "agenix": {
-      "inputs": {
-        "darwin": [],
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1770165109,
-        "narHash": "sha256-9VnK6Oqai65puVJ4WYtCTvlJeXxMzAp/69HhQuTdl/I=",
-        "owner": "ryantm",
-        "repo": "agenix",
-        "rev": "b027ee29d959fda4b60b57566d64c98a202e0feb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ryantm",
-        "repo": "agenix",
-        "type": "github"
-      }
-    },
     "anthropic-skills": {
       "flake": false,
       "locked": {
@@ -150,11 +123,11 @@
         "typescript-src": "typescript-src"
       },
       "locked": {
-        "lastModified": 1786187884,
-        "narHash": "sha256-pCJR6lZ4q2+M6+k7XZrT7UDJEL3zNfXjlry7Q82HJ80=",
+        "lastModified": 1786189840,
+        "narHash": "sha256-wM6ACgSDYQKK+td8pxT6I5sIFtixqmOMQa0Z2lVTz88=",
         "owner": "Effect-TS",
         "repo": "tsgo",
-        "rev": "8423f68f068ccc0b4d77c026f38ac6e69588370c",
+        "rev": "5d000e3f8de0a6530094d9c030025b2a0d39a8f2",
         "type": "github"
       },
       "original": {
@@ -287,11 +260,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786166533,
-        "narHash": "sha256-cDbBQvFQJcu3RNO7duTSrA2MMXm9JTPJ+T1sGt1cx8g=",
+        "lastModified": 1786214812,
+        "narHash": "sha256-eZHKINwShASWb8ir7nL2HKCIK871JuXQYZRhuG+4TbE=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "df0664e9fdc0f06099ffeb1fe4878fcf58e13905",
+        "rev": "d3b1906c10a78730e7d2deaf08e407c754ebdde5",
         "type": "github"
       },
       "original": {
@@ -457,7 +430,6 @@
     },
     "root": {
       "inputs": {
-        "agenix": "agenix",
         "anthropic-skills": "anthropic-skills",
         "catppuccin": "catppuccin",
         "catppuccin-aseprite-latte": "catppuccin-aseprite-latte",
@@ -479,6 +451,7 @@
         "ru-ip-list": "ru-ip-list",
         "ru-ip-list-v6": "ru-ip-list-v6",
         "russian-trusted-root-ca": "russian-trusted-root-ca",
+        "sops-nix": "sops-nix",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
       }
@@ -517,6 +490,26 @@
       "original": {
         "type": "file",
         "url": "https://gu-st.ru/content/Other/doc/russian_trusted_root_ca.cer"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783174389,
+        "narHash": "sha256-aCWC8ngycU7OdJrU2+Je3qf+1a2ykuBvpPhZT/9tXMc=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "f1406619a3884cd5c47992a70b8b35c9c0fcb4c9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "systems": {

@@ -5,6 +5,7 @@
       inputs,
       lib,
       pkgs,
+      hostName,
       ...
     }:
     let
@@ -157,9 +158,42 @@
       };
     in
     {
+      sops.secrets =
+        lib.genAttrs
+          [
+            "vpn/private-key"
+            "vpn/public-key"
+            "vpn/endpoint"
+            "vpn/junk-params"
+          ]
+          (_: {
+            sopsFile = ../../../secrets/hosts + "/${hostName}.yaml";
+          });
+
+      # Only routing/addressing lines live in the repo (it is public); key
+      # material, the endpoint, and the AWG obfuscation params (enough to
+      # build a DPI signature) stay encrypted.
+      sops.templates."${vpnIface}.conf" = {
+        restartUnits = [ "wg-quick-${vpnIface}.service" ];
+        content = ''
+          [Interface]
+          Address = 10.37.12.31/32, 2010:db0:3::a25:c1f/128
+          PrivateKey = ${config.sops.placeholder."vpn/private-key"}
+          DNS = 10.254.254.254
+          MTU = 1360
+
+          ${config.sops.placeholder."vpn/junk-params"}
+
+          [Peer]
+          PublicKey = ${config.sops.placeholder."vpn/public-key"}
+          AllowedIPs = 0.0.0.0/0, ::/0
+          Endpoint = ${config.sops.placeholder."vpn/endpoint"}
+        '';
+      };
+
       networking.wg-quick.interfaces.${vpnIface} = {
         type = "amneziawg";
-        configFile = config.age.secrets.vpn.path;
+        configFile = config.sops.templates."${vpnIface}.conf".path;
         autostart = true;
       };
 

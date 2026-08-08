@@ -45,7 +45,9 @@
       sensitivePaths = [
         "~/.ssh/**"
         "/etc/ssh/ssh_host_*_key"
-        "/run/agenix/**"
+        "/run/secrets/**"
+        "/run/secrets.d/**"
+        "/run/secrets-for-users/**"
         "~/.gnupg/**"
         "~/.config/gh/hosts.yml"
         "~/.claude/.credentials.json"
@@ -74,8 +76,8 @@
       ];
 
       # Claude Code reads a single leading slash as "relative to the settings
-      # source" — for these settings that is ~/.claude, so `/run/agenix/**`
-      # would guard ~/.claude/run/agenix. Only `//` anchors at the filesystem
+      # source" — for these settings that is ~/.claude, so `/run/secrets/**`
+      # would guard ~/.claude/run/secrets. Only `//` anchors at the filesystem
       # root. `~/…` and bare `**/…` patterns mean the same to both agents.
       toClaudePattern = path: if lib.hasPrefix "/" path then "/${path}" else path;
 

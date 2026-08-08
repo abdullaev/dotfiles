@@ -15,7 +15,7 @@
           "--verify-ssl=${inputs.russian-trusted-root-ca}"
           "https://invest-public-api.tbank.ru/mcp"
         ];
-        env.API_ACCESS_TOKEN.file = osConfig.age.secrets.t-token-readonly.path;
+        env.API_ACCESS_TOKEN.file = osConfig.sops.secrets."t-invest/token-readonly".path;
       };
     };
 }

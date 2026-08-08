@@ -25,8 +25,7 @@ in
               finalPackage = self.nixosConfigurations.${name}.config.system.build.toplevel;
 
               modules = [
-                inputs.agenix.nixosModules.default
-                ../../../secrets
+                inputs.sops-nix.nixosModules.sops
                 config.flake.modules.nixos.core
                 { networking.hostName = name; }
               ];

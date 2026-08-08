@@ -3,7 +3,6 @@
     {
       user,
       pkgs,
-      inputs,
       ...
     }:
     {
@@ -25,7 +24,9 @@
         sqlite
         python3
         defuddle
-        inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
+        sops
+        ssh-to-age
+        age
       ];
     };
 }

@@ -5,6 +5,7 @@
       lib,
       pkgs,
       users,
+      hostName,
       ...
     }:
     let
@@ -12,12 +13,24 @@
         bash = pkgs.bashInteractive;
         inherit (pkgs) zsh fish;
       };
+      passwordUsers = lib.filterAttrs (_: user: user.sopsPassword) users;
     in
     {
       users.mutableUsers = false;
 
+      # Decrypted to /run/secrets-for-users BEFORE user creation. Without
+      # neededForUsers=true + mutableUsers=false every password is locked.
+      # No owner/group: this runs before users exist, must stay root-owned.
+      sops.secrets = lib.mapAttrs' (
+        name: _:
+        lib.nameValuePair "user-passwords/${name}" {
+          sopsFile = ../../../secrets/hosts + "/${hostName}.yaml";
+          neededForUsers = true;
+        }
+      ) passwordUsers;
+
       users.users = lib.mapAttrs (
-        _: user:
+        name: user:
         {
           isNormalUser = true;
           description = user.fullName;
@@ -29,8 +42,8 @@
         // lib.optionalAttrs (user.authorizedKeys != [ ]) {
           openssh.authorizedKeys.keys = user.authorizedKeys;
         }
-        // lib.optionalAttrs (user.passwordSecret != null) {
-          hashedPasswordFile = config.age.secrets.${user.passwordSecret}.path;
+        // lib.optionalAttrs user.sopsPassword {
+          hashedPasswordFile = config.sops.secrets."user-passwords/${name}".path;
         }
       ) users;
 

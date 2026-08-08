@@ -4,6 +4,7 @@
     stateVersion
     overlays
     bootloader
+    sops
     nix
     nixLd
     networking

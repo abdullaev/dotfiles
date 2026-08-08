@@ -40,9 +40,13 @@ in
                   ];
                 };
 
-                passwordSecret = mkOption {
-                  type = with types; nullOr str;
-                  default = null;
+                sopsPassword = mkOption {
+                  type = types.bool;
+                  default = false;
+                  description = ''
+                    Provision the login password hash from
+                    secrets/hosts/<hostName>.yaml, key user-passwords/<name>.
+                  '';
                 };
 
                 authorizedKeys = mkOption {
