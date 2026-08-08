@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint (statix, deadnix, treefmt)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            download-attempts = 5
+            connect-timeout = 10
+      # Build individual check attrs, NOT `nix flake check` — the latter also
+      # evaluates nixos-hosts, which forces the private pragmata-pro input
+      # this job has no SSH key for.
+      - name: Build lint checks
+        run: |
+          nix build --no-update-lock-file --keep-going -L \
+            .#checks.x86_64-linux.statix \
+            .#checks.x86_64-linux.deadnix \
+            .#checks.x86_64-linux.treefmt
+
+  eval:
+    name: Eval vega system
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Secrets are absent on fork PRs; skip there (lint still runs).
+    if: ${{ !github.event.pull_request.head.repo.fork }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Load deploy key for private font repo
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            download-attempts = 5
+            connect-timeout = 10
+      # Instantiates the full derivation graph without building the ~30 GiB
+      # closure. Catches eval/module/assertion errors, not build failures.
+      - name: Evaluate system closure (no build)
+        run: |
+          nix eval --raw --no-update-lock-file \
+            .#nixosConfigurations.vega.config.system.build.toplevel.drvPath
+          echo

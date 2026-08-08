@@ -1,0 +1,32 @@
+name: Update flake.lock
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      # Re-locking fetches ALL inputs, including the private font repo.
+      - name: Load deploy key for private font repo
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            download-attempts = 5
+            connect-timeout = 10
+      - name: Update flake.lock and open PR
+        uses: DeterminateSystems/update-flake-lock@v28
+        with:
+          # PAT (not GITHUB_TOKEN) so the created PR triggers the CI workflow.
+          token: ${{ secrets.GH_PAT_FLAKE_UPDATE }}
+          pr-title: "flake.lock: update"
