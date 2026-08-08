@@ -83,11 +83,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785485193,
-        "narHash": "sha256-JgUmb34d3Zv1W5fYukqEUEDHSaWhw7WV9HVUXOmOCaA=",
+        "lastModified": 1786088497,
+        "narHash": "sha256-lUkfsIy1inAB7dxARG2i3seNDHkSmRejEhhH2NYXDJ4=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "41c4ebf8cb3e4052001947a457b4ac093e5dc119",
+        "rev": "9e5cacc4e3a2d01c828fc4b29e88fb577241d70f",
         "type": "github"
       },
       "original": {
@@ -150,11 +150,11 @@
         "typescript-src": "typescript-src"
       },
       "locked": {
-        "lastModified": 1786030748,
-        "narHash": "sha256-qMqnM+F1gzvSIa1XS4h6hZU4jNfEL2mchD6pGwOiA2I=",
+        "lastModified": 1786111321,
+        "narHash": "sha256-UZ44Gc/Sq63GBHxDEZrl2FOE5SPMEFM9VCudUvXuAiw=",
         "owner": "Effect-TS",
         "repo": "tsgo",
-        "rev": "b415a1e9dfba278cfe5bb632719ef0f2f5c097cc",
+        "rev": "698aea9c5fec551e4fcc71de4fe8d3d636561370",
         "type": "github"
       },
       "original": {
@@ -171,11 +171,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1785988975,
-        "narHash": "sha256-j30wh912ORhSTwX/Zrrt14bws7lDbgnp6nCSjB+0xUQ=",
+        "lastModified": 1786075368,
+        "narHash": "sha256-vSiTq6wa9WiKGHOdCRlABkKksOgfrsUuRz/K6tQ9EYA=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "63346775b7da9075a348d1dd3bcff9d8eaab9fb4",
+        "rev": "f516bdb9bc003c9d1f041d8ad9f0a9627fe800d2",
         "type": "gitlab"
       },
       "original": {
@@ -287,11 +287,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786014936,
-        "narHash": "sha256-ToQkMfyiH/Af/AMpkJi5zR0fVb1QO1lg9jiyzhLVyjc=",
+        "lastModified": 1786117558,
+        "narHash": "sha256-rVWY8+GTKfv7mQzFS0pxVvtxvwLzGFrf98iHLlhUVE8=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "5028d4667177f2593ceac30f9c8395afaf6a54d9",
+        "rev": "6cf74c9868d6322bb08e9620cd71f789f41f2f5e",
         "type": "github"
       },
       "original": {
@@ -303,11 +303,11 @@
     "mattpocock-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1786025105,
-        "narHash": "sha256-I/EXHGW92nXz6JCLp8SKGgzXrbbUTkLAfxv8bc/ThwQ=",
+        "lastModified": 1786045791,
+        "narHash": "sha256-pseSJJb5nBBGPzpxA1GzjGLB9OrT+u0At1saJ4NqZ1E=",
         "owner": "mattpocock",
         "repo": "skills",
-        "rev": "6acc160e4e0cd062dbbbd7a1b26ae92855edf07e",
+        "rev": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
         "type": "github"
       },
       "original": {
@@ -486,7 +486,7 @@
     "ru-ip-list": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-M6XsbwiMAK+yQ05rw8+eneWSYoPgdsj8UM4yOVNfpTE=",
+        "narHash": "sha256-nbCwVOU1n7AG8fJGAUw113dGYmsOK8QSIfTfaNYb0YE=",
         "type": "file",
         "url": "https://www.ipdeny.com/ipblocks/data/countries/ru.zone"
       },
@@ -557,17 +557,17 @@
     "typescript-go-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1785807459,
-        "narHash": "sha256-aW/VXTodfPOfAszo3WQ+yyX2H3uPw9Jd6x24hhSKOe0=",
+        "lastModified": 1785946683,
+        "narHash": "sha256-g8BHkacd00IkM9+b9bUhQrn3CnfhwnnVmouEkce1+pE=",
         "owner": "microsoft",
         "repo": "typescript-go",
-        "rev": "12318e599d21f516defea3b20e5d44b9369da723",
+        "rev": "86cc4767d4ebadb9b7845d0ab8eb2b05785c3fee",
         "type": "github"
       },
       "original": {
         "owner": "microsoft",
         "repo": "typescript-go",
-        "rev": "12318e599d21f516defea3b20e5d44b9369da723",
+        "rev": "86cc4767d4ebadb9b7845d0ab8eb2b05785c3fee",
         "type": "github"
       }
     },

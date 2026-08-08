@@ -1,6 +1,7 @@
 {
   flake.modules.homeManager.llm =
     {
+      config,
       inputs,
       lib,
       pkgs,
@@ -77,6 +78,8 @@
       # would guard ~/.claude/run/agenix. Only `//` anchors at the filesystem
       # root. `~/…` and bare `**/…` patterns mean the same to both agents.
       toClaudePattern = path: if lib.hasPrefix "/" path then "/${path}" else path;
+
+      claudeSettingsPath = "${config.programs.claude-code.configDir}/settings.json";
     in
     {
       programs.mcp = {
@@ -138,6 +141,18 @@
           };
         };
       };
+
+      # `programs.claude-code.settings` links settings.json to a read-only store
+      # path, but Claude Code persists runtime toggles (effort level, theme, …)
+      # into that very file. Install a writable copy instead: nix stays the
+      # source of truth, runtime edits live until the next activation.
+      home.file.${claudeSettingsPath}.enable = false;
+
+      home.activation.claudeCodeSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        run rm --force ${lib.escapeShellArg claudeSettingsPath}
+        run install -Dm600 ${config.home.file.${claudeSettingsPath}.source} \
+          ${lib.escapeShellArg claudeSettingsPath}
+      '';
 
       home.shellAliases = {
         cl = "claude";

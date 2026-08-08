@@ -5,6 +5,7 @@
     overlays
     bootloader
     nix
+    nixLd
     networking
     locale
     location
