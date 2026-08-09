@@ -138,8 +138,12 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v7
-      # Frees ~115 GB for /nix by purging runner bloat; must precede Nix install.
+      # holster (not cleave): takes only /mnt (~65 GB, enough for the closure)
+      # and leaves / untouched — grype's DB hydration needs several GB of
+      # scratch on / that cleave would have drained into the /nix pool.
       - uses: wimpysworld/nothing-but-nix@v10
+        with:
+          hatchet-protocol: holster
       - name: Load deploy key for private font repo
         uses: webfactory/ssh-agent@v0.10.0
         with:
@@ -163,9 +167,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # grype/vulnix DBs are multi-GB; / has no room after nothing-but-nix
-          # pools its free space into /nix, but TMPDIR lives in that pool.
-          export XDG_CACHE_HOME="$TMPDIR/cache"
           target=$(nix build --no-update-lock-file --no-link --print-out-paths \
             .#checks.x86_64-linux.nixos-hosts)
           nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o vulns.csv "$target" || true
