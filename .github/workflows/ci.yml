@@ -9,8 +9,11 @@ on:
 permissions:
   contents: read
 
+# event_name is part of the group so a push to main can't cancel an
+# in-flight workflow_dispatch full-build (which the push run would NOT
+# re-run — the work would be lost, not superseded).
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -20,7 +23,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
             download-attempts = 5
@@ -47,7 +50,7 @@ jobs:
         uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
             download-attempts = 5
@@ -81,7 +84,7 @@ jobs:
         uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
             download-attempts = 5
@@ -99,33 +102,44 @@ jobs:
         run: |
           nix build --no-update-lock-file --no-link -L \
             .#checks.x86_64-linux.nixos-hosts
-      # Push only what this job compiled: skip .drv files, flake sources,
-      # fixed-output (re-downloadable) paths, and anything cache.nixos.org
-      # already serves — the full closure would blow the 5 GB free tier.
-      # pragmata-pro is a commercial font and must never reach a public
-      # cache; chrome/obsidian are repackaged downloads not worth caching.
-      # CRITICAL: cachix push uploads the CLOSURE of each given path, so
-      # name-filtering alone is not enough — any aggregate (system-path,
-      # profiles) referencing an excluded package would drag it back in.
-      # Subtracting the referrers-closure of excluded paths guarantees no
-      # pushed path transitively contains them.
+      # Offer only paths this job compiled: skip .drv files, flake sources,
+      # fixed-output (re-downloadable) paths, and cache.nixos.org-signed
+      # paths. NOTE: these filters prune only what is OFFERED — cachix push
+      # uploads the full runtime CLOSURE of each offered path and skips
+      # solely what the target cache already holds; it never consults
+      # cache.nixos.org. Hence two closure-aware exclusions:
+      # 1. pragmata-pro is a commercial font and must never reach a public
+      #    cache (chrome/obsidian are repackaged downloads not worth
+      #    caching). Excluded together with the referrers-closure of every
+      #    match, so no pushed path can transitively contain them.
+      # 2. Whole-system aggregates (toplevels, system-path, etc, profiles,
+      #    the nixos-hosts join): pushing any of them would drag a host's
+      #    entire closure — multi-GiB of upstream-substituted deps — into
+      #    the 5 GB cache.
+      # Guards fail LOUD (pipefail + asserts): this filter degrading
+      # silently is exactly how the font would leak.
       - name: Push locally-built paths to Cachix
         if: env.CACHIX_AUTH_TOKEN != ''
         run: |
+          set -euo pipefail
           nix path-info --all --json | jq -r 'to_entries[]
             | select(.key | endswith(".drv") | not)
             | select(.key | test("-source$") | not)
             | select((.value.ca // "") == "")
             | select(((.value.signatures // []) | map(startswith("cache.nixos.org")) | any) | not)
             | .key' | sort -u > candidates.txt
+          # nixos-hosts itself is always built locally, so an empty
+          # candidate list can only mean the pipeline above broke.
+          [ -s candidates.txt ]
           grep -E 'pragmata|google-chrome|obsidian' candidates.txt > bad.txt || true
-          if [ -s bad.txt ]; then
-            xargs nix-store -q --referrers-closure < bad.txt | sort -u > excluded.txt
-          else
-            : > excluded.txt
-          fi
+          # vega's closure always contains pragmata-pro: no match means the
+          # name filter is broken and pushing anyway would leak the font.
+          grep -q pragmata bad.txt
+          grep -E -- '-nixos-system-|-system-path$|-etc$|-nixos-hosts-checks$|-home-manager-generation$|-home-manager-path$' \
+            candidates.txt >> bad.txt || true
+          xargs nix-store -q --referrers-closure < bad.txt | sort -u > excluded.txt
           comm -23 candidates.txt excluded.txt | tee pushed.txt | cachix push "$CACHIX_CACHE"
-          echo "Offered $(wc -l < pushed.txt) paths to cachix ($(wc -l < excluded.txt) excluded as non-redistributable or depending on such)"
+          echo "Offered $(wc -l < pushed.txt) paths to cachix ($(wc -l < excluded.txt) excluded: non-redistributable, aggregates, or referrers thereof)"
 
   cve-scan:
     name: CVE scan (advisory)
@@ -151,7 +165,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
       # Pull-only cachix access needs no token — just substituter + key.
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           extra-conf: |
             download-attempts = 5

@@ -7,6 +7,7 @@
       projectRootFile = "flake.nix";
 
       programs = {
+        actionlint.enable = true;
         nixfmt.enable = true;
         shfmt.enable = true;
         shellcheck.enable = true;
