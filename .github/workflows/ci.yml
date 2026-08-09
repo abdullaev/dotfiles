@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint (statix, deadnix, treefmt)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            download-attempts = 5
+            connect-timeout = 10
+      # Build individual check attrs, NOT `nix flake check` — the latter also
+      # evaluates nixos-hosts, which forces the private pragmata-pro input
+      # this job has no SSH key for.
+      - name: Build lint checks
+        run: |
+          nix build --no-update-lock-file --keep-going -L \
+            .#checks.x86_64-linux.statix \
+            .#checks.x86_64-linux.deadnix \
+            .#checks.x86_64-linux.treefmt
+
+  eval:
+    name: Eval vega system
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Secrets are absent on fork PRs; skip there (lint still runs).
+    if: ${{ !github.event.pull_request.head.repo.fork }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Load deploy key for private font repo
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            download-attempts = 5
+            connect-timeout = 10
+      # Instantiates the full derivation graph without building the ~30 GiB
+      # closure. Catches eval/module/assertion errors, not build failures.
+      - name: Evaluate system closure (no build)
+        run: |
+          nix eval --raw --no-update-lock-file \
+            .#nixosConfigurations.vega.config.system.build.toplevel.drvPath
+          echo
+
+  full-build:
+    name: Full system build
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    needs: eval
+    # The ~30 GiB closure build: only on the weekly update-flake-lock PRs
+    # (their head branch is fixed) and manual dispatch — never on regular PRs.
+    if: (github.event_name == 'pull_request' && github.head_ref == 'update_flake_lock_action') || github.event_name == 'workflow_dispatch'
+    env:
+      CACHIX_CACHE: abdullaev-dotfiles
+      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+      # Frees ~115 GB for /nix by purging runner bloat; must precede Nix install.
+      - uses: wimpysworld/nothing-but-nix@v10
+      - name: Load deploy key for private font repo
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            download-attempts = 5
+            connect-timeout = 10
+      # Configures the cache as a substituter (pull) and installs the CLI.
+      # Skipped until the CACHIX_AUTH_TOKEN secret exists, keeping CI green.
+      - name: Set up Cachix
+        if: env.CACHIX_AUTH_TOKEN != ''
+        uses: cachix/cachix-action@v17
+        with:
+          name: ${{ env.CACHIX_CACHE }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          skipPush: true
+      - name: Build full system closure
+        run: |
+          nix build --no-update-lock-file --no-link -L \
+            .#checks.x86_64-linux.nixos-hosts
+      # Push only what this job compiled: skip .drv files, flake sources,
+      # fixed-output (re-downloadable) paths, and anything cache.nixos.org
+      # already serves — the full closure would blow the 5 GB free tier.
+      # pragmata-pro is a commercial font and must never reach a public
+      # cache; chrome/obsidian are repackaged downloads not worth caching.
+      - name: Push locally-built paths to Cachix
+        if: env.CACHIX_AUTH_TOKEN != ''
+        run: |
+          nix path-info --all --json | jq -r 'to_entries[]
+            | select(.key | endswith(".drv") | not)
+            | select(.key | test("-source$") | not)
+            | select(.key | test("pragmata|google-chrome|obsidian") | not)
+            | select((.value.ca // "") == "")
+            | select(((.value.signatures // []) | map(startswith("cache.nixos.org")) | any) | not)
+            | .key' | cachix push "$CACHIX_CACHE"
