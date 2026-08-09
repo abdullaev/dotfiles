@@ -124,3 +124,83 @@ jobs:
           fi
           comm -23 candidates.txt excluded.txt | tee pushed.txt | cachix push "$CACHIX_CACHE"
           echo "Pushed $(wc -l < pushed.txt) paths ($(wc -l < excluded.txt) excluded as non-redistributable or depending on such)"
+
+  cve-scan:
+    name: CVE scan (advisory)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # Runs only when full-build succeeded (same gating: update PRs and
+    # manual dispatch). By then all compiles are in Cachix, so realizing
+    # the closure here is downloads-only — no compiling.
+    needs: full-build
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      # holster (not cleave): takes only /mnt (~65 GB, enough for the closure)
+      # and leaves / untouched — grype's DB hydration needs several GB of
+      # scratch on / that cleave would have drained into the /nix pool.
+      - uses: wimpysworld/nothing-but-nix@v10
+        with:
+          hatchet-protocol: holster
+      - name: Load deploy key for private font repo
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
+      # Pull-only cachix access needs no token — just substituter + key.
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            download-attempts = 5
+            connect-timeout = 10
+            extra-substituters = https://abdullaev-dotfiles.cachix.org
+            extra-trusted-public-keys = abdullaev-dotfiles.cachix.org-1:ojAEcXkl3aLb8O7Cyt8JOk3yBljFwf/jcUC58Ha3KQ0=
+      # On update PRs the base closure is scanned too (same job = same
+      # vulnerability-DB snapshot), so the report can attribute every
+      # difference to the update itself.
+      - name: Checkout PR base
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+      - name: Realize system closure from caches
+        run: |
+          nix build --no-update-lock-file --no-link -L \
+            .#checks.x86_64-linux.nixos-hosts
+      # vulnxscan = grype + osv.dev + vulnix. On update PRs the comment
+      # shows only CVEs introduced/fixed by the update (pre-existing ones
+      # are a count; full CSVs in the artifact). Advisory for findings,
+      # but scanner BREAKAGE fails the job loudly (hence no || true).
+      - name: Scan closure for known CVEs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Scanner DBs (grype's alone is ~7 GB) fit neither / nor the
+          # residual /mnt; the /nix pool is the only roomy filesystem left,
+          # and non-store dirs there are safe (gc ignores them).
+          sudo mkdir -p /nix/scanner-cache && sudo chown "$(id -un)" /nix/scanner-cache
+          export XDG_CACHE_HOME=/nix/scanner-cache
+          target=$(nix build --no-update-lock-file --no-link --print-out-paths \
+            .#checks.x86_64-linux.nixos-hosts)
+          nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o vulns.csv "$target"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base_target=$(nix build --no-update-lock-file --no-link --print-out-paths \
+              ./base#checks.x86_64-linux.nixos-hosts)
+            nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o base-vulns.csv "$base_target"
+            ./.github/scripts/cve-report.sh vulns.csv base-vulns.csv
+          else
+            ./.github/scripts/cve-report.sh vulns.csv
+          fi
+          cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            gh pr comment "${{ github.event.pull_request.number }}" --body-file cve-report.md
+          fi
+      - name: Upload full CVE report
+        uses: actions/upload-artifact@v7
+        with:
+          name: cve-report
+          path: |
+            vulns.csv
+            base-vulns.csv
