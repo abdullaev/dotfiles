@@ -65,6 +65,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     needs: eval
+    permissions:
+      contents: read
+      pull-requests: write
     # The ~30 GiB closure build: only on the weekly update-flake-lock PRs
     # (their head branch is fixed) and manual dispatch — never on regular PRs.
     if: (github.event_name == 'pull_request' && github.head_ref == 'update_flake_lock_action') || github.event_name == 'workflow_dispatch'
@@ -124,3 +127,41 @@ jobs:
           fi
           comm -23 candidates.txt excluded.txt | tee pushed.txt | cachix push "$CACHIX_CACHE"
           echo "Pushed $(wc -l < pushed.txt) paths ($(wc -l < excluded.txt) excluded as non-redistributable or depending on such)"
+      # Advisory CVE scan of the built closure (vulnxscan = grype + osv.dev
+      # + vulnix). Single-scanner findings are mostly name-match noise, so
+      # the report highlights >=2-scanner hits; full CSV ships as an
+      # artifact. Never fails the job.
+      - name: CVE scan (advisory)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          target=$(nix build --no-update-lock-file --no-link --print-out-paths \
+            .#checks.x86_64-linux.nixos-hosts)
+          nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o vulns.csv "$target" || true
+          {
+            total=$(($(wc -l < vulns.csv) - 1))
+            multi=$(awk -F'","' 'NR>1 && $9+0>=2' vulns.csv | wc -l)
+            echo "## CVE scan (advisory)"
+            echo
+            echo "$total findings; $multi confirmed by >=2 scanners (top 15 by CVSS below)." \
+              "Full report in the run artifacts. Advisory only — name-based matching has false positives."
+            echo
+            echo "| CVE | package | version | CVSS | grype/osv/vulnix |"
+            echo "|---|---|---|---|---|"
+            awk -F'","' 'NR>1 { sub(/^"/,"",$1);
+              if ($9+0>=2) { sev=($5==""?0:$5+0);
+                printf "%06.2f\t| [%s](%s) | %s | %s | %s | %s/%s/%s |\n",
+                  sev,$1,$2,$3,$4,($5==""?"-":$5),$6,$7,$8 } }' vulns.csv \
+              | sort -rn | head -15 | cut -f2-
+          } > cve-report.md
+          cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            gh pr comment "${{ github.event.pull_request.number }}" --body-file cve-report.md
+          fi
+      - name: Upload full CVE report
+        continue-on-error: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: cve-report
+          path: vulns.csv
