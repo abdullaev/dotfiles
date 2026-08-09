@@ -25,7 +25,7 @@
           auto-optimise-store = true;
           extra-substituters = [ "https://abdullaev-dotfiles.cachix.org" ];
           extra-trusted-public-keys = [
-            "abdullaev-dotfiles.cachix.org-1:sKeDq8ekKsXv1zUw8xNim0chXcAHdS1i9Z5+5mZB2Ug="
+            "abdullaev-dotfiles.cachix.org-1:ojAEcXkl3aLb8O7Cyt8JOk3yBljFwf/jcUC58Ha3KQ0="
           ];
         };
 
