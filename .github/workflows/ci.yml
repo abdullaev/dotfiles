@@ -68,6 +68,9 @@ jobs:
     # The ~30 GiB closure build: only on the weekly update-flake-lock PRs
     # (their head branch is fixed) and manual dispatch — never on regular PRs.
     if: (github.event_name == 'pull_request' && github.head_ref == 'update_flake_lock_action') || github.event_name == 'workflow_dispatch'
+    env:
+      CACHIX_CACHE: abdullaev-dotfiles
+      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v7
       # Frees ~115 GB for /nix by purging runner bloat; must precede Nix install.
@@ -81,7 +84,28 @@ jobs:
           extra-conf: |
             download-attempts = 5
             connect-timeout = 10
+      # Configures the cache as a substituter (pull) and installs the CLI.
+      # Skipped until the CACHIX_AUTH_TOKEN secret exists, keeping CI green.
+      - name: Set up Cachix
+        if: env.CACHIX_AUTH_TOKEN != ''
+        uses: cachix/cachix-action@v17
+        with:
+          name: ${{ env.CACHIX_CACHE }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          skipPush: true
       - name: Build full system closure
         run: |
           nix build --no-update-lock-file --no-link -L \
             .#checks.x86_64-linux.nixos-hosts
+      # Push only what this job compiled: skip .drv files, flake sources,
+      # fixed-output (re-downloadable) paths, and anything cache.nixos.org
+      # already serves — the full closure would blow the 5 GB free tier.
+      - name: Push locally-built paths to Cachix
+        if: env.CACHIX_AUTH_TOKEN != ''
+        run: |
+          nix path-info --all --json | jq -r 'to_entries[]
+            | select(.key | endswith(".drv") | not)
+            | select(.key | test("-source$") | not)
+            | select((.value.ca // "") == "")
+            | select(((.value.signatures // []) | map(startswith("cache.nixos.org")) | any) | not)
+            | .key' | cachix push "$CACHIX_CACHE"
