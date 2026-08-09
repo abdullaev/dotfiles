@@ -36,7 +36,7 @@ jobs:
             .#checks.x86_64-linux.treefmt
 
   eval:
-    name: Eval vega system
+    name: Eval NixOS hosts
     runs-on: ubuntu-latest
     timeout-minutes: 30
     # Secrets are absent on fork PRs; skip there (lint still runs).
@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Load deploy key for private font repo
-        uses: webfactory/ssh-agent@v0.10.0
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
       - uses: DeterminateSystems/nix-installer-action@v22
@@ -54,10 +54,12 @@ jobs:
             connect-timeout = 10
       # Instantiates the full derivation graph without building the ~30 GiB
       # closure. Catches eval/module/assertion errors, not build failures.
-      - name: Evaluate system closure (no build)
+      # nixos-hosts aggregates every host, so new hosts are covered
+      # automatically and coverage matches what full-build builds.
+      - name: Evaluate system closures (no build)
         run: |
           nix eval --raw --no-update-lock-file \
-            .#nixosConfigurations.vega.config.system.build.toplevel.drvPath
+            .#checks.x86_64-linux.nixos-hosts.drvPath
           echo
 
   full-build:
@@ -74,9 +76,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       # Frees ~115 GB for /nix by purging runner bloat; must precede Nix install.
-      - uses: wimpysworld/nothing-but-nix@v10
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
       - name: Load deploy key for private font repo
-        uses: webfactory/ssh-agent@v0.10.0
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
       - uses: DeterminateSystems/nix-installer-action@v22
@@ -88,7 +90,7 @@ jobs:
       # Skipped until the CACHIX_AUTH_TOKEN secret exists, keeping CI green.
       - name: Set up Cachix
         if: env.CACHIX_AUTH_TOKEN != ''
-        uses: cachix/cachix-action@v17
+        uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: ${{ env.CACHIX_CACHE }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
@@ -123,7 +125,7 @@ jobs:
             : > excluded.txt
           fi
           comm -23 candidates.txt excluded.txt | tee pushed.txt | cachix push "$CACHIX_CACHE"
-          echo "Pushed $(wc -l < pushed.txt) paths ($(wc -l < excluded.txt) excluded as non-redistributable or depending on such)"
+          echo "Offered $(wc -l < pushed.txt) paths to cachix ($(wc -l < excluded.txt) excluded as non-redistributable or depending on such)"
 
   cve-scan:
     name: CVE scan (advisory)
@@ -141,11 +143,11 @@ jobs:
       # holster (not cleave): takes only /mnt (~65 GB, enough for the closure)
       # and leaves / untouched — grype's DB hydration needs several GB of
       # scratch on / that cleave would have drained into the /nix pool.
-      - uses: wimpysworld/nothing-but-nix@v10
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
         with:
           hatchet-protocol: holster
       - name: Load deploy key for private font repo
-        uses: webfactory/ssh-agent@v0.10.0
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
       # Pull-only cachix access needs no token — just substituter + key.
@@ -169,13 +171,27 @@ jobs:
         run: |
           nix build --no-update-lock-file --no-link -L \
             .#checks.x86_64-linux.nixos-hosts
+      # The base closure is only fully cached if main hasn't changed since
+      # the last update PR merged; any other merge in between turns this
+      # into a from-source build that would blow the job timeout. Hence
+      # best-effort with a hard budget: on miss, the scan below falls back
+      # to the absolute report instead of the diff.
+      - name: Realize PR base closure from caches (best-effort)
+        id: base
+        if: github.event_name == 'pull_request'
+        run: |
+          if timeout 20m nix build --no-update-lock-file --no-link -L \
+              ./base#checks.x86_64-linux.nixos-hosts; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Base closure not realizable within budget; CVE report will be absolute, not an update diff."
+          fi
       # vulnxscan = grype + osv.dev + vulnix. On update PRs the comment
       # shows only CVEs introduced/fixed by the update (pre-existing ones
       # are a count; full CSVs in the artifact). Advisory for findings,
       # but scanner BREAKAGE fails the job loudly (hence no || true).
       - name: Scan closure for known CVEs
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           # Scanner DBs (grype's alone is ~7 GB) fit neither / nor the
           # residual /mnt; the /nix pool is the only roomy filesystem left,
@@ -185,22 +201,34 @@ jobs:
           target=$(nix build --no-update-lock-file --no-link --print-out-paths \
             .#checks.x86_64-linux.nixos-hosts)
           nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o vulns.csv "$target"
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
+          if [ "${{ steps.base.outputs.ok }}" = "true" ]; then
             base_target=$(nix build --no-update-lock-file --no-link --print-out-paths \
               ./base#checks.x86_64-linux.nixos-hosts)
             nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o base-vulns.csv "$base_target"
             ./.github/scripts/cve-report.sh vulns.csv base-vulns.csv
           else
             ./.github/scripts/cve-report.sh vulns.csv
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              printf '\n_Base closure was not realizable from caches; this is an absolute report, not an update diff._\n' >> cve-report.md
+            fi
           fi
           cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            gh pr comment "${{ github.event.pull_request.number }}" --body-file cve-report.md
-          fi
+      # Separate step so a posting hiccup is attributed to posting, not the
+      # scan, and the artifact below still uploads. --edit-last keeps one
+      # always-current comment on update PRs that live across Mondays.
+      - name: Post report as PR comment
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr comment "${{ github.event.pull_request.number }}" \
+            --edit-last --create-if-none --body-file cve-report.md
       - name: Upload full CVE report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: cve-report
           path: |
             vulns.csv
             base-vulns.csv
+          if-no-files-found: ignore
