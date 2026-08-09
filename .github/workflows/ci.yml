@@ -102,13 +102,25 @@ jobs:
       # already serves — the full closure would blow the 5 GB free tier.
       # pragmata-pro is a commercial font and must never reach a public
       # cache; chrome/obsidian are repackaged downloads not worth caching.
+      # CRITICAL: cachix push uploads the CLOSURE of each given path, so
+      # name-filtering alone is not enough — any aggregate (system-path,
+      # profiles) referencing an excluded package would drag it back in.
+      # Subtracting the referrers-closure of excluded paths guarantees no
+      # pushed path transitively contains them.
       - name: Push locally-built paths to Cachix
         if: env.CACHIX_AUTH_TOKEN != ''
         run: |
           nix path-info --all --json | jq -r 'to_entries[]
             | select(.key | endswith(".drv") | not)
             | select(.key | test("-source$") | not)
-            | select(.key | test("pragmata|google-chrome|obsidian") | not)
             | select((.value.ca // "") == "")
             | select(((.value.signatures // []) | map(startswith("cache.nixos.org")) | any) | not)
-            | .key' | cachix push "$CACHIX_CACHE"
+            | .key' | sort -u > candidates.txt
+          grep -E 'pragmata|google-chrome|obsidian' candidates.txt > bad.txt || true
+          if [ -s bad.txt ]; then
+            xargs nix-store -q --referrers-closure < bad.txt | sort -u > excluded.txt
+          else
+            : > excluded.txt
+          fi
+          comm -23 candidates.txt excluded.txt | tee pushed.txt | cachix push "$CACHIX_CACHE"
+          echo "Pushed $(wc -l < pushed.txt) paths ($(wc -l < excluded.txt) excluded as non-redistributable or depending on such)"
