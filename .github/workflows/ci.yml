@@ -167,9 +167,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Scanner DBs (grype's alone is ~7 GB) fit neither / nor the
+          # residual /mnt; the /nix pool is the only roomy filesystem left,
+          # and non-store dirs there are safe (gc ignores them).
+          sudo mkdir -p /nix/scanner-cache && sudo chown "$(id -un)" /nix/scanner-cache
+          export XDG_CACHE_HOME=/nix/scanner-cache
           target=$(nix build --no-update-lock-file --no-link --print-out-paths \
             .#checks.x86_64-linux.nixos-hosts)
-          nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o vulns.csv "$target" || true
+          # No || true: scanner FINDINGS exit 0 (advisory), but scanner
+          # BREAKAGE must fail the job loudly.
+          nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o vulns.csv "$target"
           if [ -f vulns.csv ]; then
             {
               total=$(($(wc -l < vulns.csv) - 1))
