@@ -156,13 +156,23 @@ jobs:
             connect-timeout = 10
             extra-substituters = https://abdullaev-dotfiles.cachix.org
             extra-trusted-public-keys = abdullaev-dotfiles.cachix.org-1:ojAEcXkl3aLb8O7Cyt8JOk3yBljFwf/jcUC58Ha3KQ0=
+      # On update PRs the base closure is scanned too (same job = same
+      # vulnerability-DB snapshot), so the report can attribute every
+      # difference to the update itself.
+      - name: Checkout PR base
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
       - name: Realize system closure from caches
         run: |
           nix build --no-update-lock-file --no-link -L \
             .#checks.x86_64-linux.nixos-hosts
-      # vulnxscan = grype + osv.dev + vulnix. Single-scanner findings are
-      # mostly name-match noise, so the report highlights >=2-scanner hits;
-      # full CSV ships as an artifact. Advisory: never fails the job.
+      # vulnxscan = grype + osv.dev + vulnix. On update PRs the comment
+      # shows only CVEs introduced/fixed by the update (pre-existing ones
+      # are a count; full CSVs in the artifact). Advisory for findings,
+      # but scanner BREAKAGE fails the job loudly (hence no || true).
       - name: Scan closure for known CVEs
         env:
           GH_TOKEN: ${{ github.token }}
@@ -174,28 +184,14 @@ jobs:
           export XDG_CACHE_HOME=/nix/scanner-cache
           target=$(nix build --no-update-lock-file --no-link --print-out-paths \
             .#checks.x86_64-linux.nixos-hosts)
-          # No || true: scanner FINDINGS exit 0 (advisory), but scanner
-          # BREAKAGE must fail the job loudly.
           nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o vulns.csv "$target"
-          if [ -f vulns.csv ]; then
-            {
-              total=$(($(wc -l < vulns.csv) - 1))
-              multi=$(awk -F'","' 'NR>1 && $9+0>=2' vulns.csv | wc -l)
-              echo "## CVE scan (advisory)"
-              echo
-              echo "$total findings; $multi confirmed by >=2 scanners (top 15 by CVSS below)." \
-                "Full report in the run artifacts. Advisory only — name-based matching has false positives."
-              echo
-              echo "| CVE | package | version | CVSS | grype/osv/vulnix |"
-              echo "|---|---|---|---|---|"
-              awk -F'","' 'NR>1 { sub(/^"/,"",$1);
-                if ($9+0>=2) { sev=($5==""?0:$5+0);
-                  printf "%06.2f\t| [%s](%s) | %s | %s | %s | %s/%s/%s |\n",
-                    sev,$1,$2,$3,$4,($5==""?"-":$5),$6,$7,$8 } }' vulns.csv \
-                | sort -rn | head -15 | cut -f2-
-            } > cve-report.md
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base_target=$(nix build --no-update-lock-file --no-link --print-out-paths \
+              ./base#checks.x86_64-linux.nixos-hosts)
+            nix shell --inputs-from . nixpkgs#sbomnix -c vulnxscan -o base-vulns.csv "$base_target"
+            ./.github/scripts/cve-report.sh vulns.csv base-vulns.csv
           else
-            printf '## CVE scan (advisory)\n\nScan produced no results — check the job log.\n' > cve-report.md
+            ./.github/scripts/cve-report.sh vulns.csv
           fi
           cat cve-report.md >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ github.event_name }}" = "pull_request" ]; then
@@ -205,4 +201,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: cve-report
-          path: vulns.csv
+          path: |
+            vulns.csv
+            base-vulns.csv
