@@ -100,12 +100,15 @@ jobs:
       # Push only what this job compiled: skip .drv files, flake sources,
       # fixed-output (re-downloadable) paths, and anything cache.nixos.org
       # already serves — the full closure would blow the 5 GB free tier.
+      # pragmata-pro is a commercial font and must never reach a public
+      # cache; chrome/obsidian are repackaged downloads not worth caching.
       - name: Push locally-built paths to Cachix
         if: env.CACHIX_AUTH_TOKEN != ''
         run: |
           nix path-info --all --json | jq -r 'to_entries[]
             | select(.key | endswith(".drv") | not)
             | select(.key | test("-source$") | not)
+            | select(.key | test("pragmata|google-chrome|obsidian") | not)
             | select((.value.ca // "") == "")
             | select(((.value.signatures // []) | map(startswith("cache.nixos.org")) | any) | not)
             | .key' | cachix push "$CACHIX_CACHE"
