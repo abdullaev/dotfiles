@@ -23,9 +23,13 @@
             "flakes"
           ];
           auto-optimise-store = true;
-          extra-substituters = [ "https://abdullaev-dotfiles.cachix.org" ];
+          extra-substituters = [
+            "https://abdullaev-dotfiles.cachix.org"
+            "https://devenv.cachix.org"
+          ];
           extra-trusted-public-keys = [
             "abdullaev-dotfiles.cachix.org-1:ojAEcXkl3aLb8O7Cyt8JOk3yBljFwf/jcUC58Ha3KQ0="
+            "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
           ];
         };
 
