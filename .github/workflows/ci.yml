@@ -45,7 +45,7 @@ jobs:
     if: (github.event_name == 'pull_request' && github.head_ref == 'update_flake_lock_action') || github.event_name == 'workflow_dispatch'
     env:
       CACHIX_CACHE: abdullaev-dotfiles
-      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      CACHIX_ENABLED: ${{ secrets.CACHIX_AUTH_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v7
       - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
@@ -53,7 +53,7 @@ jobs:
         with:
           deploy-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
       - name: Set up Cachix
-        if: env.CACHIX_AUTH_TOKEN != ''
+        if: env.CACHIX_ENABLED == 'true'
         uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: ${{ env.CACHIX_CACHE }}
@@ -64,5 +64,7 @@ jobs:
           nix build --no-update-lock-file --no-link -L \
             .#checks.x86_64-linux.nixos-hosts
       - name: Push locally-built paths to Cachix
-        if: env.CACHIX_AUTH_TOKEN != ''
+        if: env.CACHIX_ENABLED == 'true'
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
         run: ./.github/scripts/cachix-push.sh
