@@ -1,4 +1,8 @@
-{ stdenvNoCC, src }:
+{
+  lib,
+  stdenvNoCC,
+  src,
+}:
 
 stdenvNoCC.mkDerivation {
   pname = "pragmata-pro";
@@ -11,4 +15,6 @@ stdenvNoCC.mkDerivation {
     install -m644 ./*.otf "$out/share/fonts/opentype/"
     runHook postInstall
   '';
+
+  meta.license = lib.licenses.unfree;
 }

@@ -1,6 +1,6 @@
 {
   perSystem =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     let
       lint =
         name: command:
@@ -14,6 +14,12 @@
       checks = {
         statix = lint "statix" "statix check .";
         deadnix = lint "deadnix" "deadnix --fail .";
+        lint = pkgs.linkFarm "lint-checks" (
+          removeAttrs config.checks [
+            "nixos-hosts"
+            "lint"
+          ]
+        );
       };
     };
 }

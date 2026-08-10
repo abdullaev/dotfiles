@@ -1,0 +1,21 @@
+name: Set up Nix
+description: Install Nix with shared fetch-retry settings, optionally loading the private font repo deploy key first.
+
+inputs:
+  deploy-key:
+    description: SSH deploy key for the private pragmata-pro repo; omit in jobs that never fetch it.
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Load deploy key for private font repo
+      if: inputs.deploy-key != ''
+      uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
+      with:
+        ssh-private-key: ${{ inputs.deploy-key }}
+    - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+      with:
+        extra-conf: |
+          download-attempts = 5
+          connect-timeout = 10

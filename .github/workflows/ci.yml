@@ -23,20 +23,13 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
-        with:
-          extra-conf: |
-            download-attempts = 5
-            connect-timeout = 10
-      # Build individual check attrs, NOT `nix flake check` — the latter also
+      - uses: ./.github/actions/setup-nix
+      # Build the lint aggregate, NOT `nix flake check` — the latter also
       # evaluates nixos-hosts, which forces the private pragmata-pro input
-      # this job has no SSH key for.
+      # this job has no SSH key for. The aggregate (modules/flake/lint.nix)
+      # joins every secretless check, so new checks are covered automatically.
       - name: Build lint checks
-        run: |
-          nix build --no-update-lock-file --keep-going -L \
-            .#checks.x86_64-linux.statix \
-            .#checks.x86_64-linux.deadnix \
-            .#checks.x86_64-linux.treefmt
+        run: nix build --no-update-lock-file --keep-going -L .#checks.x86_64-linux.lint
 
   eval:
     name: Eval NixOS hosts
@@ -46,24 +39,15 @@ jobs:
     if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
       - uses: actions/checkout@v7
-      - name: Load deploy key for private font repo
-        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
+      - uses: ./.github/actions/setup-nix
         with:
-          ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
-      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
-        with:
-          extra-conf: |
-            download-attempts = 5
-            connect-timeout = 10
+          deploy-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
       # Instantiates the full derivation graph without building the ~30 GiB
       # closure. Catches eval/module/assertion errors, not build failures.
       # nixos-hosts aggregates every host, so new hosts are covered
       # automatically and coverage matches what full-build builds.
       - name: Evaluate system closures (no build)
-        run: |
-          nix eval --raw --no-update-lock-file \
-            .#checks.x86_64-linux.nixos-hosts.drvPath
-          echo
+        run: nix eval --no-update-lock-file .#checks.x86_64-linux.nixos-hosts.drvPath
 
   full-build:
     name: Full system build
@@ -80,15 +64,9 @@ jobs:
       - uses: actions/checkout@v7
       # Frees ~115 GB for /nix by purging runner bloat; must precede Nix install.
       - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
-      - name: Load deploy key for private font repo
-        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
+      - uses: ./.github/actions/setup-nix
         with:
-          ssh-private-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
-      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
-        with:
-          extra-conf: |
-            download-attempts = 5
-            connect-timeout = 10
+          deploy-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
       # Configures the cache as a substituter (pull) and installs the CLI.
       # Skipped until the CACHIX_AUTH_TOKEN secret exists, keeping CI green.
       - name: Set up Cachix
@@ -135,8 +113,11 @@ jobs:
           # vega's closure always contains pragmata-pro: no match means the
           # name filter is broken and pushing anyway would leak the font.
           grep -q pragmata bad.txt
+          # No `|| true`: the nixos-hosts join and toplevels are always in
+          # candidates, so zero matches means this regex drifted from
+          # upstream naming — fail rather than push multi-GiB closures.
           grep -E -- '-nixos-system-|-system-path$|-etc$|-nixos-hosts-checks$|-home-manager-generation$|-home-manager-path$' \
-            candidates.txt >> bad.txt || true
+            candidates.txt >> bad.txt
           xargs nix-store -q --referrers-closure < bad.txt | sort -u > excluded.txt
           comm -23 candidates.txt excluded.txt | tee pushed.txt | cachix push "$CACHIX_CACHE"
           echo "Offered $(wc -l < pushed.txt) paths to cachix ($(wc -l < excluded.txt) excluded: non-redistributable, aggregates, or referrers thereof)"
