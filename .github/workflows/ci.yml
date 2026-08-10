@@ -9,9 +9,6 @@ on:
 permissions:
   contents: read
 
-# event_name is part of the group so a push to main can't cancel an
-# in-flight workflow_dispatch full-build (which the push run would NOT
-# re-run — the work would be lost, not superseded).
 concurrency:
   group: ci-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
@@ -24,10 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-nix
-      # Build the lint aggregate, NOT `nix flake check` — the latter also
-      # evaluates nixos-hosts, which forces the private pragmata-pro input
-      # this job has no SSH key for. The aggregate (modules/flake/lint.nix)
-      # joins every secretless check, so new checks are covered automatically.
       - name: Build lint checks
         run: nix build --no-update-lock-file --keep-going -L .#checks.x86_64-linux.lint
 
@@ -35,17 +28,12 @@ jobs:
     name: Eval NixOS hosts
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    # Secrets are absent on fork PRs; skip there (lint still runs).
     if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-nix
         with:
           deploy-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
-      # Instantiates the full derivation graph without building the ~30 GiB
-      # closure. Catches eval/module/assertion errors, not build failures.
-      # nixos-hosts aggregates every host, so new hosts are covered
-      # automatically and coverage matches what full-build builds.
       - name: Evaluate system closures (no build)
         run: nix eval --no-update-lock-file .#checks.x86_64-linux.nixos-hosts.drvPath
 
@@ -54,21 +42,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     needs: eval
-    # The ~30 GiB closure build: only on the weekly update-flake-lock PRs
-    # (their head branch is fixed) and manual dispatch — never on regular PRs.
     if: (github.event_name == 'pull_request' && github.head_ref == 'update_flake_lock_action') || github.event_name == 'workflow_dispatch'
     env:
       CACHIX_CACHE: abdullaev-dotfiles
       CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v7
-      # Frees ~115 GB for /nix by purging runner bloat; must precede Nix install.
       - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
       - uses: ./.github/actions/setup-nix
         with:
           deploy-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
-      # Configures the cache as a substituter (pull) and installs the CLI.
-      # Skipped until the CACHIX_AUTH_TOKEN secret exists, keeping CI green.
       - name: Set up Cachix
         if: env.CACHIX_AUTH_TOKEN != ''
         uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
@@ -80,44 +63,6 @@ jobs:
         run: |
           nix build --no-update-lock-file --no-link -L \
             .#checks.x86_64-linux.nixos-hosts
-      # Offer only paths this job compiled: skip .drv files, flake sources,
-      # fixed-output (re-downloadable) paths, and cache.nixos.org-signed
-      # paths. NOTE: these filters prune only what is OFFERED — cachix push
-      # uploads the full runtime CLOSURE of each offered path and skips
-      # solely what the target cache already holds; it never consults
-      # cache.nixos.org. Hence two closure-aware exclusions:
-      # 1. pragmata-pro is a commercial font and must never reach a public
-      #    cache (chrome/obsidian are repackaged downloads not worth
-      #    caching). Excluded together with the referrers-closure of every
-      #    match, so no pushed path can transitively contain them.
-      # 2. Whole-system aggregates (toplevels, system-path, etc, profiles,
-      #    the nixos-hosts join): pushing any of them would drag a host's
-      #    entire closure — multi-GiB of upstream-substituted deps — into
-      #    the 5 GB cache.
-      # Guards fail LOUD (pipefail + asserts): this filter degrading
-      # silently is exactly how the font would leak.
       - name: Push locally-built paths to Cachix
         if: env.CACHIX_AUTH_TOKEN != ''
-        run: |
-          set -euo pipefail
-          nix path-info --all --json | jq -r 'to_entries[]
-            | select(.key | endswith(".drv") | not)
-            | select(.key | test("-source$") | not)
-            | select((.value.ca // "") == "")
-            | select(((.value.signatures // []) | map(startswith("cache.nixos.org")) | any) | not)
-            | .key' | sort -u > candidates.txt
-          # nixos-hosts itself is always built locally, so an empty
-          # candidate list can only mean the pipeline above broke.
-          [ -s candidates.txt ]
-          grep -E 'pragmata|google-chrome|obsidian' candidates.txt > bad.txt || true
-          # vega's closure always contains pragmata-pro: no match means the
-          # name filter is broken and pushing anyway would leak the font.
-          grep -q pragmata bad.txt
-          # No `|| true`: the nixos-hosts join and toplevels are always in
-          # candidates, so zero matches means this regex drifted from
-          # upstream naming — fail rather than push multi-GiB closures.
-          grep -E -- '-nixos-system-|-system-path$|-etc$|-nixos-hosts-checks$|-home-manager-generation$|-home-manager-path$' \
-            candidates.txt >> bad.txt
-          xargs nix-store -q --referrers-closure < bad.txt | sort -u > excluded.txt
-          comm -23 candidates.txt excluded.txt | tee pushed.txt | cachix push "$CACHIX_CACHE"
-          echo "Offered $(wc -l < pushed.txt) paths to cachix ($(wc -l < excluded.txt) excluded: non-redistributable, aggregates, or referrers thereof)"
+        run: ./.github/scripts/cachix-push.sh
