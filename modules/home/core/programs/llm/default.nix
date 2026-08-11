@@ -32,7 +32,7 @@
       herdrSkills = {
         herdr = pkgs.runCommand "herdr-skill" { } ''
           mkdir -p "$out"
-          cp ${pkgs.herdr.src}/SKILL.md "$out/SKILL.md"
+          cp ${pkgs.herdr.src}/skills/herdr/SKILL.md "$out/SKILL.md"
         '';
       };
 
