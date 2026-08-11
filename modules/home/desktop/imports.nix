@@ -13,5 +13,6 @@
     firefox
     pob
     obsidian
+    xdg
   ];
 }
