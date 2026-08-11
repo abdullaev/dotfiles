@@ -11,6 +11,8 @@
 
       cursorName = "breeze_cursors";
       cursorSize = 24;
+
+      lookAndFeel = "Catppuccin-${lib.toSentenceCase flavor}-${lib.toSentenceCase accent}";
     in
     {
       home.packages = [
@@ -43,6 +45,27 @@
           kdeglobals = {
             General = {
               DeviceLedsAccentColored = true;
+            };
+            KDE = {
+              DefaultLightLookAndFeel = lookAndFeel;
+              DefaultDarkLookAndFeel = lookAndFeel;
+            };
+            "KFileDialog Settings" = {
+              "Allow Expansion" = false;
+              "Automatically select filename extension" = true;
+              "Breadcrumb Navigation" = true;
+              "Decoration position" = 2;
+              "Show Full Path" = false;
+              "Show Inline Previews" = true;
+              "Show Preview" = false;
+              "Show Speedbar" = true;
+              "Show hidden files" = false;
+              "Sort by" = "Name";
+              "Sort directories first" = true;
+              "Sort hidden files last" = false;
+              "Sort reversed" = true;
+              "Speedbar Width" = 140;
+              "View Style" = "DetailTree";
             };
           };
         };
