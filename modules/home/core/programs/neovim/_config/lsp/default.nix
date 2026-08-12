@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   lib,
 }:
@@ -34,5 +33,5 @@ lib.mkMerge [
     };
   }
 
-  (import ./ts.nix { inherit inputs pkgs lib; })
+  (import ./ts.nix { inherit pkgs lib; })
 ]

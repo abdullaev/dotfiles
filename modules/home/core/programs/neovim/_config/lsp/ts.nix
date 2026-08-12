@@ -1,12 +1,9 @@
 {
-  inputs,
   pkgs,
   lib,
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) system;
-
-  effect-tsgo = inputs.effect-tsgo.packages.${system}.effect-tsgo;
 
   # `@typescript/*` platform packages are named after node's platform and arch.
   nodePlatform =
@@ -23,7 +20,7 @@ let
       [ "@platform@" "@fallback@" ]
       [
         nodePlatform
-        (lib.getExe' effect-tsgo "tsgo")
+        (lib.getExe' pkgs.typescript-go "tsgo")
       ]
       (builtins.readFile ../lua/tsgo-cmd.lua);
 in

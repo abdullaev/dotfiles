@@ -1,20 +1,18 @@
 diff --git a/docs/next/api/herdr-api.schema.json b/docs/next/api/herdr-api.schema.json
-index dab07fb..93cf653 100644
---- a/docs/next/api/herdr-api.schema.json
-+++ b/docs/next/api/herdr-api.schema.json
+--- a/docs/next/api/herdr-api.schema.json	2026-08-12 22:30:49.406213271 +0300
++++ b/docs/next/api/herdr-api.schema.json	2026-08-12 22:31:44.834042897 +0300
 @@ -1,6 +1,6 @@
  {
    "$schema": "https://json-schema.org/draft/2020-12/schema",
--  "protocol": 17,
-+  "protocol": 18,
+-  "protocol": 19,
++  "protocol": 20,
    "schema_version": 1,
    "schemas": {
      "error_response": {
 diff --git a/src/pane/terminal.rs b/src/pane/terminal.rs
-index 2c83f8f..d109ed6 100644
---- a/src/pane/terminal.rs
-+++ b/src/pane/terminal.rs
-@@ -2559,6 +2559,9 @@ fn cell_data_from_style(symbol: String, style: Style) -> CellData {
+--- a/src/pane/terminal.rs	2026-08-12 22:30:49.426769997 +0300
++++ b/src/pane/terminal.rs	2026-08-12 22:30:49.549871160 +0300
+@@ -2728,6 +2728,9 @@
          },
          fg: crate::protocol::color_to_u32(style.fg.unwrap_or(Color::Reset)),
          bg: crate::protocol::color_to_u32(style.bg.unwrap_or(Color::Reset)),
@@ -24,7 +22,7 @@ index 2c83f8f..d109ed6 100644
          modifier: crate::protocol::modifier_to_u16(style.add_modifier),
          skip: false,
          hyperlink: None,
-@@ -5004,6 +5007,59 @@ mod tests {
+@@ -5415,6 +5418,59 @@
          );
      }
  
@@ -85,10 +83,9 @@ index 2c83f8f..d109ed6 100644
      fn process_pty_bytes_orders_default_color_reply_before_following_device_attribute_reply() {
          let (tx, mut rx) = mpsc::channel(4);
 diff --git a/src/protocol/render_ansi.rs b/src/protocol/render_ansi.rs
-index f02ec2b..0e32304 100644
---- a/src/protocol/render_ansi.rs
-+++ b/src/protocol/render_ansi.rs
-@@ -291,6 +291,34 @@ fn color_to_sgr_bg(val: u32) -> String {
+--- a/src/protocol/render_ansi.rs	2026-08-12 22:30:49.427127771 +0300
++++ b/src/protocol/render_ansi.rs	2026-08-12 22:30:49.550126188 +0300
+@@ -298,6 +298,34 @@
      }
  }
  
@@ -123,7 +120,7 @@ index f02ec2b..0e32304 100644
  // ---------------------------------------------------------------------------
  // Modifier → SGR
  // ---------------------------------------------------------------------------
-@@ -349,7 +377,7 @@ fn modifier_to_sgr_parts(val: u16) -> Vec<&'static str> {
+@@ -356,7 +384,7 @@
  }
  
  /// Builds a complete SGR escape sequence for a cell's style.
@@ -132,7 +129,7 @@ index f02ec2b..0e32304 100644
      let mut parts = vec!["0".to_owned()];
      parts.extend(
          modifier_to_sgr_parts(modifier)
-@@ -358,6 +386,7 @@ fn build_sgr(fg: u32, bg: u32, modifier: u16) -> String {
+@@ -365,6 +393,7 @@
      );
      parts.push(color_to_sgr_fg(fg));
      parts.push(color_to_sgr_bg(bg));
@@ -140,7 +137,7 @@ index f02ec2b..0e32304 100644
      format!("\x1b[{}m", parts.join(";"))
  }
  
-@@ -371,6 +400,7 @@ fn cells_equal(a: &CellData, b: &CellData) -> bool {
+@@ -378,6 +407,7 @@
      a.symbol == b.symbol
          && a.fg == b.fg
          && a.bg == b.bg
@@ -148,7 +145,7 @@ index f02ec2b..0e32304 100644
          && a.modifier == b.modifier
          && a.hyperlink == b.hyperlink
      // Skip flag is only for ratatui internal use, not visual.
-@@ -605,7 +635,7 @@ fn write_all_cells(writer: &mut impl Write, frame: &FrameData) {
+@@ -637,7 +667,7 @@
              let _ = write!(writer, "\x1b[{};{}H", row + 1, col + 1);
  
              // Set style.
@@ -157,7 +154,7 @@ index f02ec2b..0e32304 100644
              let _ = writer.write_all(sgr.as_bytes());
  
              write_hyperlink_if_changed(
-@@ -696,7 +726,7 @@ fn write_cell(
+@@ -728,7 +758,7 @@
          write_cursor_position(writer, position);
      }
  
@@ -166,7 +163,7 @@ index f02ec2b..0e32304 100644
      if sgr != *last_sgr {
          let _ = writer.write_all(sgr.as_bytes());
          *last_sgr = sgr;
-@@ -716,6 +746,7 @@ fn cells_visually_equal(
+@@ -748,6 +778,7 @@
      cell.symbol == prev_cell.symbol
          && cell.fg == prev_cell.fg
          && cell.bg == prev_cell.bg
@@ -174,7 +171,7 @@ index f02ec2b..0e32304 100644
          && cell.modifier == prev_cell.modifier
          && sanitized_cell_hyperlink_uri(sanitized_hyperlinks, cell)
              == sanitized_cell_hyperlink_uri(prev_sanitized_hyperlinks, prev_cell)
-@@ -789,10 +820,21 @@ mod tests {
+@@ -821,10 +852,21 @@
      const WIDE_GRAPHEME: &str = "💡";
  
      fn make_cell(symbol: &str, fg: u32, bg: u32, modifier: u16) -> CellData {
@@ -196,7 +193,7 @@ index f02ec2b..0e32304 100644
              modifier,
              skip: false,
              hyperlink: None,
-@@ -866,7 +908,7 @@ mod tests {
+@@ -898,7 +940,7 @@
  
      #[test]
      fn build_sgr_produces_valid_sequence() {
@@ -205,7 +202,7 @@ index f02ec2b..0e32304 100644
          assert!(sgr.starts_with("\x1b["));
          assert!(sgr.ends_with("m"));
          assert!(sgr.contains("0")); // reset existing style first
-@@ -877,7 +919,10 @@ mod tests {
+@@ -909,7 +951,10 @@
  
      #[test]
      fn build_sgr_resets_previous_modifiers_when_cell_is_plain() {
@@ -217,7 +214,7 @@ index f02ec2b..0e32304 100644
      }
  
      #[test]
-@@ -887,11 +932,63 @@ mod tests {
+@@ -919,11 +964,63 @@
          );
  
          assert_eq!(
@@ -283,24 +280,23 @@ index f02ec2b..0e32304 100644
      fn cells_equal_identical() {
          let a = make_cell("A", 2, 1, 0);
 diff --git a/src/protocol/wire.rs b/src/protocol/wire.rs
-index 9cc2924..d5557bc 100644
---- a/src/protocol/wire.rs
-+++ b/src/protocol/wire.rs
-@@ -13,7 +13,12 @@ use serde::{Deserialize, Serialize};
+--- a/src/protocol/wire.rs	2026-08-12 22:30:49.427153407 +0300
++++ b/src/protocol/wire.rs	2026-08-12 22:31:43.817028487 +0300
+@@ -13,7 +13,12 @@
  // ---------------------------------------------------------------------------
  
  /// Current protocol version. Bumped when wire format changes incompatibly.
--pub const PROTOCOL_VERSION: u32 = 17;
+-pub const PROTOCOL_VERSION: u32 = 19;
 +///
-+/// 18 adds `CellData::underline_color`. Frames are bincode-encoded, which is
++/// 20 adds `CellData::underline_color`. Frames are bincode-encoded, which is
 +/// not self-describing, so a client and server that disagree about this field
 +/// would silently misdecode every frame — the bump turns that into a clear
 +/// "please upgrade" error instead.
-+pub const PROTOCOL_VERSION: u32 = 18;
++pub const PROTOCOL_VERSION: u32 = 20;
  
  /// Maximum allowed frame payload size (2 MB). Frames larger than this are
  /// rejected to prevent denial-of-service via oversized length prefixes.
-@@ -426,6 +431,10 @@ pub struct CellData {
+@@ -459,6 +464,10 @@
      pub fg: u32,
      /// Background color as a packed u32.
      pub bg: u32,
@@ -311,15 +307,15 @@ index 9cc2924..d5557bc 100644
      /// Bitmask of style modifiers (bold, italic, etc.) plus Herdr extension bits.
      pub modifier: u16,
      /// Whether this cell should be skipped during diff-based rendering.
-@@ -521,6 +530,7 @@ impl FrameData {
-                     symbol: cell.symbol().to_owned(),
-                     fg: color_to_u32(cell.fg),
-                     bg: color_to_u32(cell.bg),
-+                    underline_color: color_to_u32(cell.underline_color),
-                     modifier: modifier_to_u16(cell.modifier),
-                     skip: cell.skip,
-                     hyperlink,
-@@ -559,6 +569,7 @@ impl FrameData {
+@@ -473,6 +482,7 @@
+             symbol: cell.symbol().to_owned(),
+             fg: color_to_u32(cell.fg),
+             bg: color_to_u32(cell.bg),
++            underline_color: color_to_u32(cell.underline_color),
+             modifier: modifier_to_u16(cell.modifier),
+             skip: cell.skip,
+             hyperlink: None,
+@@ -600,6 +610,7 @@
                  cell.set_symbol(&cell_data.symbol);
                  cell.fg = u32_to_color(cell_data.fg);
                  cell.bg = u32_to_color(cell_data.bg);
@@ -327,7 +323,7 @@ index 9cc2924..d5557bc 100644
                  cell.modifier = u16_to_modifier(cell_data.modifier);
                  cell.skip = cell_data.skip;
              }
-@@ -1246,6 +1257,7 @@ mod tests {
+@@ -1369,6 +1380,7 @@
                      symbol: "H".into(),
                      fg: color_to_u32(Color::Red),
                      bg: color_to_u32(Color::Black),
@@ -335,7 +331,7 @@ index 9cc2924..d5557bc 100644
                      modifier: Modifier::BOLD.bits(),
                      skip: false,
                      hyperlink: None,
-@@ -1254,6 +1266,7 @@ mod tests {
+@@ -1377,6 +1389,7 @@
                      symbol: "i".into(),
                      fg: color_to_u32(Color::Green),
                      bg: color_to_u32(Color::Reset),
@@ -343,7 +339,7 @@ index 9cc2924..d5557bc 100644
                      modifier: Modifier::ITALIC.bits(),
                      skip: false,
                      hyperlink: None,
-@@ -1262,6 +1275,7 @@ mod tests {
+@@ -1385,6 +1398,7 @@
                      symbol: "!".into(),
                      fg: color_to_u32(Color::Rgb(255, 128, 0)),
                      bg: color_to_u32(Color::Indexed(220)),
@@ -351,7 +347,7 @@ index 9cc2924..d5557bc 100644
                      modifier: (Modifier::BOLD | Modifier::UNDERLINED).bits(),
                      skip: false,
                      hyperlink: Some(0),
-@@ -1270,6 +1284,7 @@ mod tests {
+@@ -1393,6 +1407,7 @@
                      symbol: " ".into(),
                      fg: color_to_u32(Color::Reset),
                      bg: color_to_u32(Color::Reset),
@@ -359,7 +355,7 @@ index 9cc2924..d5557bc 100644
                      modifier: Modifier::empty().bits(),
                      skip: true,
                      hyperlink: None,
-@@ -1278,6 +1293,7 @@ mod tests {
+@@ -1401,6 +1416,7 @@
                      symbol: "→".into(), // multi-byte grapheme
                      fg: color_to_u32(Color::Cyan),
                      bg: color_to_u32(Color::Blue),
@@ -367,7 +363,7 @@ index 9cc2924..d5557bc 100644
                      modifier: Modifier::REVERSED.bits(),
                      skip: false,
                      hyperlink: None,
-@@ -1286,6 +1302,7 @@ mod tests {
+@@ -1409,6 +1425,7 @@
                      symbol: "🦀".into(), // emoji, wide grapheme cluster
                      fg: color_to_u32(Color::Yellow),
                      bg: color_to_u32(Color::Magenta),
@@ -375,7 +371,7 @@ index 9cc2924..d5557bc 100644
                      modifier: Modifier::empty().bits(),
                      skip: false,
                      hyperlink: None,
-@@ -1459,6 +1476,7 @@ mod tests {
+@@ -1591,6 +1608,7 @@
                  },
                  fg: color_to_u32(Color::Rgb((i % 256) as u8, ((i / 256) % 256) as u8, 128)),
                  bg: color_to_u32(Color::Indexed((i % 256) as u8)),
@@ -383,7 +379,7 @@ index 9cc2924..d5557bc 100644
                  modifier: ((i % 16) as u16),
                  skip: i % 100 == 0,
                  hyperlink: None,
-@@ -1809,6 +1827,7 @@ mod tests {
+@@ -1941,6 +1959,7 @@
                      symbol: "X".into(),
                      fg: 0,
                      bg: 0,
@@ -392,10 +388,9 @@ index 9cc2924..d5557bc 100644
                      skip: false,
                      hyperlink: None,
 diff --git a/src/ui/tab_surface.rs b/src/ui/tab_surface.rs
-index 1594f83..796b354 100644
---- a/src/ui/tab_surface.rs
-+++ b/src/ui/tab_surface.rs
-@@ -304,7 +304,7 @@ mod tests {
+--- a/src/ui/tab_surface.rs	2026-08-12 22:30:49.428538165 +0300
++++ b/src/ui/tab_surface.rs	2026-08-12 22:30:49.550551441 +0300
+@@ -304,7 +304,7 @@
          assert_eq!(frame.hyperlinks, vec![uri.to_owned()]);
          assert_eq!(
              frame_digest(&frame),
@@ -404,7 +399,7 @@ index 1594f83..796b354 100644
          );
      }
  
-@@ -321,7 +321,7 @@ mod tests {
+@@ -321,7 +321,7 @@
          assert_eq!(frame.cursor, None);
          assert_eq!(
              frame_digest(&frame),

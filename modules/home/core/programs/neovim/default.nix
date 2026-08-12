@@ -2,7 +2,6 @@
   flake.modules.homeManager.neovim =
     {
       config,
-      inputs,
       pkgs,
       lib,
       ...
@@ -64,7 +63,7 @@
         (import ./_config/linters.nix { inherit pkgs lib; })
         (import ./_config/git.nix)
         (import ./_config/languages.nix)
-        (import ./_config/lsp { inherit inputs pkgs lib; })
+        (import ./_config/lsp { inherit pkgs lib; })
         (import ./_config/lualine.nix)
         (import ./_config/mini.nix)
         (import ./_config/snacks.nix { inherit pkgs; })
