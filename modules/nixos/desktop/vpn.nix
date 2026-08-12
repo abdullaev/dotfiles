@@ -165,22 +165,22 @@
             "vpn/public-key"
             "vpn/endpoint"
             "vpn/junk-params"
+            "vpn/address"
+            "vpn/dns"
+            "vpn/mtu"
           ]
           (_: {
             sopsFile = ../../../secrets/hosts + "/${hostName}.yaml";
           });
 
-      # Only routing/addressing lines live in the repo (it is public); key
-      # material, the endpoint, and the AWG obfuscation params (enough to
-      # build a DPI signature) stay encrypted.
       sops.templates."${vpnIface}.conf" = {
         restartUnits = [ "wg-quick-${vpnIface}.service" ];
         content = ''
           [Interface]
-          Address = 10.37.12.31/32, 2010:db0:3::a25:c1f/128
+          Address = ${config.sops.placeholder."vpn/address"}
           PrivateKey = ${config.sops.placeholder."vpn/private-key"}
-          DNS = 10.254.254.254
-          MTU = 1360
+          DNS = ${config.sops.placeholder."vpn/dns"}
+          MTU = ${config.sops.placeholder."vpn/mtu"}
 
           ${config.sops.placeholder."vpn/junk-params"}
 
