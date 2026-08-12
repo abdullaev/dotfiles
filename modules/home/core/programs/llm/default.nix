@@ -84,6 +84,10 @@
       toClaudePattern = path: if lib.hasPrefix "/" path then "/${path}" else path;
 
       claudeSettingsPath = "${config.programs.claude-code.configDir}/settings.json";
+
+      palette =
+        (lib.importJSON "${config.catppuccin.sources.palette}/palette.json")
+        .${config.catppuccin.flavor}.colors;
     in
     {
       programs.mcp = {
@@ -119,7 +123,7 @@
         package = llmAgents.claude-code;
         inherit skills;
         settings = {
-          theme = "dark-ansi";
+          theme = "custom:dark-ansi-custom";
           effortLevel = "xhigh";
           tui = "default";
           permissions = {
@@ -145,6 +149,17 @@
           };
         };
       };
+
+      home.file."${config.programs.claude-code.configDir}/themes/dark-ansi-custom.json".text =
+        builtins.toJSON
+          {
+            name = "Dark ANSI Custom";
+            base = "dark-ansi";
+            overrides = {
+              selectionBg = palette.surface1.hex;
+              userMessageBackgroundHover = palette.surface0.hex;
+            };
+          };
 
       # `programs.claude-code.settings` links settings.json to a read-only store
       # path, but Claude Code persists runtime toggles (effort level, theme, …)
