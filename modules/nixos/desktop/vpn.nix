@@ -164,6 +164,7 @@
             "vpn/private-key"
             "vpn/public-key"
             "vpn/endpoint"
+            "vpn/allowed-ips"
             "vpn/junk-params"
             "vpn/address"
             "vpn/dns"
@@ -186,7 +187,7 @@
 
           [Peer]
           PublicKey = ${config.sops.placeholder."vpn/public-key"}
-          AllowedIPs = 0.0.0.0/0, ::/0
+          AllowedIPs = ${config.sops.placeholder."vpn/allowed-ips"}
           Endpoint = ${config.sops.placeholder."vpn/endpoint"}
         '';
       };
