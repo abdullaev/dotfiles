@@ -1,4 +1,4 @@
 result
 .direnv/
-*.vim
+.pre-commit-config.yaml
 .claude/settings.local.json

@@ -8,14 +8,23 @@
 
       programs = {
         actionlint.enable = true;
+        jsonfmt.enable = true;
         nixfmt.enable = true;
-        shfmt.enable = true;
-        shellcheck.enable = true;
+        shellcheck = {
+          enable = true;
+          severity = "warning";
+        };
+        shfmt = {
+          enable = true;
+          useEditorConfig = true;
+        };
         stylua.enable = true;
+        taplo.enable = true;
+        yamlfmt.enable = true;
       };
 
-      settings.formatter.shellcheck.options = [
-        "--severity=warning"
+      settings.formatter.yamlfmt.excludes = [
+        "secrets/**"
       ];
     };
   };

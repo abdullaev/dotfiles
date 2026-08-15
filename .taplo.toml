@@ -1,0 +1,4 @@
+[formatting]
+indent_string = "  "
+align_comments = false
+reorder_keys = false

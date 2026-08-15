@@ -1,0 +1,7 @@
+# Picked up automatically for every checked script.
+# Directives: https://github.com/koalaman/shellcheck/wiki/Ignore
+# Minimum severity is CLI-only and set in modules/flake/formatter.nix.
+
+# Examples:
+# disable=SC2034   # ignore "unused variable" repo-wide
+# external-sources=true
