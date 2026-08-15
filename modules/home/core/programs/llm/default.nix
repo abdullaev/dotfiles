@@ -8,8 +8,6 @@
       ...
     }:
     let
-      llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
-
       anthropicSkills = lib.genAttrs [
         "mcp-builder"
       ] (name: "${inputs.anthropic-skills}/skills/${name}");
@@ -106,7 +104,6 @@
       programs.opencode = {
         enable = true;
         enableMcpIntegration = true;
-        package = llmAgents.opencode;
         inherit skills;
         settings = {
           permission = {
@@ -120,7 +117,6 @@
       programs.claude-code = {
         enable = true;
         enableMcpIntegration = true;
-        package = llmAgents.claude-code;
         inherit skills;
         settings = {
           theme = "custom:dark-ansi-custom";

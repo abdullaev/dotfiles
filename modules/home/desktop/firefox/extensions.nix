@@ -1,8 +1,8 @@
 {
   flake.modules.homeManager.firefox =
-    { pkgs, inputs, ... }:
+    { pkgs, ... }:
     let
-      addons = inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
+      addons = pkgs.firefox-addons;
     in
     {
       programs.firefox.profiles.default = {

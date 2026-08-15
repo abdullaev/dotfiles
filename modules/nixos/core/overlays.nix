@@ -1,22 +1,54 @@
 {
-  flake.modules.nixos.overlays = {
-    nixpkgs.overlays = [
-      # herdr drops the underline color when it serializes a pane frame for the
-      # client, so neovim's diagnostic undercurls come out in the foreground
-      # color instead of the severity color. Carry the fix until it lands
-      # upstream (still missing on main as of 0.8.0).
-      (_: prev: {
-        herdr = prev.herdr.overrideAttrs (old: {
-          patches = (old.patches or [ ]) ++ [ ../../../pkgs/herdr/underline-color.patch ];
-        });
-      })
+  config,
+  inputs,
+  lib,
+  ...
+}:
+{
+  flake.overlays.default = lib.composeManyExtensions [
+    # herdr drops the underline color when it serializes a pane frame for the
+    # client, so neovim's diagnostic undercurls come out in the foreground
+    # color instead of the severity color. Carry the fix until it lands
+    # upstream (still missing on main as of 0.8.0).
+    (_: prev: {
+      herdr = prev.herdr.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [ ../../../pkgs/herdr/underline-color.patch ];
+      });
+    })
 
-      # nvf's conform mix preset still references the deprecated `elixir`
-      # alias, which spams an eval warning on every rebuild. Resolve the alias
-      # to the real package; drop once nvf uses beamPackages.elixir.
-      (final: _: {
-        elixir = final.beamPackages.elixir;
-      })
-    ];
+    # nvf's conform mix preset still references the deprecated `elixir`
+    # alias, which spams an eval warning on every rebuild. Resolve the alias
+    # to the real package; drop once nvf uses beamPackages.elixir.
+    (final: _: {
+      elixir = final.beamPackages.elixir;
+    })
+
+    (final: _: {
+      pragmata-pro = final.callPackage ../../../pkgs/pragmata-pro {
+        src = inputs.pragmata-pro;
+      };
+    })
+
+    (final: _: {
+      inherit (inputs.llm-agents.packages.${final.stdenv.hostPlatform.system})
+        claude-code
+        opencode
+        ;
+    })
+
+    (final: _: {
+      firefox-addons = inputs.firefox-addons.packages.${final.stdenv.hostPlatform.system};
+    })
+
+    (final: _: {
+      stable = import inputs.nixpkgs-stable {
+        inherit (final.stdenv.hostPlatform) system;
+        config.allowUnfree = true;
+      };
+    })
+  ];
+
+  flake.modules.nixos.overlays = {
+    nixpkgs.overlays = [ config.flake.overlays.default ];
   };
 }
