@@ -16,7 +16,7 @@
         command = lib.getExe pkgs.mcp-proxy;
         args = [
           "--transport=streamablehttp"
-          "--verify-ssl=${../../../../../certs/russian_trusted_root_ca.cer}"
+          "--verify-ssl=${../../../../../certs/russian_trusted_root_ca.pem}"
           "https://invest-public-api.tbank.ru/mcp"
         ];
         env.API_ACCESS_TOKEN.file = config.sops.secrets."t-invest/token-readonly".path;
