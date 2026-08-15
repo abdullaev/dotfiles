@@ -2,7 +2,6 @@
   flake.modules.homeManager.llm =
     {
       config,
-      inputs,
       lib,
       pkgs,
       user,
@@ -17,7 +16,7 @@
         command = lib.getExe pkgs.mcp-proxy;
         args = [
           "--transport=streamablehttp"
-          "--verify-ssl=${inputs.russian-trusted-root-ca}"
+          "--verify-ssl=${../../../../../certs/russian_trusted_root_ca.cer}"
           "https://invest-public-api.tbank.ru/mcp"
         ];
         env.API_ACCESS_TOKEN.file = config.sops.secrets."t-invest/token-readonly".path;

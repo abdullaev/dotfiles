@@ -455,7 +455,6 @@
         "plasma-manager": "plasma-manager",
         "pragmata-pro": "pragmata-pro",
         "ru-ip-list": "ru-ip-list",
-        "russian-trusted-root-ca": "russian-trusted-root-ca",
         "sops-nix": "sops-nix",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
@@ -475,18 +474,6 @@
         "owner": "abdullaev",
         "repo": "ru-ip-list",
         "type": "github"
-      }
-    },
-    "russian-trusted-root-ca": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-Q4a1kBIhuNzdmwEQ9f2jxsPaTRbShGdnqNzRHn0p/Ws=",
-        "type": "file",
-        "url": "https://gu-st.ru/content/Other/doc/russian_trusted_root_ca.cer"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://gu-st.ru/content/Other/doc/russian_trusted_root_ca.cer"
       }
     },
     "sops-nix": {

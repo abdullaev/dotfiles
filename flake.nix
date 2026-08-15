@@ -89,10 +89,6 @@
       url = "github:abdullaev/ru-ip-list";
       flake = false;
     };
-    russian-trusted-root-ca = {
-      url = "file+https://gu-st.ru/content/Other/doc/russian_trusted_root_ca.cer";
-      flake = false;
-    };
   };
 
   outputs =
