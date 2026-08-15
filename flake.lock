@@ -464,7 +464,6 @@
         "plasma-manager": "plasma-manager",
         "pragmata-pro": "pragmata-pro",
         "ru-ip-list": "ru-ip-list",
-        "ru-ip-list-v6": "ru-ip-list-v6",
         "russian-trusted-root-ca": "russian-trusted-root-ca",
         "sops-nix": "sops-nix",
         "systems": "systems",
@@ -474,25 +473,17 @@
     "ru-ip-list": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Y2KVsHJVWyVuVvSTCKPGztN0589CK2Rys9jQPDAkB6Y=",
-        "type": "file",
-        "url": "https://www.ipdeny.com/ipblocks/data/countries/ru.zone"
+        "lastModified": 1786797419,
+        "narHash": "sha256-60+KjI2NuMp4Z3aKZr9FHQ+UY78RO2w8CVwNDATrNig=",
+        "owner": "abdullaev",
+        "repo": "ru-ip-list",
+        "rev": "d41c67255837fc613d1c4fed6f6219c1f05192b6",
+        "type": "github"
       },
       "original": {
-        "type": "file",
-        "url": "https://www.ipdeny.com/ipblocks/data/countries/ru.zone"
-      }
-    },
-    "ru-ip-list-v6": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-g3fKzo9PAZuYB2N8lO5i2Kb8fzCUZ1hWk7KrWzK0d+4=",
-        "type": "file",
-        "url": "https://www.ipdeny.com/ipv6/ipaddresses/blocks/ru.zone"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://www.ipdeny.com/ipv6/ipaddresses/blocks/ru.zone"
+        "owner": "abdullaev",
+        "repo": "ru-ip-list",
+        "type": "github"
       }
     },
     "russian-trusted-root-ca": {

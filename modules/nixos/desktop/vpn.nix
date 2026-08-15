@@ -111,14 +111,14 @@
           }
 
           rc=0
-          apply_family 4 ${inputs.ru-ip-list} || rc=$?
+          apply_family 4 ${inputs.ru-ip-list}/ipv4.txt || rc=$?
           if [ "$rc" -ne 0 ]; then
             echo "IPv4 split tunnel failed (rc=$rc)" >&2
             exit 1
           fi
 
           rc=0
-          apply_family 6 ${inputs.ru-ip-list-v6} || rc=$?
+          apply_family 6 ${inputs.ru-ip-list}/ipv6.txt || rc=$?
           if [ "$rc" -eq 1 ]; then
             echo "No non-VPN IPv6 default route; skipping IPv6"
           elif [ "$rc" -ne 0 ]; then
