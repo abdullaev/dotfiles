@@ -69,28 +69,20 @@
         "type": "github"
       }
     },
-    "catppuccin-aseprite-latte": {
+    "catppuccin-aseprite": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ooCx06ET/iXO0STbbzqfr6M4fKPzUKIFSgCa6cwii74=",
-        "type": "file",
-        "url": "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-latte.aseprite-extension"
+        "lastModified": 1761541338,
+        "narHash": "sha256-RDv2tR3PxZcc4zAv+ZvhrsdQwQkwJVP6ppNoNEBEACk=",
+        "owner": "catppuccin",
+        "repo": "aseprite",
+        "rev": "3113df487afbb564f20e6e9402ee077f002f926c",
+        "type": "github"
       },
       "original": {
-        "type": "file",
-        "url": "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-latte.aseprite-extension"
-      }
-    },
-    "catppuccin-aseprite-mocha": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-sR/iCU9QHkCPAjPkgnBdyGhMzcTHJxa8APBLYTLifX0=",
-        "type": "file",
-        "url": "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-mocha.aseprite-extension"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/catppuccin/aseprite/releases/download/v1.2.1/catppuccin-theme-mocha.aseprite-extension"
+        "owner": "catppuccin",
+        "repo": "aseprite",
+        "type": "github"
       }
     },
     "disko": {
@@ -446,8 +438,7 @@
       "inputs": {
         "anthropic-skills": "anthropic-skills",
         "catppuccin": "catppuccin",
-        "catppuccin-aseprite-latte": "catppuccin-aseprite-latte",
-        "catppuccin-aseprite-mocha": "catppuccin-aseprite-mocha",
+        "catppuccin-aseprite": "catppuccin-aseprite",
         "disko": "disko",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
