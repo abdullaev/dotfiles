@@ -39,13 +39,6 @@
     (final: _: {
       firefox-addons = inputs.firefox-addons.packages.${final.stdenv.hostPlatform.system};
     })
-
-    (final: _: {
-      stable = import inputs.nixpkgs-stable {
-        inherit (final.stdenv.hostPlatform) system;
-        config.allowUnfree = true;
-      };
-    })
   ];
 
   flake.modules.nixos.overlays = {

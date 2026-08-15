@@ -5,14 +5,8 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
-    nixpkgs-stable = {
-      url = "github:nixos/nixpkgs/nixos-26.05";
-    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-    };
-    systems = {
-      url = "github:nix-systems/default";
     };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -59,7 +53,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
       inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.systems.follows = "systems";
     };
     anthropic-skills = {
       url = "github:anthropics/skills";
@@ -87,6 +80,10 @@
     };
     ru-ip-list = {
       url = "github:abdullaev/ru-ip-list";
+      flake = false;
+    };
+    tzdb = {
+      url = "github:eggert/tz";
       flake = false;
     };
   };

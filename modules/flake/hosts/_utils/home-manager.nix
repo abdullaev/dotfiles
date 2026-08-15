@@ -1,10 +1,7 @@
 { lib, inputs }:
 { config, ... }:
 let
-  resolveHomeManagerModules =
-    user:
-    (if user.homeManagerModules == null then config.homeManagerModules else user.homeManagerModules)
-    ++ user.extraHomeManagerModules;
+  resolveHomeManagerModules = user: config.homeManagerModules ++ user.extraHomeManagerModules;
 
   enabledHomeManagerUsers = lib.filterAttrs (_: user: user.enableHomeManager) config.users;
 

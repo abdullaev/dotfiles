@@ -258,9 +258,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": [
-          "systems"
-        ],
+        "systems": "systems",
         "treefmt-nix": [
           "treefmt-nix"
         ]
@@ -338,22 +336,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "nixpkgs.lib",
-        "type": "github"
-      }
-    },
-    "nixpkgs-stable": {
-      "locked": {
-        "lastModified": 1786711500,
-        "narHash": "sha256-QvnceIGTBeDvDd9oCn+GvdsnkquliuwbVgpiRH68qaQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "02e08985a27c65ffd33d434eeb2e660a2e4dc84d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-26.05",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -449,15 +431,14 @@
         "llm-agents": "llm-agents",
         "mattpocock-skills": "mattpocock-skills",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-stable": "nixpkgs-stable",
         "nvf": "nvf",
         "obsidian-skills": "obsidian-skills",
         "plasma-manager": "plasma-manager",
         "pragmata-pro": "pragmata-pro",
         "ru-ip-list": "ru-ip-list",
         "sops-nix": "sops-nix",
-        "systems": "systems",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix",
+        "tzdb": "tzdb"
       }
     },
     "ru-ip-list": {
@@ -528,6 +509,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "tzdb": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786433762,
+        "narHash": "sha256-eFqSFpGCRzLDvLzZ9hOhcudWyo+Rx2zVwur+TGHsExw=",
+        "owner": "eggert",
+        "repo": "tz",
+        "rev": "98fe31f1ecd0e29acf31dce641f2d67a21a8d1ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "eggert",
+        "repo": "tz",
         "type": "github"
       }
     }

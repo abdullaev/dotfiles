@@ -4,6 +4,8 @@
     {
       programs.firefox = {
         enable = true;
+        # The upstream default for stateVersion >= 26.05; setting it opts in
+        # early and silences the transition warning.
         configPath = "${config.xdg.configHome}/mozilla/firefox";
         nativeMessagingHosts = [ pkgs.kdePackages.plasma-browser-integration ];
 

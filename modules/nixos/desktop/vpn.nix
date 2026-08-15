@@ -12,6 +12,9 @@
       vpnIface = "awg0";
       ruTable = toString 51821;
       rulePrio = toString 100;
+      # awg-quick would pick the first free table (51820) anyway; pinning it
+      # via FwMark makes the kill switch's mark match immune to drift.
+      wgFwMark = toString 51820;
 
       stateDir = "/var/lib/vpn";
       vpnOffFlag = "${stateDir}/vpn-disabled";
@@ -45,9 +48,10 @@
               systemctl start wg-quick-${vpnIface}.service
               ;;
             off)
-              mkdir -p ${stateDir}
+              install -d -m 0755 ${stateDir}
               touch ${vpnOffFlag}
               systemctl stop wg-quick-${vpnIface}.service
+              systemctl stop vpn-killswitch.service
               ;;
             bypass)
               case "''${2:-}" in
@@ -58,7 +62,7 @@
                   fi
                   ;;
                 off)
-                  mkdir -p ${stateDir}
+                  install -d -m 0755 ${stateDir}
                   touch ${bypassOffFlag}
                   systemctl stop ru-direct-routes.service
                   ;;
@@ -67,11 +71,13 @@
               ;;
             status)
               vpn_state="$(systemctl is-active wg-quick-${vpnIface}.service || true)"
+              ks_state="$(systemctl is-active vpn-killswitch.service || true)"
               bypass_state="$(systemctl is-active ru-direct-routes.service || true)"
               [ -e ${vpnOffFlag} ] && vpn_state="$vpn_state (turned off)"
               [ -e ${bypassOffFlag} ] && bypass_state="$bypass_state (turned off)"
-              echo "vpn:    $vpn_state"
-              echo "bypass: $bypass_state"
+              echo "vpn:        $vpn_state"
+              echo "killswitch: $ks_state"
+              echo "bypass:     $bypass_state"
               ;;
             *) usage ;;
           esac
@@ -156,6 +162,50 @@
           echo "DNS still not working after 60s; letting wg-quick try anyway"
         '';
       };
+
+      # Egress firewall for the fail-closed default: everything that is not
+      # the tunnel itself, its marked encrypted packets, the RU split tunnel,
+      # or local/bootstrap traffic (LAN, DHCP, DNS) is dropped. `vpn off`
+      # removes it together with the tunnel, so only *failure* fails closed.
+      killswitchRules = pkgs.runCommand "vpn-killswitch.nft" { } ''
+        emit_set() {
+          local name=$1 type=$2 file=$3
+          echo "  set $name {"
+          echo "    type $type"
+          echo "    flags interval"
+          echo "    auto-merge"
+          if grep -q '[^[:space:]]' "$file"; then
+            echo "    elements = {"
+            awk 'NF { if (prev) print "      " prev ","; prev = $0 }
+                 END { if (prev) print "      " prev }' "$file"
+            echo "    }"
+          fi
+          echo "  }"
+        }
+
+        {
+          echo 'table inet vpn-killswitch'
+          echo 'delete table inet vpn-killswitch'
+          echo 'table inet vpn-killswitch {'
+          emit_set ru4 ipv4_addr ${inputs.ru-ip-list}/ipv4.txt
+          emit_set ru6 ipv6_addr ${inputs.ru-ip-list}/ipv6.txt
+          cat <<'EOF'
+          chain output {
+            type filter hook output priority filter; policy drop;
+            oifname { "lo", "${vpnIface}" } accept
+            meta mark ${wgFwMark} accept comment "tunnel's own encrypted packets"
+            ip daddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16, 255.255.255.255 } accept comment "LAN"
+            ip6 daddr { fe80::/10, fc00::/7, ff00::/8 } accept comment "link-local, ULA, multicast"
+            udp dport { 53, 67 } accept comment "DNS bootstrap for the endpoint + DHCP"
+            tcp dport 53 accept
+            ip daddr @ru4 accept comment "split tunnel goes direct"
+            ip6 daddr @ru6 accept
+            counter comment "would-be leaks"
+          }
+        }
+        EOF
+        } > "$out"
+      '';
     in
     {
       sops.secrets =
@@ -182,6 +232,7 @@
           PrivateKey = ${config.sops.placeholder."vpn/private-key"}
           DNS = ${config.sops.placeholder."vpn/dns"}
           MTU = ${config.sops.placeholder."vpn/mtu"}
+          FwMark = ${wgFwMark}
 
           ${config.sops.placeholder."vpn/junk-params"}
 
@@ -200,14 +251,32 @@
 
       environment.systemPackages = [ vpnCtl ];
 
+      # Fail closed: the kill switch outlives a crashed or start-limited
+      # tunnel, so a dead VPN means no internet instead of a silent leak.
+      # Only `vpn off` (which stops both units) is allowed to fail open.
+      systemd.services.vpn-killswitch = {
+        description = "VPN kill switch: drop egress that bypasses ${vpnIface}";
+        wantedBy = [ "multi-user.target" ];
+        before = [ "wg-quick-${vpnIface}.service" ];
+        unitConfig.ConditionPathExists = "!${vpnOffFlag}";
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${lib.getExe pkgs.nftables} -f ${killswitchRules}";
+          ExecStop = "-${lib.getExe pkgs.nftables} delete table inet vpn-killswitch";
+        };
+      };
+
       systemd.services."wg-quick-${vpnIface}" = {
         after = [
           "network-online.target"
           "nss-lookup.target"
+          "vpn-killswitch.service"
         ];
         wants = [
           "network-online.target"
           "nss-lookup.target"
+          "vpn-killswitch.service"
         ];
         unitConfig.ConditionPathExists = "!${vpnOffFlag}";
         serviceConfig = {

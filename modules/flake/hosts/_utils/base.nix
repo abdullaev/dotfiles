@@ -75,11 +75,6 @@ in
                   default = true;
                 };
 
-                homeManagerModules = mkOption {
-                  type = with types; nullOr (listOf deferredModule);
-                  default = null;
-                };
-
                 extraHomeManagerModules = mkOption {
                   type = with types; listOf deferredModule;
                   default = [ ];
@@ -128,11 +123,6 @@ in
       default = [ ];
     };
 
-    extraSpecialArgs = mkOption {
-      type = with types; attrsOf anything;
-      default = { };
-    };
-
     specialArgs = mkOption {
       type = with types; attrsOf anything;
       readOnly = true;
@@ -149,6 +139,5 @@ in
     inherit (config)
       users
       ;
-  }
-  // config.extraSpecialArgs;
+  };
 }

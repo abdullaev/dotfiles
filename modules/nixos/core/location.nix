@@ -2,14 +2,16 @@
   flake.modules.nixos.location =
     {
       config,
+      inputs,
       lib,
-      pkgs,
       ...
     }:
     let
       # zone1970.tab maps every canonical timezone to its principal city's
-      # coordinates in ISO 6709 (+DDMM+DDDMM or +DDMMSS+DDDMMSS).
-      zoneTab = builtins.readFile "${pkgs.tzdata}/share/zoneinfo/zone1970.tab";
+      # coordinates in ISO 6709 (+DDMM+DDDMM or +DDMMSS+DDDMMSS). Read from
+      # the tzdb flake input rather than pkgs.tzdata: inputs are plain
+      # sources, so this avoids import-from-derivation.
+      zoneTab = builtins.readFile "${inputs.tzdb}/zone1970.tab";
 
       rows = map (lib.splitString "\t") (
         lib.filter (line: line != "" && !lib.hasPrefix "#" line) (lib.splitString "\n" zoneTab)
