@@ -1,13 +1,8 @@
 {
   flake.modules.homeManager.firefox =
-    {
-      lib,
-      pkgs,
-      inputs,
-      ...
-    }:
+    { lib, pkgs, ... }:
     let
-      addons = inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
+      addons = pkgs.firefox-addons;
 
       button =
         extensionId:

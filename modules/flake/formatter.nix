@@ -26,6 +26,10 @@
       settings.formatter.yamlfmt.excludes = [
         "secrets/**"
       ];
+
+      settings.global.excludes = [
+        "modules/hosts/*/_nixos/hardware-configuration.nix"
+      ];
     };
   };
 }

@@ -165,47 +165,60 @@
 
       # Egress firewall for the fail-closed default: everything that is not
       # the tunnel itself, its marked encrypted packets, the RU split tunnel,
-      # or local/bootstrap traffic (LAN, DHCP, DNS) is dropped. `vpn off`
-      # removes it together with the tunnel, so only *failure* fails closed.
-      killswitchRules = pkgs.runCommand "vpn-killswitch.nft" { } ''
-        emit_set() {
-          local name=$1 type=$2 file=$3
-          echo "  set $name {"
-          echo "    type $type"
-          echo "    flags interval"
-          echo "    auto-merge"
-          if grep -q '[^[:space:]]' "$file"; then
-            echo "    elements = {"
-            awk 'NF { if (prev) print "      " prev ","; prev = $0 }
-                 END { if (prev) print "      " prev }' "$file"
-            echo "    }"
-          fi
-          echo "  }"
-        }
+      # or local traffic (LAN, multicast, broadcast) is dropped. No port-53
+      # accept: bootstrap DNS/DHCP servers are either on the LAN (RFC1918)
+      # or Russian ISP resolvers already in @ru4, and a global 53 accept
+      # would leak every query in plaintext whenever the tunnel is down.
+      # `vpn off` removes it together with the tunnel, so only *failure*
+      # fails closed.
+      killswitchRules =
+        pkgs.runCommand "vpn-killswitch.nft" { nativeBuildInputs = [ pkgs.buildPackages.nftables ]; }
+          ''
+            emit_set() {
+              local name=$1 type=$2 file=$3
+              echo "  set $name {"
+              echo "    type $type"
+              echo "    flags interval"
+              echo "    auto-merge"
+              if grep -q '[^[:space:]]' "$file"; then
+                echo "    elements = {"
+                awk 'NF { if (prev) print "      " prev ","; prev = $0 }
+                     END { if (prev) print "      " prev }' "$file"
+                echo "    }"
+              fi
+              echo "  }"
+            }
 
-        {
-          echo 'table inet vpn-killswitch'
-          echo 'delete table inet vpn-killswitch'
-          echo 'table inet vpn-killswitch {'
-          emit_set ru4 ipv4_addr ${inputs.ru-ip-list}/ipv4.txt
-          emit_set ru6 ipv6_addr ${inputs.ru-ip-list}/ipv6.txt
-          cat <<'EOF'
-          chain output {
-            type filter hook output priority filter; policy drop;
-            oifname { "lo", "${vpnIface}" } accept
-            meta mark ${wgFwMark} accept comment "tunnel's own encrypted packets"
-            ip daddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16, 255.255.255.255 } accept comment "LAN"
-            ip6 daddr { fe80::/10, fc00::/7, ff00::/8 } accept comment "link-local, ULA, multicast"
-            udp dport { 53, 67 } accept comment "DNS bootstrap for the endpoint + DHCP"
-            tcp dport 53 accept
-            ip daddr @ru4 accept comment "split tunnel goes direct"
-            ip6 daddr @ru6 accept
-            counter comment "would-be leaks"
-          }
-        }
-        EOF
-        } > "$out"
-      '';
+            {
+              echo 'table inet vpn-killswitch'
+              echo 'delete table inet vpn-killswitch'
+              echo 'table inet vpn-killswitch {'
+              emit_set ru4 ipv4_addr ${inputs.ru-ip-list}/ipv4.txt
+              emit_set ru6 ipv6_addr ${inputs.ru-ip-list}/ipv6.txt
+              cat <<'EOF'
+              chain output {
+                type filter hook output priority filter; policy drop;
+                oifname { "lo", "${vpnIface}" } accept
+                meta mark ${wgFwMark} accept comment "tunnel's own encrypted packets"
+                ip daddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16, 224.0.0.0/4, 255.255.255.255 } accept comment "LAN, multicast, broadcast"
+                ip6 daddr { fe80::/10, fc00::/7, ff00::/8 } accept comment "link-local, ULA, multicast"
+                ip daddr @ru4 accept comment "split tunnel goes direct"
+                ip6 daddr @ru6 accept
+                counter comment "would-be leaks"
+              }
+            }
+            EOF
+            } > "$out"
+
+            # Validate at build time so a bad ru-ip-list update fails the
+            # build, not the boot. Same trick as the NixOS nftables module:
+            # nft needs netlink even for --check, so run it against LKL's
+            # userspace kernel, minus the delete (absent table there).
+            sed '/^delete table/d' "$out" > check.conf
+            NIX_REDIRECTS="/etc/protocols=${config.environment.etc.protocols.source}:/etc/services=${config.environment.etc.services.source}" \
+              LD_PRELOAD="${pkgs.buildPackages.libredirect}/lib/libredirect.so ${pkgs.buildPackages.lklWithFirewall.lib}/lib/liblkl-hijack.so" \
+              nft --check --file check.conf
+          '';
     in
     {
       sops.secrets =
@@ -254,10 +267,16 @@
       # Fail closed: the kill switch outlives a crashed or start-limited
       # tunnel, so a dead VPN means no internet instead of a silent leak.
       # Only `vpn off` (which stops both units) is allowed to fail open.
+      # Ordering before network-pre.target loads the rules before
+      # NetworkManager brings any interface up, closing the boot window.
       systemd.services.vpn-killswitch = {
         description = "VPN kill switch: drop egress that bypasses ${vpnIface}";
         wantedBy = [ "multi-user.target" ];
-        before = [ "wg-quick-${vpnIface}.service" ];
+        wants = [ "network-pre.target" ];
+        before = [
+          "network-pre.target"
+          "wg-quick-${vpnIface}.service"
+        ];
         unitConfig.ConditionPathExists = "!${vpnOffFlag}";
         serviceConfig = {
           Type = "oneshot";
@@ -276,8 +295,10 @@
         wants = [
           "network-online.target"
           "nss-lookup.target"
-          "vpn-killswitch.service"
         ];
+        # requires, not wants: a kill switch that failed to load must block
+        # the tunnel from starting instead of letting it run unprotected.
+        requires = [ "vpn-killswitch.service" ];
         unitConfig.ConditionPathExists = "!${vpnOffFlag}";
         serviceConfig = {
           ExecStartPre = lib.getExe waitForDns;

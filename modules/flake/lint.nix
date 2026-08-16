@@ -13,7 +13,7 @@
     {
       checks = {
         statix = lint "statix" "statix check .";
-        deadnix = lint "deadnix" "deadnix --fail .";
+        deadnix = lint "deadnix" "deadnix --fail --exclude modules/hosts/*/_nixos/hardware-configuration.nix -- .";
         lint = pkgs.linkFarm "lint-checks" (
           removeAttrs config.checks [
             "nixos-hosts"

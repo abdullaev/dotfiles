@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/setup-nix
       - name: Build lint checks
         run: nix build --no-update-lock-file --keep-going -L .#checks.x86_64-linux.lint
@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 30
     if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/setup-nix
         with:
           deploy-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
@@ -42,12 +42,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     needs: eval
-    if: (github.event_name == 'pull_request' && github.head_ref == 'update_flake_lock_action') || github.event_name == 'workflow_dispatch'
     env:
       CACHIX_CACHE: abdullaev-dotfiles
       CACHIX_ENABLED: ${{ secrets.CACHIX_AUTH_TOKEN != '' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
       - uses: ./.github/actions/setup-nix
         with:
