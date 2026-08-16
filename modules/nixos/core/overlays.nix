@@ -17,6 +17,20 @@
       });
     })
 
+    # Obsidian 1.13 sets its Wayland app_id to md.Obsidian, but the nixpkgs
+    # desktop item is still obsidian.desktop with no StartupWMClass, so Plasma
+    # can't match the window to the launcher (generic icon, separate task).
+    # Upstream packaging already ships StartupWMClass=md.Obsidian; drop once
+    # nixpkgs does the same.
+    (_: prev: {
+      obsidian = prev.obsidian.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          chmod u+w $out/share/applications/obsidian.desktop
+          echo "StartupWMClass=md.Obsidian" >> $out/share/applications/obsidian.desktop
+        '';
+      });
+    })
+
     # nvf's conform mix preset still references the deprecated `elixir`
     # alias, which spams an eval warning on every rebuild. Resolve the alias
     # to the real package; drop once nvf uses beamPackages.elixir.
