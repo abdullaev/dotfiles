@@ -4,14 +4,11 @@
       config,
       lib,
       pkgs,
+      catppuccinPalette,
       ...
     }:
     let
-      palette =
-        (lib.importJSON "${config.catppuccin.sources.palette}/palette.json")
-        .${config.catppuccin.flavor}.colors;
-
-      accent = palette.${config.catppuccin.accent}.hex;
+      accent = catppuccinPalette.${config.catppuccin.accent}.hex;
 
       # The agent integrations are shims embedded in the herdr binary that report
       # the pane's agent session back over HERDR_SOCKET_PATH, so the agent panel
@@ -46,7 +43,7 @@
             name = "catppuccin";
             custom = {
               inherit accent;
-              surface_dim = palette.surface0.hex;
+              surface_dim = catppuccinPalette.surface0.hex;
             };
           };
 

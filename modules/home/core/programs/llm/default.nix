@@ -5,6 +5,7 @@
       inputs,
       lib,
       pkgs,
+      catppuccinPalette,
       ...
     }:
     let
@@ -82,10 +83,6 @@
       toClaudePattern = path: if lib.hasPrefix "/" path then "/${path}" else path;
 
       claudeSettingsPath = "${config.programs.claude-code.configDir}/settings.json";
-
-      palette =
-        (lib.importJSON "${config.catppuccin.sources.palette}/palette.json")
-        .${config.catppuccin.flavor}.colors;
     in
     {
       programs.mcp = {
@@ -152,8 +149,8 @@
             name = "Dark ANSI Custom";
             base = "dark-ansi";
             overrides = {
-              selectionBg = palette.surface1.hex;
-              userMessageBackgroundHover = palette.surface0.hex;
+              selectionBg = catppuccinPalette.surface1.hex;
+              userMessageBackgroundHover = catppuccinPalette.surface0.hex;
             };
           };
 
