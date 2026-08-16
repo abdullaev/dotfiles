@@ -36,7 +36,6 @@
             "x-scheme-handler/terminal" = "com.mitchellh.ghostty.desktop";
             "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
             "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
-            "x-scheme-handler/bitwarden" = "bitwarden.desktop";
             "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
             "x-scheme-handler/obsidian" = "obsidian.desktop";
           };

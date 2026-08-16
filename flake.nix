@@ -55,6 +55,10 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
+    pragmata-pro = {
+      url = "git+ssh://git@github.com/abdullaev/font-pragmata-pro.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     anthropic-skills = {
       url = "github:anthropics/skills";
       flake = false;
@@ -70,10 +74,6 @@
     ghostty-cursor-shaders = {
       url = "github:sahaj-b/ghostty-cursor-shaders";
       flake = false;
-    };
-    pragmata-pro = {
-      url = "git+ssh://git@github.com/abdullaev/font-pragmata-pro.git";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin-aseprite = {
       url = "github:catppuccin/aseprite";
