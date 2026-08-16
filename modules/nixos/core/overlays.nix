@@ -24,9 +24,7 @@
     })
 
     (final: _: {
-      pragmata-pro = final.callPackage ../../../pkgs/pragmata-pro {
-        src = inputs.pragmata-pro;
-      };
+      pragmata-pro = inputs.pragmata-pro.packages.${final.stdenv.hostPlatform.system}.default;
     })
 
     (final: _: {

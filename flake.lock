@@ -388,13 +388,17 @@
       }
     },
     "pragmata-pro": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1771147942,
-        "narHash": "sha256-kCZnZt1/VmNPHZdWp8yC5AJF5RmeMvsYlYHz1W4xoow=",
+        "lastModified": 1786868778,
+        "narHash": "sha256-WqMd2QY8DILCb9qtGyvXrl7B2IQoECY9+ytOQCAgAfo=",
         "ref": "refs/heads/main",
-        "rev": "5c08979930149e31386b1bda24844b3354fef8c4",
-        "revCount": 2,
+        "rev": "07ad2a4b351fbb818582ac4464fc145cef29d1d4",
+        "revCount": 4,
         "type": "git",
         "url": "ssh://git@github.com/abdullaev/font-pragmata-pro.git"
       },

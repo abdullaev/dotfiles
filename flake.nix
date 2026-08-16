@@ -73,7 +73,7 @@
     };
     pragmata-pro = {
       url = "git+ssh://git@github.com/abdullaev/font-pragmata-pro.git";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin-aseprite = {
       url = "github:catppuccin/aseprite";
