@@ -2,13 +2,15 @@
   flake.modules.homeManager.herdr =
     {
       config,
+      inputs,
       lib,
       pkgs,
-      catppuccinPalette,
       ...
     }:
     let
-      accent = catppuccinPalette.${config.catppuccin.accent}.hex;
+      palette =
+        (lib.importJSON "${inputs.catppuccin-palette}/palette.json").${config.catppuccin.flavor}.colors;
+      accent = palette.${config.catppuccin.accent}.hex;
 
       # The agent integrations are shims embedded in the herdr binary that report
       # the pane's agent session back over HERDR_SOCKET_PATH, so the agent panel
@@ -43,7 +45,7 @@
             name = "catppuccin";
             custom = {
               inherit accent;
-              surface_dim = catppuccinPalette.surface0.hex;
+              surface_dim = palette.surface0.hex;
             };
           };
 

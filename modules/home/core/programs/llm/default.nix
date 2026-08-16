@@ -5,10 +5,11 @@
       inputs,
       lib,
       pkgs,
-      catppuccinPalette,
       ...
     }:
     let
+      palette =
+        (lib.importJSON "${inputs.catppuccin-palette}/palette.json").${config.catppuccin.flavor}.colors;
       anthropicSkills = lib.genAttrs [
         "mcp-builder"
       ] (name: "${inputs.anthropic-skills}/skills/${name}");
@@ -149,8 +150,8 @@
             name = "Dark ANSI Custom";
             base = "dark-ansi";
             overrides = {
-              selectionBg = catppuccinPalette.surface1.hex;
-              userMessageBackgroundHover = catppuccinPalette.surface0.hex;
+              selectionBg = palette.surface1.hex;
+              userMessageBackgroundHover = palette.surface0.hex;
             };
           };
 

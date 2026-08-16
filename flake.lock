@@ -85,6 +85,22 @@
         "type": "github"
       }
     },
+    "catppuccin-palette": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774131488,
+        "narHash": "sha256-hsy+GhuM4MSjnwGq1YJSLBFIbVm67SSdPRgObP00mxw=",
+        "owner": "catppuccin",
+        "repo": "palette",
+        "rev": "07d02aa110ef9eb7e7427afca5c73ba9cf7f8ebd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "palette",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -181,7 +197,9 @@
     },
     "git-hooks": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "flake-compat": [
+          "flake-compat"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -313,7 +331,6 @@
     "nvf": {
       "inputs": {
         "flake-compat": [
-          "git-hooks",
           "flake-compat"
         ],
         "mnw": "mnw",
@@ -399,8 +416,10 @@
         "anthropic-skills": "anthropic-skills",
         "catppuccin": "catppuccin",
         "catppuccin-aseprite": "catppuccin-aseprite",
+        "catppuccin-palette": "catppuccin-palette",
         "disko": "disko",
         "firefox-addons": "firefox-addons",
+        "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "ghostty-cursor-shaders": "ghostty-cursor-shaders",
         "git-hooks": "git-hooks",

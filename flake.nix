@@ -16,6 +16,11 @@
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+    };
+    flake-compat = {
+      url = "github:NixOS/flake-compat";
+      flake = false;
     };
     import-tree = {
       url = "github:vic/import-tree";
@@ -36,10 +41,14 @@
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin-palette = {
+      url = "github:catppuccin/palette";
+      flake = false;
+    };
     nvf = {
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-compat.follows = "git-hooks/flake-compat";
+      inputs.flake-compat.follows = "flake-compat";
     };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
