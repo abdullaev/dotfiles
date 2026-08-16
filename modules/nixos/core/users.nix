@@ -1,3 +1,4 @@
+{ root, ... }:
 {
   flake.modules.nixos.users =
     {
@@ -24,7 +25,7 @@
       sops.secrets = lib.mapAttrs' (
         name: _:
         lib.nameValuePair "user-passwords/${name}" {
-          sopsFile = ../../../secrets/hosts + "/${hostName}.yaml";
+          sopsFile = root + "/secrets/hosts/${hostName}.yaml";
           neededForUsers = true;
         }
       ) passwordUsers;

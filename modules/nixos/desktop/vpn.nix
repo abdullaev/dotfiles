@@ -1,3 +1,4 @@
+{ root, ... }:
 {
   flake.modules.nixos.vpn =
     {
@@ -234,7 +235,7 @@
             "vpn/mtu"
           ]
           (_: {
-            sopsFile = ../../../secrets/hosts + "/${hostName}.yaml";
+            sopsFile = root + "/secrets/hosts/${hostName}.yaml";
           });
 
       sops.templates."${vpnIface}.conf" = {

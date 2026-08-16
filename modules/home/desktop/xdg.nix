@@ -1,8 +1,9 @@
+{ root, ... }:
 {
   flake.modules.homeManager.xdg =
     { lib, config, ... }:
     let
-      mimetypes = import ../../../shared/mimetypes.nix;
+      mimetypes = import (root + /shared/mimetypes.nix);
       videoMimes = mimetypes.video;
       textMimes = mimetypes.text;
 

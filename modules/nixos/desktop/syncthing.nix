@@ -1,3 +1,4 @@
+{ root, ... }:
 {
   flake.modules.nixos.syncthing =
     {
@@ -8,7 +9,7 @@
       ...
     }:
     let
-      keys = import ../../../shared/keys.nix;
+      keys = import (root + /shared/keys.nix);
 
       # `throw` instead of an assertion: `name` is forced while evaluating the
       # config below, so an assertion could never fire first.
@@ -100,7 +101,7 @@
     in
     {
       sops.secrets."syncthing/gui-password" = {
-        sopsFile = ../../../secrets/hosts + "/${hostName}.yaml";
+        sopsFile = root + "/secrets/hosts/${hostName}.yaml";
         owner = name;
         mode = "0400";
         restartUnits = [ "syncthing-init.service" ];

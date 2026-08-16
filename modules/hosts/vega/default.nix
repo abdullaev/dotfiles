@@ -1,6 +1,6 @@
-{ config, ... }:
+{ config, root, ... }:
 let
-  keys = import ../../../shared/keys.nix;
+  keys = import (root + /shared/keys.nix);
 in
 {
   nixosHosts.vega = {

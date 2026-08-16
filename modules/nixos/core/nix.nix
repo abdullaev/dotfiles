@@ -1,9 +1,10 @@
+{ root, ... }:
 {
   flake.modules.nixos.nix =
     { config, inputs, ... }:
     {
       sops.secrets.nix-access-tokens = {
-        sopsFile = ../../../secrets/shared.yaml;
+        sopsFile = root + /secrets/shared.yaml;
         group = "wheel";
         mode = "0440";
       };

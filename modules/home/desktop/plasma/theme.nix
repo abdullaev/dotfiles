@@ -1,3 +1,4 @@
+{ root, ... }:
 {
   flake.modules.homeManager.plasma =
     {
@@ -26,7 +27,7 @@
         workspace = {
           wallpaper = builtins.path {
             name = "wallpaper.png";
-            path = ../../../../images/wallpaper.png;
+            path = root + /images/wallpaper.png;
           };
           colorScheme = "Catppuccin${lib.toSentenceCase flavor}${lib.toSentenceCase accent}";
           iconTheme = "breeze";

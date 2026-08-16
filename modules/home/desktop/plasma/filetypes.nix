@@ -1,8 +1,9 @@
+{ root, ... }:
 {
   flake.modules.homeManager.plasma =
     { lib, ... }:
     let
-      mimetypes = import ../../../../shared/mimetypes.nix;
+      mimetypes = import (root + /shared/mimetypes.nix);
 
       # Never show these inline in a KPart viewer — hand off to the
       # application chosen in mimeapps.list (see home/desktop/xdg.nix).

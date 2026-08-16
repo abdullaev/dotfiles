@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  root,
   ...
 }:
 {
@@ -12,7 +13,7 @@
     # upstream (still missing on main as of 0.8.0).
     (_: prev: {
       herdr = prev.herdr.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [ ../../../pkgs/herdr/underline-color.patch ];
+        patches = (old.patches or [ ]) ++ [ (root + /pkgs/herdr/underline-color.patch) ];
       });
     })
 
