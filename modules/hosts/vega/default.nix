@@ -36,11 +36,8 @@ in
       desktop
     ]);
 
-    homeManagerModules = [
-      ./_home
-    ]
-    ++ (with config.flake.modules.homeManager; [
+    homeManagerModules = with config.flake.modules.homeManager; [
       core
-    ]);
+    ];
   };
 }

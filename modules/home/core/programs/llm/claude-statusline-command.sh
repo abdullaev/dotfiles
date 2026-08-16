@@ -2,16 +2,34 @@
 # No shebang: this file is embedded into a writeShellScript in default.nix.
 input=$(cat)
 
-model=$(echo "$input" | jq -r '.model.display_name // "Unknown Model"')
+# Every field in one jq pass — the statusline runs on each UI refresh, so one
+# spawn instead of ten matters. Fields are joined on the unit separator, not
+# @tsv: tab is IFS whitespace, so `read` would collapse empty fields (absent
+# rate limits, null used_percentage) and shift the rest left.
+IFS=$'\x1f' read -r model cost_usd transcript used_pct ctx_size current_input cache_read rate_5h reset_5h rate_7d reset_7d <<<"$(echo "$input" | jq -r '[
+  (.model.display_name // "Unknown Model"),
+  (.cost.total_cost_usd // 0),
+  (.transcript_path // ""),
+  (.context_window.used_percentage // ""),
+  (.context_window.context_window_size // 0),
+  # input + cache_read + cache_creation = total context used
+  ((.context_window.current_usage.input_tokens // 0)
+    + (.context_window.current_usage.cache_read_input_tokens // 0)
+    + (.context_window.current_usage.cache_creation_input_tokens // 0)),
+  # cache_read = served from cache this request
+  (.context_window.current_usage.cache_read_input_tokens // 0),
+  # rate limits exist in subscription mode only — absent in API mode
+  (.rate_limits.five_hour.used_percentage // ""),
+  (.rate_limits.five_hour.resets_at // ""),
+  (.rate_limits.seven_day.used_percentage // ""),
+  (.rate_limits.seven_day.resets_at // "")
+] | map(tostring) | join("\u001f")')"
 
-# Session cost
-cost_usd=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
 cost_display=$(printf '$%.2f' "$cost_usd")
 
 # Session duration: prefer first transcript entry's timestamp (FS birth time
 # is unreliable on ext4, and mtime is meaningless because the jsonl is
 # appended to). GNU date/stat only — the wrapper pins coreutils into PATH.
-transcript=$(echo "$input" | jq -r '.transcript_path // empty')
 if [ -n "$transcript" ] && [ -f "$transcript" ]; then
   start_time=""
   # First line is often a meta entry (permissionMode/sessionId/type) without
@@ -45,16 +63,8 @@ else
   duration="?"
 fi
 
-# Context window
-used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
-ctx_size=$(echo "$input" | jq -r '.context_window.context_window_size // 0')
-# Sum all input token types from current_usage (input + cache_read + cache_creation = total context used)
-current_input=$(echo "$input" | jq -r '.context_window.current_usage | ((.input_tokens // 0) + (.cache_read_input_tokens // 0) + (.cache_creation_input_tokens // 0))')
-# Cached tokens (cache_read = served from cache this request)
-cache_read=$(echo "$input" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0')
+# Context window (values in K)
 cache_k=$((cache_read / 1000))
-
-# Format context size in K
 ctx_k=$((ctx_size / 1000))
 
 # If used_percentage is null but we have token counts, compute it ourselves
@@ -77,12 +87,6 @@ if [ -n "$used_pct" ] && [ "$used_pct" != "0" ]; then
 else
   ctx_display="0/${ctx_k}k 0%"
 fi
-
-# Rate limits (subscription mode only — field absent in API mode)
-rate_5h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
-rate_7d=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
-reset_5h=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
-reset_7d=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 
 color_pct() {
   local pct_int
