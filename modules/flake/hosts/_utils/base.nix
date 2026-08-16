@@ -59,10 +59,9 @@ in
                     with types;
                     enum [
                       "bash"
-                      "zsh"
                       "fish"
                     ];
-                  default = "zsh";
+                  default = "fish";
                 };
 
                 linger = mkOption {

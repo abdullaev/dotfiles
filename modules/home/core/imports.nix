@@ -4,7 +4,6 @@
     stateVersion
     sops
     base
-    zsh
     fish
     starship
     git

@@ -12,7 +12,7 @@
     let
       shellPackages = {
         bash = pkgs.bashInteractive;
-        inherit (pkgs) zsh fish;
+        inherit (pkgs) fish;
       };
       passwordUsers = lib.filterAttrs (_: user: user.sopsPassword) users;
     in
@@ -48,7 +48,6 @@
         }
       ) users;
 
-      programs.zsh.enable = lib.any (user: user.shell == "zsh") (lib.attrValues users);
       programs.fish.enable = lib.any (user: user.shell == "fish") (lib.attrValues users);
     };
 }

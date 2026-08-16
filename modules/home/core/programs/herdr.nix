@@ -109,11 +109,5 @@
             set -gx TERM xterm-ghostty
         end
       '';
-
-      programs.zsh.initContent = ''
-        if [[ -n "$HERDR_ENV" && "$TERM" == "xterm-256color" ]]; then
-          export TERM=xterm-ghostty
-        fi
-      '';
     };
 }

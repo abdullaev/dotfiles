@@ -16,7 +16,6 @@
         pinentry.package = pkgs.pinentry-qt;
         enableBashIntegration = user.shell == "bash";
         enableFishIntegration = user.shell == "fish";
-        enableZshIntegration = user.shell == "zsh";
       };
     };
 }
