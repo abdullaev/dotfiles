@@ -1,6 +1,10 @@
-{ config, ... }:
+{ config, inputs, ... }:
 {
-  flake.modules.homeManager.desktop.imports = with config.flake.modules.homeManager; [
+  flake.modules.homeManager.desktop.imports = [
+    # Option-providing input modules the desktop programs below depend on.
+    inputs.plasma-manager.homeModules.plasma-manager
+  ]
+  ++ (with config.flake.modules.homeManager; [
     plasma
     mpv
     aseprite
@@ -14,5 +18,5 @@
     pob
     obsidian
     xdg
-  ];
+  ]);
 }

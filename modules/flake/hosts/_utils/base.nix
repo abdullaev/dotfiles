@@ -1,4 +1,8 @@
-{ lib, inputs }:
+{
+  lib,
+  inputs,
+  systems,
+}:
 let
   inherit (lib)
     mkOption
@@ -35,9 +39,7 @@ in
 
                 groups = mkOption {
                   type = with types; listOf str;
-                  default = [
-                    "networkmanager"
-                  ];
+                  default = [ ];
                 };
 
                 sopsPassword = mkOption {
@@ -66,7 +68,12 @@ in
 
                 linger = mkOption {
                   type = types.bool;
-                  default = true;
+                  default = false;
+                  description = ''
+                    Start the user's systemd user session at boot instead of
+                    first login, so user services that must run unattended
+                    (e.g. home-level sops decryption) come up without a login.
+                  '';
                 };
 
                 enableHomeManager = mkOption {
@@ -113,7 +120,9 @@ in
     };
 
     system = mkOption {
-      type = types.str;
+      # Constrained to the flake's `systems` so a host on an unlisted platform
+      # fails eval instead of silently getting no `checks.nixos-hosts` entry.
+      type = types.enum systems;
       default = "x86_64-linux";
     };
 

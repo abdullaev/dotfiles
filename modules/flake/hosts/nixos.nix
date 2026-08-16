@@ -10,7 +10,14 @@ let
     types
     mkOption
     ;
-  inherit (import ./_utils { inherit lib inputs; }) baseHostModule homeManagerModule;
+  inherit
+    (import ./_utils {
+      inherit lib inputs;
+      inherit (config) systems;
+    })
+    baseHostModule
+    homeManagerModule
+    ;
 in
 {
   options = {

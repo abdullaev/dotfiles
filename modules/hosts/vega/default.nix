@@ -19,6 +19,7 @@ in
         keys.users.sqxt.ssh
       ];
       sopsPassword = true;
+      linger = true;
       groups = [
         "networkmanager"
         "wheel"

@@ -1,5 +1,8 @@
 { root, ... }:
 {
+  # Mechanics only: single-user service wiring, gui password from sops, and
+  # tmpfiles for whatever folders the host declares. Devices and folders are
+  # personal topology and live with the host (e.g. modules/hosts/vega).
   flake.modules.nixos.syncthing =
     {
       config,
@@ -25,77 +28,12 @@
         keys.hosts.${hostName}.syncthing
           or (throw "shared/keys.nix is missing hosts.${hostName}.syncthing for flake.modules.nixos.syncthing");
 
-      peers = [
-        hostName
-        "iphone"
-      ];
-
-      folderDefaults = {
-        devices = peers;
-
-        versioning = {
-          type = "simple";
-          params = {
-            keep = "10";
-            cleanoutDays = "0";
-          };
-          cleanupIntervalS = 3600;
-        };
-      };
-
-      folders = lib.mapAttrs (_: folder: folderDefaults // folder) {
-        sync = {
-          path = "${user.homeDirectory}/Sync";
-          label = "Sync";
-        };
-
-        documents = {
-          path = "${user.homeDirectory}/Documents/Sync";
-          label = "Documents";
-          devices = peers ++ [ "boox" ];
-        };
-
-        music = {
-          path = "${user.homeDirectory}/Music/Sync";
-          label = "Music";
-          type = "sendonly";
-          versioning = null;
-        };
-
-        notes = {
-          path = "${user.homeDirectory}/Notes/Sync";
-          label = "Notes";
-
-          ignorePatterns = [
-            ".obsidian"
-            ".trash"
-          ];
-        };
-
-        boox-notes = {
-          path = "${user.homeDirectory}/Notes/Boox";
-          label = "Boox Notes";
-          type = "receiveonly";
-          devices = [
-            hostName
-            "boox"
-          ];
-        };
-
-        video = {
-          path = "${user.homeDirectory}/Videos/Sync";
-          label = "Video";
-          type = "sendonly";
-          versioning = null;
-        };
-      };
-
       managedDirs = lib.filter (dir: dir != user.homeDirectory) (
         lib.unique (
           lib.concatMap (folder: [
             (builtins.dirOf folder.path)
             folder.path
-          ]) (lib.attrValues folders)
+          ]) (lib.attrValues config.services.syncthing.settings.folders)
         )
       );
     in
@@ -125,15 +63,9 @@
         overrideFolders = true;
 
         settings = {
-          devices = {
-            ${hostName}.id = hostId;
-            iphone.id = keys.devices.iphone.syncthing;
-            boox.id = keys.devices.boox.syncthing;
-          };
+          devices.${hostName}.id = hostId;
 
           gui.user = name;
-
-          inherit folders;
 
           options = {
             urAccepted = -1;
