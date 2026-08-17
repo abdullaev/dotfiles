@@ -14,8 +14,6 @@
         defaultCacheTtl = 1800;
         maxCacheTtl = 7200;
         pinentry.package = pkgs.pinentry-qt;
-        enableBashIntegration = user.shell == "bash";
-        enableFishIntegration = user.shell == "fish";
       };
     };
 }

@@ -6,7 +6,6 @@
 
       programs.ghostty = {
         enable = true;
-        enableFishIntegration = true;
         settings = {
           window-width = 180;
           window-height = 48;
