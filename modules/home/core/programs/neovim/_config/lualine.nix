@@ -1,24 +1,31 @@
 { lib }:
-let
-  breadcrumbs = [
-    ''
-      {
-        function()
-          return require("nvim-navic").get_location({ separator = "  " })
-        end,
-        cond = function()
-          return require("nvim-navic").is_available()
-        end,
-      }
-    ''
-  ];
-in
 {
   statusline.lualine = {
     enable = true;
 
     integrations.breadcrumbs.nvim-navic.enable = true;
-    setupOpts.sections.lualine_c = lib.mkForce (map lib.generators.mkLuaInline breadcrumbs);
+    setupOpts.sections.lualine_c = lib.mkForce [
+      (lib.generators.mkLuaInline ''
+        {
+          function()
+            return require("nvim-navic").get_location({ separator = "  " })
+          end,
+          cond = function()
+            return require("nvim-navic").is_available()
+          end,
+        }
+      '')
+    ];
+
+    sectionSeparator = {
+      left = "";
+      right = "";
+    };
+    componentSeparator = {
+      left = "";
+      right = "";
+    };
+
     activeSection = {
       a = [
         ''
@@ -26,7 +33,6 @@ in
             "mode",
             icons_enabled = true,
             fmt = function(str) return str:sub(1,1) end,
-            separator = { left = "", right = "" },
           }
         ''
       ];
@@ -36,11 +42,9 @@ in
             "filename",
             path = 0,
             symbols = { modified = '', readonly = '' },
-            separator = { left = "", right = "" },
           }
         ''
       ];
-      c = breadcrumbs;
       x = [
         ''
           {
@@ -55,7 +59,6 @@ in
               color_info = { fg = 'cyan' },
             },
             padding = { left = 1, right = 0 },
-            separator = { left = "", right = "" },
           }
         ''
         ''
@@ -67,7 +70,6 @@ in
               done = "",
               separator = ', ',
             },
-            separator = { left = "", right = "" },
             show_name = true
           }
         ''
@@ -87,14 +89,12 @@ in
               }
             end,
             padding = { left = 1, right = 0 },
-            separator = { left = "", right = "" },
           }
         ''
         ''
           {
             "branch",
             icon = '',
-            separator = { left = "", right = "" },
           }
         ''
       ];
@@ -103,21 +103,18 @@ in
           {
             "location",
             padding = { left = 1, right = 1 },
-            separator = { left = "", right = "" }
           }
         ''
         ''
           {
             "progress",
             padding = { left = 0, right = 1 },
-            separator = { left = "", right = "" }
           }
         ''
         ''
           {
             "searchcount",
             padding = { left = 0, right = 0 },
-            separator = { left = "", right = "" }
           }
         ''
       ];
