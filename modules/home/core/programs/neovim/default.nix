@@ -64,7 +64,7 @@
         (import ./_config/git.nix)
         (import ./_config/languages.nix)
         (import ./_config/lsp { inherit pkgs lib; })
-        (import ./_config/lualine.nix)
+        (import ./_config/lualine.nix { inherit lib; })
         (import ./_config/mini.nix)
         (import ./_config/snacks.nix { inherit pkgs; })
         (import ./_config/treesitter.nix { inherit pkgs; })

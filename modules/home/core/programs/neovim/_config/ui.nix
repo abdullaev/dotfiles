@@ -23,12 +23,6 @@
       enable = true;
     };
 
-    breadcrumbs = {
-      enable = true;
-      lualine.winbar.alwaysRender = false;
-      lualine.winbar.enable = false;
-    };
-
     borders = {
       enable = true;
     };

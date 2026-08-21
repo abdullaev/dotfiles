@@ -1,6 +1,24 @@
+{ lib }:
+let
+  breadcrumbs = [
+    ''
+      {
+        function()
+          return require("nvim-navic").get_location({ separator = "  " })
+        end,
+        cond = function()
+          return require("nvim-navic").is_available()
+        end,
+      }
+    ''
+  ];
+in
 {
   statusline.lualine = {
     enable = true;
+
+    integrations.breadcrumbs.nvim-navic.enable = true;
+    setupOpts.sections.lualine_c = lib.mkForce (map lib.generators.mkLuaInline breadcrumbs);
     activeSection = {
       a = [
         ''
@@ -22,18 +40,7 @@
           }
         ''
       ];
-      c = [
-        ''
-          {
-            function()
-              return require("nvim-navic").get_location({ separator = "  " })
-            end,
-            cond = function()
-              return require("nvim-navic").is_available()
-            end,
-          }
-        ''
-      ];
+      c = breadcrumbs;
       x = [
         ''
           {
