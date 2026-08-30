@@ -28,10 +28,16 @@
 
         cp "$HOME/.claude/hooks/herdr-agent-state.sh" "$out/claude-agent-state.sh"
         cp "$HOME/.config/opencode/plugins/herdr-agent-state.js" "$out/opencode-agent-state.js"
+        cp "$HOME/.config/opencode/herdr-tui-session.js" "$out/opencode-tui-session.js"
+        cp "$HOME/.config/opencode/tui.jsonc" "$out/opencode-tui.jsonc"
       '';
 
       # `herdr integration status` looks for the hook at this exact path.
       claudeHook = ".claude/hooks/herdr-agent-state.sh";
+
+      claudeHookCommand =
+        "PATH=${lib.makeBinPath [ pkgs.python3 ]}\${PATH:+:$PATH} "
+        + "bash '${config.home.homeDirectory}/${claudeHook}' session";
     in
     {
       programs.herdr = {
@@ -87,7 +93,7 @@
             hooks = [
               {
                 type = "command";
-                command = "bash '${config.home.homeDirectory}/${claudeHook}' session";
+                command = claudeHookCommand;
                 timeout = 10;
               }
             ];
@@ -99,8 +105,10 @@
         source = "${integrations}/claude-agent-state.sh";
       };
 
-      xdg.configFile."opencode/plugins/herdr-agent-state.js" = lib.mkIf config.programs.opencode.enable {
-        source = "${integrations}/opencode-agent-state.js";
+      xdg.configFile = lib.mkIf config.programs.opencode.enable {
+        "opencode/plugins/herdr-agent-state.js".source = "${integrations}/opencode-agent-state.js";
+        "opencode/herdr-tui-session.js".source = "${integrations}/opencode-tui-session.js";
+        "opencode/tui.jsonc".source = "${integrations}/opencode-tui.jsonc";
       };
 
       programs.fish.interactiveShellInit = ''
