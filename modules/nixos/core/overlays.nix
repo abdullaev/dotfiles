@@ -10,7 +10,8 @@
     # herdr drops the underline color when it serializes a pane frame for the
     # client, so neovim's diagnostic undercurls come out in the foreground
     # color instead of the severity color. Carry the fix until it lands
-    # upstream (still missing on main as of 0.8.0).
+    # upstream (0.8.2 preserves the color in the pane render path, but the
+    # wire-format CellData and client SGR emission still drop it).
     (_: prev: {
       herdr = prev.herdr.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [ (root + /pkgs/herdr/underline-color.patch) ];
