@@ -118,7 +118,7 @@
         inherit skills;
         settings = {
           theme = "custom:dark-ansi-custom";
-          effortLevel = "xhigh";
+          effortLevel = "high";
           tui = "default";
           permissions = {
             defaultMode = "auto";
