@@ -45,9 +45,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     needs: eval
+    if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
     env:
       CACHIX_CACHE: abdullaev-dotfiles
-      CACHIX_ENABLED: ${{ secrets.CACHIX_AUTH_TOKEN != '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
@@ -55,21 +55,46 @@ jobs:
         with:
           deploy-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
       - name: Set up Cachix
-        if: env.CACHIX_ENABLED == 'true'
         uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: ${{ env.CACHIX_CACHE }}
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: true
       - name: Build full system closure
         run: |
           nix build --no-update-lock-file --no-link -L \
             .#checks.x86_64-linux.nixos-hosts
-      # Never push from pull_request runs: the cache is trusted by every
-      # substituting machine, so only reviewed (pushed/dispatched) code may
-      # populate it. PR builds still substitute from the cache via skipPush.
-      - name: Push locally-built paths to Cachix
-        if: env.CACHIX_ENABLED == 'true' && github.event_name != 'pull_request'
+
+  publish:
+    name: Build and publish main
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    needs: [lint, eval]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    # This environment allows only protected main, where PR approval is required.
+    # Keep CACHIX_PUBLISH_TOKEN exclusively as an environment secret.
+    environment: cachix-publish
+    env:
+      CACHIX_CACHE: abdullaev-dotfiles
+    steps:
+      - name: Require publishing credential
         env:
-          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_PUBLISH_TOKEN }}
+        run: ': "${CACHIX_AUTH_TOKEN:?Configure CACHIX_PUBLISH_TOKEN in the protected cachix-publish environment}"'
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+      - uses: ./.github/actions/setup-nix
+        with:
+          deploy-key: ${{ secrets.PRAGMATA_PRO_DEPLOY_KEY }}
+      - name: Set up Cachix
+        uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: ${{ env.CACHIX_CACHE }}
+          skipPush: true
+      - name: Build full system closure
+        run: |
+          nix build --no-update-lock-file --no-link -L \
+            .#checks.x86_64-linux.nixos-hosts
+      - name: Push locally-built paths to Cachix
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_PUBLISH_TOKEN }}
         run: ./.github/scripts/cachix-push.sh

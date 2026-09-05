@@ -20,20 +20,20 @@ return function(dispatchers, config)
 
   local function native(node_modules, pkg, binary)
     local platform_pkg = ("@typescript/%s-%s"):format(pkg, platform)
-    local store_pkg = ("@typescript+%s-%s@*"):format(pkg, platform)
+    local package_name = pkg == "typescript" and pkg or "@typescript/" .. pkg
+    local dir = vim.uv.fs_realpath(node_modules .. "/" .. package_name)
 
-    -- npm and yarn hoist the platform package, pnpm and bun keep it in a store.
-    for _, pattern in ipairs({
-      ("%s/%s"):format(node_modules, platform_pkg),
-      ("%s/.pnpm/%s/node_modules/%s"):format(node_modules, store_pkg, platform_pkg),
-      ("%s/.bun/%s/node_modules/%s"):format(node_modules, store_pkg, platform_pkg),
-    }) do
-      for _, dir in ipairs(vim.fn.glob(pattern, true, true)) do
-        local exe = file(("%s/lib/%s"):format(dir, binary))
+    -- Resolve from the installed package, following its links into pnpm/bun stores.
+    -- Walking Node's lookup locations also supports nested and hoisted npm deps.
+    while dir do
+      if vim.fs.basename(dir) ~= "node_modules" then
+        local exe = file(("%s/node_modules/%s/lib/%s"):format(dir, platform_pkg, binary))
         if exe then
           return exe
         end
       end
+      local parent = vim.fs.dirname(dir)
+      dir = parent ~= dir and parent or nil
     end
   end
 
@@ -50,7 +50,7 @@ return function(dispatchers, config)
 
   local cmd = fallback
   for _, node_modules in ipairs(dirs) do
-    -- Layouts the globs above miss: the shim resolves the binary itself.
+    -- Other layouts: the shim resolves the binary itself.
     local exe = native(node_modules, "native-preview", "tsgo")
       or native(node_modules, "typescript", "tsc")
       or file(node_modules .. "/.bin/tsgo")

@@ -10,8 +10,8 @@
       ghostty = lib.getExe config.programs.ghostty.package;
 
       ghosttyHere = pkgs.writeShellScriptBin "ghostty-here" ''
-        ${ghostty} +new-window --working-directory="$PWD" 2>/dev/null \
-          || exec ${ghostty} --working-directory="$PWD"
+        ${ghostty} +new-window --working-directory="$PWD" "$@" 2>/dev/null \
+          || exec ${ghostty} --working-directory="$PWD" "$@"
       '';
     in
     {

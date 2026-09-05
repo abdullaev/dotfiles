@@ -83,12 +83,9 @@ _G.toggle_snacks_indent_chunk = function()
 end
 
 _G.toggle_quickfix = function()
-  local windows = vim.fn.getwininfo()
-  for _, win in pairs(windows) do
-    if win["quickfix"] == 1 then
-      vim.cmd.cclose()
-      return
-    end
+  if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
+    vim.cmd.cclose()
+    return
   end
   if not vim.tbl_isempty(vim.fn.getqflist()) then
     vim.cmd.copen()

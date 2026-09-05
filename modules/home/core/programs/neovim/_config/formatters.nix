@@ -15,7 +15,9 @@ let
 
   chain =
     names:
-    mkLuaInline "{ ${lib.concatMapStringsSep ", " (n: ''"${n}"'') names}, stop_after_first = true }";
+    mkLuaInline "{ ${
+      lib.concatMapStringsSep ", " (n: ''"${n}"'') names
+    }, stop_after_first = true, lsp_format = \"never\" }";
 
   full = chain [
     "biome-check"
@@ -48,6 +50,15 @@ in
       # run). Keep the synchronous one -- it is what guarantees the file that
       # lands on disk is already formatted.
       format_after_save = null;
+      # Honor the chains' opt-in policy instead of forcing LSP fallback on save.
+      format_on_save = mkLuaInline ''
+        function(buf)
+          if not vim.g.formatsave or vim.b[buf].disableFormatSave then
+            return
+          end
+          return { bufnr = buf, timeout_ms = 500 }
+        end
+      '';
 
       formatters = {
         # `require_cwd` everywhere: if a cloned repo configured no formatter we

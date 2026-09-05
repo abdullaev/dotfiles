@@ -45,6 +45,7 @@
           case "''${1:-status}" in
             on)
               rm -f ${vpnOffFlag}
+              systemctl reload-or-restart vpn-killswitch.service
               systemctl reset-failed wg-quick-${vpnIface}.service 2>/dev/null || true
               systemctl start wg-quick-${vpnIface}.service
               ;;
@@ -52,12 +53,13 @@
               install -d -m 0755 ${stateDir}
               touch ${vpnOffFlag}
               systemctl stop wg-quick-${vpnIface}.service
-              systemctl stop vpn-killswitch.service
+              systemctl reload-or-restart vpn-killswitch.service
               ;;
             bypass)
               case "''${2:-}" in
                 on)
                   rm -f ${bypassOffFlag}
+                  systemctl reload-or-restart vpn-killswitch.service
                   if systemctl is-active --quiet wg-quick-${vpnIface}.service; then
                     systemctl start ru-direct-routes.service
                   fi
@@ -65,6 +67,7 @@
                 off)
                   install -d -m 0755 ${stateDir}
                   touch ${bypassOffFlag}
+                  systemctl reload-or-restart vpn-killswitch.service
                   systemctl stop ru-direct-routes.service
                   ;;
                 *) usage ;;
@@ -167,13 +170,15 @@
       # Egress firewall for the fail-closed default: everything that is not
       # the tunnel itself, its marked encrypted packets, the RU split tunnel,
       # or local traffic (LAN, multicast, broadcast) is dropped. No port-53
-      # accept: bootstrap DNS/DHCP servers are either on the LAN (RFC1918)
-      # or Russian ISP resolvers already in @ru4, and a global 53 accept
+      # accept: bootstrap DNS/DHCP servers must be on the LAN (RFC1918),
+      # or in @ru4 when bypass is enabled. A global 53 accept
       # would leak every query in plaintext whenever the tunnel is down.
       # `vpn off` removes it together with the tunnel, so only *failure*
       # fails closed.
       killswitchRules =
-        pkgs.runCommand "vpn-killswitch.nft" { nativeBuildInputs = [ pkgs.buildPackages.nftables ]; }
+        bypass:
+        pkgs.runCommand "vpn-killswitch${lib.optionalString bypass "-bypass"}.nft"
+          { nativeBuildInputs = [ pkgs.buildPackages.nftables ]; }
           ''
             emit_set() {
               local name=$1 type=$2 file=$3
@@ -194,8 +199,10 @@
               echo 'table inet vpn-killswitch'
               echo 'delete table inet vpn-killswitch'
               echo 'table inet vpn-killswitch {'
-              emit_set ru4 ipv4_addr ${inputs.ru-ip-list}/ipv4.txt
-              emit_set ru6 ipv6_addr ${inputs.ru-ip-list}/ipv6.txt
+              ${lib.optionalString bypass ''
+                emit_set ru4 ipv4_addr ${inputs.ru-ip-list}/ipv4.txt
+                emit_set ru6 ipv6_addr ${inputs.ru-ip-list}/ipv6.txt
+              ''}
               cat <<'EOF'
               chain output {
                 type filter hook output priority filter; policy drop;
@@ -203,8 +210,10 @@
                 meta mark ${wgFwMark} accept comment "tunnel's own encrypted packets"
                 ip daddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16, 224.0.0.0/4, 255.255.255.255 } accept comment "LAN, multicast, broadcast"
                 ip6 daddr { fe80::/10, fc00::/7, ff00::/8 } accept comment "link-local, ULA, multicast"
-                ip daddr @ru4 accept comment "split tunnel goes direct"
-                ip6 daddr @ru6 accept
+                ${lib.optionalString bypass ''
+                  ip daddr @ru4 accept comment "split tunnel goes direct"
+                  ip6 daddr @ru6 accept
+                ''}
                 counter comment "would-be leaks"
               }
             }
@@ -220,6 +229,21 @@
               LD_PRELOAD="${pkgs.buildPackages.libredirect}/lib/libredirect.so ${pkgs.buildPackages.lklWithFirewall.lib}/lib/liblkl-hijack.so" \
               nft --check --file check.conf
           '';
+
+      killswitchApply = pkgs.writeShellApplication {
+        name = "vpn-killswitch-apply";
+        runtimeInputs = [ pkgs.nftables ];
+        text = ''
+          if [ -e ${vpnOffFlag} ]; then
+            # Add first so explicit removal is also safe when no table exists.
+            nft 'add table inet vpn-killswitch; delete table inet vpn-killswitch'
+          elif [ -e ${bypassOffFlag} ]; then
+            nft -f ${killswitchRules false}
+          else
+            nft -f ${killswitchRules true}
+          fi
+        '';
+      };
     in
     {
       sops.secrets =
@@ -267,9 +291,8 @@
 
       # Fail closed: the kill switch outlives a crashed or start-limited
       # tunnel, so a dead VPN means no internet instead of a silent leak.
-      # Only `vpn off` (which stops both units) is allowed to fail open.
-      # Ordering before network-pre.target loads the rules before
-      # NetworkManager brings any interface up, closing the boot window.
+      # Only `vpn off` removes the table. Ordinary stops preserve it, and
+      # reloads atomically replace it without tearing down the tunnel.
       systemd.services.vpn-killswitch = {
         description = "VPN kill switch: drop egress that bypasses ${vpnIface}";
         wantedBy = [ "multi-user.target" ];
@@ -278,13 +301,19 @@
           "network-pre.target"
           "wg-quick-${vpnIface}.service"
         ];
-        unitConfig.ConditionPathExists = "!${vpnOffFlag}";
+        reloadIfChanged = true;
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
-          ExecStart = "${lib.getExe pkgs.nftables} -f ${killswitchRules}";
-          ExecStop = "-${lib.getExe pkgs.nftables} delete table inet vpn-killswitch";
+          ExecStart = lib.getExe killswitchApply;
+          ExecReload = lib.getExe killswitchApply;
         };
+      };
+
+      # Ordering alone does not gate networking when initial rule loading fails.
+      systemd.services.NetworkManager = {
+        requires = [ "vpn-killswitch.service" ];
+        after = [ "vpn-killswitch.service" ];
       };
 
       systemd.services."wg-quick-${vpnIface}" = {

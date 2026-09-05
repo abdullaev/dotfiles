@@ -130,6 +130,12 @@ in
           return ok and type(data) == "table" and data[key] ~= nil
         end
 
+        local function run(name, opts)
+          vim.api.nvim_buf_call(buf, function()
+            lint.try_lint(name, opts)
+          end)
+        end
+
         for _, name in ipairs(names) do
           local linter = lint.linters[name]
           if linter ~= nil then
@@ -140,11 +146,11 @@ in
             if spec == nil then
               -- Not one of ours; keep nvf's default required_files behaviour.
               if linter.required_files == nil then
-                lint.lint(linter)
+                run(name)
               else
                 for _, fname in ipairs(linter.required_files) do
                   if vim.uv.fs_stat(vim.fs.joinpath(linter.cwd or vim.fn.getcwd(), fname)) then
-                    lint.lint(linter)
+                    run(name)
                     break
                   end
                 end
@@ -158,7 +164,7 @@ in
                 return false
               end)
               if root ~= nil then
-                lint.lint(linter, { cwd = root })
+                run(name, { cwd = root })
               end
             end
           end
