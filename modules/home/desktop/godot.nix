@@ -1,7 +1,6 @@
 {
   flake.modules.homeManager.godot =
     {
-      inputs,
       lib,
       pkgs,
       ...
