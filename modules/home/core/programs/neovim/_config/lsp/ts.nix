@@ -20,7 +20,7 @@ let
       [ "@platform@" "@fallback@" ]
       [
         nodePlatform
-        (lib.getExe' pkgs.typescript-go "tsgo")
+        (lib.getExe pkgs.typescript)
       ]
       (builtins.readFile ../lua/tsgo-cmd.lua);
 in
