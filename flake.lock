@@ -114,11 +114,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1788926592,
-        "narHash": "sha256-cHzKQBhQVLPfMCtK+E0EMeQpwW2/XA9l+8H6xXsT+70=",
+        "lastModified": 1789012949,
+        "narHash": "sha256-KBgLlh6RZxutLDtAF/s6hUYqlY2W4xtrfoL9H804LNs=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "9d230a63e1419b6efd95728f01a6a72e1986a03f",
+        "rev": "0a05d0d144297405cb33aed943b93612e3fcf3fa",
         "type": "gitlab"
       },
       "original": {
@@ -210,11 +210,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788988965,
-        "narHash": "sha256-7xl3XjXv2uVxe/18efxaKYsMD7skQqCx/YSWw/lI3w8=",
+        "lastModified": 1789047607,
+        "narHash": "sha256-TvkqeCjWyQvQs7jZ/2WcOWF1GMSgKtAP3qrw7eKpp1k=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "448c15a7fe6aa7693f63b9e8d1803bdc3dd6368d",
+        "rev": "f7f333f04ff6e2f94f955642a1b4956d4fcd3010",
         "type": "github"
       },
       "original": {
@@ -253,11 +253,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788988243,
-        "narHash": "sha256-jaMfS6xRISkPiFRwnBWeRN7sDfuZyNp8lP+Kii1MTCM=",
+        "lastModified": 1789031966,
+        "narHash": "sha256-9iJmspIpxKjkAIgDA8MI23Us2C7BRAc2PWcHedd3NcI=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "d89d69ab9d67483b2d37ed1ae4f88892020a67b1",
+        "rev": "f9d6a07194a3d5bfe2743e9b8460207fe87da15c",
         "type": "github"
       },
       "original": {
@@ -299,11 +299,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1788881743,
-        "narHash": "sha256-2V9GZGvPfrNzxFozhI9dcqV+c3QdA8YZrvAAzqEB+dI=",
+        "lastModified": 1789006805,
+        "narHash": "sha256-xB8mKMOx1IA9vTDNLmJZ6n4wCMq/cuWBBOzGCRnqxrU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d6524aaca2ff07876657ae2b323f24be4874944b",
+        "rev": "8ce4ef6cb6f871616146b9fe26d2a5ae594e94fe",
         "type": "github"
       },
       "original": {
@@ -425,11 +425,11 @@
     "ru-ip-list": {
       "flake": false,
       "locked": {
-        "lastModified": 1788885059,
-        "narHash": "sha256-K8P+W6WbJh8knh3y63xxjFZnuME7falkFm3sN4Bknoc=",
+        "lastModified": 1789057001,
+        "narHash": "sha256-JjjWdhT4U0+PcAPDh+tjMnN0FweHHzoBRS9sJ6MqgLI=",
         "owner": "abdullaev",
         "repo": "ru-ip-list",
-        "rev": "923e81bd127b2ea6f472f1145d7dc599dd2c4a31",
+        "rev": "157d78228941b4736912e6e2fba1232ea72ab075",
         "type": "github"
       },
       "original": {

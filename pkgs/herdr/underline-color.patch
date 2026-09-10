@@ -5,8 +5,8 @@ index f9642ff..0b63231 100644
 @@ -1,6 +1,6 @@
  {
    "$schema": "https://json-schema.org/draft/2020-12/schema",
--  "protocol": 20,
-+  "protocol": 21,
+-  "protocol": 22,
++  "protocol": 23,
    "schema_version": 1,
    "schemas": {
      "error_response": {
@@ -281,13 +281,13 @@ index 4a44536..1c190d6 100644
  // ---------------------------------------------------------------------------
  
  /// Current protocol version. Bumped when wire format changes incompatibly.
--pub const PROTOCOL_VERSION: u32 = 20;
+-pub const PROTOCOL_VERSION: u32 = 22;
 +///
-+/// 21 adds `CellData::underline_color`. Frames are bincode-encoded, which is
++/// 23 adds `CellData::underline_color`. Frames are bincode-encoded, which is
 +/// not self-describing, so a client and server that disagree about this field
 +/// would silently misdecode every frame — the bump turns that into a clear
 +/// "please upgrade" error instead.
-+pub const PROTOCOL_VERSION: u32 = 21;
++pub const PROTOCOL_VERSION: u32 = 23;
  
  /// Maximum allowed frame payload size (2 MB). Frames larger than this are
  /// rejected to prevent denial-of-service via oversized length prefixes.
@@ -366,7 +366,15 @@ index 4a44536..1c190d6 100644
                      modifier: Modifier::empty().bits(),
                      skip: false,
                      hyperlink: None,
-@@ -1683,6 +1700,7 @@ mod tests {
+@@ -2434,6 +2451,7 @@ mod tests {
+                     symbol: "x".into(),
+                     fg: 1,
+                     bg: 2,
++                    underline_color: 0,
+                     modifier: 3,
+                     skip: false,
+                     hyperlink: None,
+@@ -2905,6 +2923,7 @@ mod tests {
                  },
                  fg: color_to_u32(Color::Rgb((i % 256) as u8, ((i / 256) % 256) as u8, 128)),
                  bg: color_to_u32(Color::Indexed((i % 256) as u8)),
@@ -374,7 +382,7 @@ index 4a44536..1c190d6 100644
                  modifier: ((i % 16) as u16),
                  skip: i % 100 == 0,
                  hyperlink: None,
-@@ -2033,6 +2051,7 @@ mod tests {
+@@ -3264,6 +3283,7 @@ mod tests {
                      symbol: "X".into(),
                      fg: 0,
                      bg: 0,
@@ -382,25 +390,33 @@ index 4a44536..1c190d6 100644
                      modifier: 0,
                      skip: false,
                      hyperlink: None,
-diff --git a/src/ui/tab_surface.rs b/src/ui/tab_surface.rs
-index 99ca972..defff64 100644
---- a/src/ui/tab_surface.rs
-+++ b/src/ui/tab_surface.rs
-@@ -304,7 +304,7 @@ mod tests {
-         assert_eq!(frame.hyperlinks, vec![uri.to_owned()]);
-         assert_eq!(
-             frame_digest(&frame),
--            "a7c21fa42305a41231c7ae254f264f6ef923f46301d8fc4cd35ab6dfdd651b6b"
-+            "60e152980eb520e6347ba855743fe9f4c5e92bbcd24b1c7554a09b0a359d7831"
-         );
-     }
- 
-@@ -321,7 +321,7 @@ mod tests {
-         assert_eq!(frame.cursor, None);
-         assert_eq!(
-             frame_digest(&frame),
--            "295608a66067f1e1f066c0adb3cf427e8a2d68bba8f68949fb72d464dcd8baab"
-+            "43f2cedd0634dc4716cb0cc6a559c5477dbcab88150518febe475fc919fb91ae"
-         );
-     }
- }
+diff --git a/src/server/headless/retained_surface.rs b/src/server/headless/retained_surface.rs
+--- a/src/server/headless/retained_surface.rs
++++ b/src/server/headless/retained_surface.rs
+@@ -565,6 +565,7 @@
+             symbol: symbol.to_owned(),
+             fg: 0,
+             bg: 0,
++            underline_color: 0,
+             modifier: 0,
+             skip: false,
+             hyperlink: None,
+diff --git a/src/client/shell/tests/popup_focus_projection.rs b/src/client/shell/tests/popup_focus_projection.rs
+--- a/src/client/shell/tests/popup_focus_projection.rs
++++ b/src/client/shell/tests/popup_focus_projection.rs
+@@ -1058,6 +1058,7 @@
+                     symbol: "N".into(),
+                     fg: 0,
+                     bg: 0,
++                    underline_color: 0,
+                     modifier: 0,
+                     skip: false,
+                     hyperlink: None,
+@@ -1166,6 +1167,7 @@
+                 symbol: "▐".into(),
+                 fg: 0,
+                 bg: 0,
++                underline_color: 0,
+                 modifier: 0,
+                 skip: false,
+                 hyperlink: None,
