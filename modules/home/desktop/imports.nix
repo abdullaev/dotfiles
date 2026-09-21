@@ -15,6 +15,7 @@
     google-chrome
     qbittorrent
     mangohud
+    steam
     firefox
     obsidian
     xdg
