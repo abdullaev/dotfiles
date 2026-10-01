@@ -37,7 +37,7 @@
             "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
             "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
             "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
-            "x-scheme-handler/obsidian" = "obsidian.desktop";
+            "x-scheme-handler/obsidian" = "md.obsidian.Obsidian.desktop";
           };
 
         associations.added =
@@ -66,7 +66,7 @@
             "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
             "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
             "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
-            "x-scheme-handler/obsidian" = "obsidian.desktop";
+            "x-scheme-handler/obsidian" = "md.obsidian.Obsidian.desktop";
           };
       };
 

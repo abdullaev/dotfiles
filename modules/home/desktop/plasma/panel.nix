@@ -33,7 +33,7 @@
                 "applications:com.mitchellh.ghostty.desktop"
                 "applications:org.telegram.desktop.desktop"
                 "applications:discord.desktop"
-                "applications:obsidian.desktop"
+                "applications:md.obsidian.Obsidian.desktop"
                 "applications:org.godotengine.Godot4.7.desktop"
                 "applications:blender.desktop"
                 "applications:org.qbittorrent.qBittorrent.desktop"
