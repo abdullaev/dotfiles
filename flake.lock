@@ -416,26 +416,9 @@
         "obsidian-skills": "obsidian-skills",
         "plasma-manager": "plasma-manager",
         "pragmata-pro": "pragmata-pro",
-        "ru-ip-list": "ru-ip-list",
         "sops-nix": "sops-nix",
         "treefmt-nix": "treefmt-nix",
         "tzdb": "tzdb"
-      }
-    },
-    "ru-ip-list": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790439313,
-        "narHash": "sha256-sLBXPncS6pnbHClQmBYc3lX1kX5Gwxp9hyiAWKCW98s=",
-        "owner": "abdullaev",
-        "repo": "ru-ip-list",
-        "rev": "0d12a5f3abea3942041590ead6453d437fcdd065",
-        "type": "github"
-      },
-      "original": {
-        "owner": "abdullaev",
-        "repo": "ru-ip-list",
-        "type": "github"
       }
     },
     "sops-nix": {

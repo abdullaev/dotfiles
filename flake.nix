@@ -85,10 +85,6 @@
       url = "github:sahaj-b/ghostty-cursor-shaders";
       flake = false;
     };
-    ru-ip-list = {
-      url = "github:abdullaev/ru-ip-list";
-      flake = false;
-    };
     tzdb = {
       url = "github:eggert/tz";
       flake = false;
