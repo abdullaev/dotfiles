@@ -16,6 +16,7 @@
     qbittorrent
     mangohud
     steam
+    lutris
     firefox
     obsidian
     xdg
