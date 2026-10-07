@@ -148,15 +148,24 @@ index 97685d4..5956fdb 100644
          && a.modifier == b.modifier
          && a.hyperlink == b.hyperlink
      // Skip flag is only for ratatui internal use, not visual.
-@@ -744,7 +774,7 @@ fn write_cell(
-         write_cursor_position(writer, position);
-     }
- 
--    let sgr = build_sgr(cell.fg, cell.bg, cell.modifier);
-+    let sgr = build_sgr(cell.fg, cell.bg, cell.underline_color, cell.modifier);
-     if sgr != *last_sgr {
-         let _ = writer.write_all(sgr.as_bytes());
-         *last_sgr = sgr;
+@@ -727,7 +757,7 @@ fn write_cell(
+     cursor_position: Option<(u16, u16)>,
+     cell: &CellData,
+     last_sgr: &mut String,
+-    last_style: &mut Option<(u32, u32, u16)>,
++    last_style: &mut Option<(u32, u32, u32, u16)>,
+     active_hyperlink: &mut Option<String>,
+     frame: &FrameData,
+ ) {
+@@ -742,6 +772,6 @@ fn write_cell(
+-    let style = (cell.fg, cell.bg, cell.modifier);
++    let style = (cell.fg, cell.bg, cell.underline_color, cell.modifier);
+     if *last_style != Some(style) {
+-        let sgr = build_sgr(cell.fg, cell.bg, cell.modifier);
++        let sgr = build_sgr(cell.fg, cell.bg, cell.underline_color, cell.modifier);
+         if sgr != *last_sgr {
+             let _ = writer.write_all(sgr.as_bytes());
+             *last_sgr = sgr;
 @@ -764,6 +794,7 @@ fn cells_visually_equal(
      cell.symbol == prev_cell.symbol
          && cell.fg == prev_cell.fg
@@ -208,7 +217,7 @@ index 97685d4..5956fdb 100644
      }
  
      #[test]
-@@ -942,11 +987,63 @@ mod tests {
+@@ -942,11 +987,88 @@ mod tests {
          );
  
          assert_eq!(
@@ -249,6 +258,31 @@ index 97685d4..5956fdb 100644
 +        // SGR 0 already restores "underline follows the foreground", so no
 +        // explicit SGR 59 is needed.
 +        assert!(!build_sgr(0x00_00_00_02, 0x00_00_00_00, 0, 0).contains("58"));
++    }
++
++    #[test]
++    fn adjacent_cells_preserve_distinct_underline_colors() {
++        let modifier = crate::protocol::modifier_to_u16(
++            crate::protocol::modifier_with_underline_style(ratatui::style::Modifier::UNDERLINED, 3),
++        );
++        let frame = make_frame(
++            3,
++            1,
++            vec![
++                make_underlined_cell("A", 2, 0, 0x02_F3_8B_A8, modifier),
++                make_underlined_cell("B", 2, 0, 0x02_A6_E3_A1, modifier),
++                make_underlined_cell("C", 2, 0, 0, modifier),
++            ],
++        );
++        let mut out = Vec::new();
++        write_all_cells(&mut out, &frame);
++        let rendered = String::from_utf8(out).unwrap();
++
++        assert!(rendered.contains(concat!(
++            "\x1b[0;4:3;31;49;58:2::243:139:168mA",
++            "\x1b[0;4:3;31;49;58:2::166:227:161mB",
++            "\x1b[0;4:3;31;49mC",
++        )));
 +    }
 +
 +    #[test]
@@ -390,6 +424,17 @@ index 4a44536..1c190d6 100644
                      modifier: 0,
                      skip: false,
                      hyperlink: None,
+diff --git a/src/protocol/surface_delta/decode.rs b/src/protocol/surface_delta/decode.rs
+--- a/src/protocol/surface_delta/decode.rs
++++ b/src/protocol/surface_delta/decode.rs
+@@ -463,6 +463,7 @@ mod tests {
+             symbol: "x".into(),
+             fg: 1,
+             bg: 2,
++            underline_color: 0,
+             modifier: 0,
+             skip: false,
+             hyperlink: None,
 diff --git a/src/server/headless/retained_surface.rs b/src/server/headless/retained_surface.rs
 --- a/src/server/headless/retained_surface.rs
 +++ b/src/server/headless/retained_surface.rs

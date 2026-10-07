@@ -1,9 +1,7 @@
 {
-  flake.modules.homeManager.lutris =
-    { pkgs, ... }:
-    {
-      programs.lutris = {
-        enable = true;
-      };
+  flake.modules.homeManager.lutris = {
+    programs.lutris = {
+      enable = true;
     };
+  };
 }
