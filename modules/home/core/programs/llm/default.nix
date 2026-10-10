@@ -89,7 +89,6 @@
       programs.mcp = {
         enable = true;
         servers = {
-          vkusvill.url = "https://mcp.vkusvill.ru/mcp";
           playwright = {
             command = lib.getExe pkgs.playwright-mcp;
             args = [

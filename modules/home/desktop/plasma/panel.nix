@@ -39,6 +39,8 @@
                 "applications:org.qbittorrent.qBittorrent.desktop"
                 "applications:mpv.desktop"
                 "applications:steam.desktop"
+                "applications:net.lutris.Lutris.desktop"
+                "applications:throne.desktop"
               ];
             };
           }
