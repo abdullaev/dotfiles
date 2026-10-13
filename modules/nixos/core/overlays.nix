@@ -25,8 +25,21 @@
     (final: _: {
       inherit (inputs.llm-agents.packages.${final.stdenv.hostPlatform.system})
         claude-code
-        opencode
+        opencode2
         ;
+
+      # Keep the conventional executable name for Home Manager and Herdr's
+      # session resume command, while installing only OpenCode 2.
+      opencode = final.symlinkJoin {
+        name = "opencode-${final.opencode2.version}";
+        paths = [ final.opencode2 ];
+        postBuild = ''
+          ln -s opencode2 "$out/bin/opencode"
+        '';
+        meta = final.opencode2.meta // {
+          mainProgram = "opencode";
+        };
+      };
     })
 
     (final: _: {

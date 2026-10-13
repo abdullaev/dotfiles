@@ -84,6 +84,15 @@
       toClaudePattern = path: if lib.hasPrefix "/" path then "/${path}" else path;
 
       claudeSettingsPath = "${config.programs.claude-code.configDir}/settings.json";
+
+      # Home Manager and catppuccin/nix still target V1's tui.json. V2 keeps
+      # terminal preferences in cli.json and writes runtime changes to it.
+      opencodeCliConfig = (pkgs.formats.json { }).generate "opencode-cli.json" {
+        "$schema" = "https://opencode.ai/v2/cli.json";
+        theme.name = config.programs.opencode.tui.theme;
+        plugins = lib.optionals config.programs.herdr.enable [ "./herdr-tui-session.js" ];
+      };
+      opencodeCliConfigPath = "${config.xdg.configHome}/opencode/cli.json";
     in
     {
       programs.mcp = {
@@ -111,6 +120,13 @@
       };
 
       catppuccin.opencode.enable = true;
+
+      xdg.configFile."opencode/tui.json".enable = false;
+
+      home.activation.opencodeCliConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        run rm --force ${lib.escapeShellArg opencodeCliConfigPath}
+        run install -Dm600 ${opencodeCliConfig} ${lib.escapeShellArg opencodeCliConfigPath}
+      '';
 
       programs.claude-code = {
         enable = true;
