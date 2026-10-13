@@ -59,6 +59,7 @@
 
           keys = {
             prefix = "alt+w";
+            clear_pane = "prefix+ctrl+k";
             switch_workspace = "prefix+shift+1..9";
             focus_agent = "prefix+alt+1..9";
           };

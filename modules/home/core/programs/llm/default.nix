@@ -113,6 +113,7 @@
         enableMcpIntegration = true;
         inherit skills;
         settings = {
+          update = "disable";
           permission = {
             read = lib.genAttrs sensitivePaths (_: "deny");
           };
