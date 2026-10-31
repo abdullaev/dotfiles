@@ -85,13 +85,6 @@
 
       claudeSettingsPath = "${config.programs.claude-code.configDir}/settings.json";
 
-      # Home Manager and catppuccin/nix still target V1's tui.json. V2 keeps
-      # terminal preferences in cli.json and writes runtime changes to it.
-      opencodeCliConfig = (pkgs.formats.json { }).generate "opencode-cli.json" {
-        "$schema" = "https://opencode.ai/v2/cli.json";
-        theme.name = config.programs.opencode.tui.theme;
-        plugins = lib.optionals config.programs.herdr.enable [ "./herdr-tui-session.js" ];
-      };
       opencodeCliConfigPath = "${config.xdg.configHome}/opencode/cli.json";
     in
     {
@@ -112,6 +105,7 @@
         enable = true;
         enableMcpIntegration = true;
         inherit skills;
+        cli.plugins = lib.optionals config.programs.herdr.enable [ "./herdr-tui-session.js" ];
         settings = {
           update = "disable";
           permission = {
@@ -122,11 +116,14 @@
 
       catppuccin.opencode.enable = true;
 
-      xdg.configFile."opencode/tui.json".enable = false;
+      # OpenCode writes runtime preferences to cli.json. Install a writable
+      # copy of Home Manager's generated config, reset on each activation.
+      xdg.configFile."opencode/cli.json".enable = false;
 
       home.activation.opencodeCliConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
         run rm --force ${lib.escapeShellArg opencodeCliConfigPath}
-        run install -Dm600 ${opencodeCliConfig} ${lib.escapeShellArg opencodeCliConfigPath}
+        run install -Dm600 ${config.xdg.configFile."opencode/cli.json".source} \
+          ${lib.escapeShellArg opencodeCliConfigPath}
       '';
 
       programs.claude-code = {
