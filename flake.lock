@@ -86,6 +86,26 @@
         "type": "github"
       }
     },
+    "curseforge": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793648540,
+        "narHash": "sha256-k/MtVusiIThgHyL7iN8EyQHVCvPXyKmqJlLrEJIXy7E=",
+        "owner": "spitfire05",
+        "repo": "curseforge-appimage-nix",
+        "rev": "02e627637633b7d81b328a5e4dec4052a0186077",
+        "type": "github"
+      },
+      "original": {
+        "owner": "spitfire05",
+        "repo": "curseforge-appimage-nix",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -401,6 +421,7 @@
         "anthropic-skills": "anthropic-skills",
         "catppuccin": "catppuccin",
         "catppuccin-palette": "catppuccin-palette",
+        "curseforge": "curseforge",
         "disko": "disko",
         "firefox-addons": "firefox-addons",
         "flake-compat": "flake-compat",
