@@ -9,6 +9,5 @@
     keyd
     vpn
     fonts
-    syncthing
   ];
 }

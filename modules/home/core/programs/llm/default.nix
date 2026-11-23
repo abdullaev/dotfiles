@@ -20,7 +20,7 @@
         "obsidian-bases"
         "obsidian-cli"
         "obsidian-markdown"
-      ] (name: "${inputs.obsidian-skills}/skills/${name}");
+      ] (name: "${inputs.obsidian-skills}/plugins/obsidian/skills/${name}");
 
       mattpocockSkills = lib.listToAttrs (
         map (path: {
