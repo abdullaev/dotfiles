@@ -27,7 +27,7 @@
         "$herdr" integration install opencode
 
         cp "$HOME/.claude/hooks/herdr-agent-state.sh" "$out/claude-agent-state.sh"
-        cp "$HOME/.config/opencode/herdr-tui-session.js" "$out/opencode-tui-session.js"
+        cp -r "$HOME/.config/opencode" "$out/opencode"
       '';
 
       # `herdr integration status` looks for the hook at this exact path.
@@ -104,11 +104,17 @@
         source = "${integrations}/claude-agent-state.sh";
       };
 
-      xdg.configFile = lib.mkIf config.programs.opencode.enable {
-        # V2 reports session state through the CLI plugin, registered in cli.json
-        # by the llm module, instead of the V1 server plugin and tui.jsonc.
-        "opencode/herdr-tui-session.js".source = "${integrations}/opencode-tui-session.js";
-      };
+      # Herdr checks the server plugin and both TUI registrations. Home Manager
+      # merges the V2 entry into cli.json alongside the user's other CLI settings.
+      programs.opencode.cli.plugins = lib.mkIf config.programs.opencode.enable [ "./herdr-opencode" ];
+      xdg.configFile = lib.mkIf config.programs.opencode.enable (
+        lib.genAttrs [
+          "opencode/plugins/herdr-agent-state.js"
+          "opencode/herdr-tui-session.js"
+          "opencode/herdr-opencode/tui.js"
+          "opencode/tui.jsonc"
+        ] (path: { source = "${integrations}/${path}"; })
+      );
 
       programs.fish.interactiveShellInit = ''
         if set -q HERDR_ENV; and test "$TERM" = xterm-256color

@@ -84,8 +84,6 @@
       toClaudePattern = path: if lib.hasPrefix "/" path then "/${path}" else path;
 
       claudeSettingsPath = "${config.programs.claude-code.configDir}/settings.json";
-
-      opencodeCliConfigPath = "${config.xdg.configHome}/opencode/cli.json";
     in
     {
       programs.mcp = {
@@ -105,7 +103,6 @@
         enable = true;
         enableMcpIntegration = true;
         inherit skills;
-        cli.plugins = lib.optionals config.programs.herdr.enable [ "./herdr-tui-session.js" ];
         settings = {
           update = "disable";
           permission = {
@@ -116,15 +113,21 @@
 
       catppuccin.opencode.enable = true;
 
-      # OpenCode writes runtime preferences to cli.json. Install a writable
-      # copy of Home Manager's generated config, reset on each activation.
+      # Herdr checks cli.json on disk, while OpenCode edits it from the TUI.
+      # Merge the declared settings into the writable file on activation.
       xdg.configFile."opencode/cli.json".enable = false;
 
-      home.activation.opencodeCliConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        run rm --force ${lib.escapeShellArg opencodeCliConfigPath}
-        run install -Dm600 ${config.xdg.configFile."opencode/cli.json".source} \
-          ${lib.escapeShellArg opencodeCliConfigPath}
-      '';
+      home.activation.opencodeCliConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+        lib.hm.generators.mkImpureConfigMerger {
+          inherit pkgs;
+          format = "json";
+          empty = "{}";
+          mode = "600";
+          path = "${config.xdg.configHome}/opencode/cli.json";
+          staticSettings = config.xdg.configFile."opencode/cli.json".source;
+          jqOperation = "$dynamic * $static";
+        }
+      );
 
       programs.claude-code = {
         enable = true;
