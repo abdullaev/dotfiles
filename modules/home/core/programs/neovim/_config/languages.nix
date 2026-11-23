@@ -39,7 +39,7 @@
       enable = true;
       treesitter.enable = true;
       lsp.enable = true;
-      flutter-tools.enable = false;
+      extensions.flutter-tools.enable = false;
     };
     docker = {
       enable = true;

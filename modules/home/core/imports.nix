@@ -3,7 +3,7 @@
   flake.modules.homeManager.core.imports = [
     # Option-providing input modules the core programs below depend on.
     inputs.sops-nix.homeManagerModules.sops
-    inputs.nvf.homeManagerModules.default
+    inputs.nvf.homeModules.default
     inputs.catppuccin.homeModules.catppuccin
   ]
   ++ (with config.flake.modules.homeManager; [
