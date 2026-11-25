@@ -4,6 +4,7 @@
     inputs.disko.nixosModules.disko
     ./disko.nix
     ./hardware-configuration.nix
+    ./nuphy-air75-v3.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
